@@ -1,0 +1,297 @@
+[
+    {
+        "Nombre": "Dr. Ricardo Pérez Mora",
+        "Cedula": "1 0458 0987",
+        "Celular": "60127890",
+        "Correo": "ricardo.perez@gmail.com",
+        "Especialidad": "Medicina General",
+        "Usuario": "ricardo.perez",
+        "Contrasena": "Ricardo2025#",
+        "DiasLaborales": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            1
+        ],
+        "Horario": [
+            [
+                1,
+                1,
+                0
+            ],
+            [
+                1,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1
+            ],
+            [
+                1,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                1
+            ],
+            [
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1
+            ],
+            [
+                0,
+                0,
+                0
+            ]
+        ]
+    },
+    {
+        "Nombre": "Dra. Ana María Vargas Solís",
+        "Cedula": "2 0123 0456",
+        "Celular": "72561234",
+        "Correo": "anamaria.vargas@gmail.com",
+        "Especialidad": "Pediatría",
+        "Usuario": "anamaria.vargas",
+        "Contrasena": "AnaMaria2025$",
+        "DiasLaborales": [
+            0,
+            1,
+            1,
+            1,
+            1,
+            0
+        ],
+        "Horario": [
+            [
+                1,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                1
+            ],
+            [
+                0,
+                0,
+                1
+            ],
+            [
+                0,
+                0,
+                1
+            ],
+            [
+                1,
+                0,
+                0
+            ],
+            [
+                1,
+                1,
+                0
+            ],
+            [
+                0,
+                1,
+                0
+            ],
+            [
+                0,
+                1,
+                0
+            ]
+        ]
+    },
+    {
+        "Nombre": "Dr. Felipe Gómez Calderón",
+        "Cedula": "3 0987 0543",
+        "Celular": "87129043",
+        "Correo": "felipe.gomez@gmail.com",
+        "Especialidad": "Cardiología",
+        "Usuario": "felipe.gomez",
+        "Contrasena": "Felipe2025@",
+        "DiasLaborales": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+        ],
+        "Horario": [
+            [
+                0,
+                0,
+                1
+            ],
+            [
+                0,
+                1,
+                1
+            ],
+            [
+                1,
+                0,
+                1
+            ],
+            [
+                1,
+                0,
+                0
+            ],
+            [
+                1,
+                0,
+                1
+            ],
+            [
+                0,
+                0,
+                1
+            ],
+            [
+                1,
+                0,
+                0
+            ],
+            [
+                1,
+                0,
+                1
+            ]
+        ]
+    },
+    {
+        "Nombre": "Dra. Lucía Fernández Rojas",
+        "Cedula": "4 0876 0321",
+        "Celular": "78654321",
+        "Correo": "lucia.fernandez@gmail.com",
+        "Especialidad": "Medicina General",
+        "Usuario": "lucia.fernandez",
+        "Contrasena": "Lucia2025%",
+        "DiasLaborales": [
+            1,
+            0,
+            0,
+            1,
+            1,
+            0
+        ],
+        "Horario": [
+            [
+                1,
+                1,
+                0
+            ],
+            [
+                0,
+                1,
+                0
+            ],
+            [
+                0,
+                1,
+                1
+            ],
+            [
+                0,
+                0,
+                1
+            ],
+            [
+                0,
+                1,
+                0
+            ],
+            [
+                0,
+                1,
+                0
+            ],
+            [
+                1,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                1
+            ]
+        ]
+    },
+    {
+        "Nombre": "Dr. Andrés Ramírez Chacón",
+        "Cedula": "5 0234 0897",
+        "Celular": "60345987",
+        "Correo": "andres.ramirez@gmail.com",
+        "Especialidad": "Pediatría",
+        "Usuario": "andres.ramirez",
+        "Contrasena": "Andres2025!",
+        "DiasLaborales": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+        ],
+        "Horario": [
+            [
+                1,
+                1,
+                1
+            ],
+            [
+                1,
+                0,
+                0
+            ],
+            [
+                1,
+                0,
+                1
+            ],
+            [
+                1,
+                0,
+                1
+            ],
+            [
+                1,
+                1,
+                0
+            ],
+            [
+                0,
+                1,
+                0
+            ],
+            [
+                1,
+                0,
+                1
+            ],
+            [
+                0,
+                1,
+                1
+            ]
+        ]
+    }
+]

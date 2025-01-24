@@ -1,0 +1,18 @@
+[
+    {
+        "Nombre": "Karla Sánchez Rivera",
+        "Cedula": "6 0456 0789",
+        "Celular": "70124567",
+        "Correo": "karla.sanchez@gmail.com",
+        "Usuario": "karla.sanchez",
+        "Contrasena": "Karla2025*"
+    },
+    {
+        "Nombre": "Luis Ramírez Torres",
+        "Cedula": "7 0987 0452",
+        "Celular": "88123456",
+        "Correo": "luis.ramirez@gmail.com",
+        "Usuario": "luis.ramirez",
+        "Contrasena": "Luis2025&"
+    }
+]

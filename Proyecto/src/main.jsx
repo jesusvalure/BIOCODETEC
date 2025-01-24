@@ -1,6 +1,11 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './Components/SelectDoctorPaciente'
 
+const root = ReactDOM.createRoot(document.getElementById('root'))
 
-const root = createRoot(document.getElementById('root'))
-root.render("Hello, World!")
+root.render(
+  <React.Fragment>
+    <App />
+  </React.Fragment>
+)
