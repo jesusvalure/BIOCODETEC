@@ -16,6 +16,7 @@ body {
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   text-align: center;
+  position: relative;
 }
 
 .text-center img {
@@ -23,6 +24,12 @@ body {
   height: 90px;
   border-radius: 50%;
   margin-bottom: 20px;
+}
+
+.text-danger {
+  color: red;
+  font-size: 0.875rem; /* Tamaño de fuente para el mensaje de error */
+  
 }
 
 .login-container h2 {
@@ -82,6 +89,8 @@ a:last-child {
   background-color: #007bff;
   color: white;
 }
+
+
 
 /*Admin board*/
 body {
@@ -437,6 +446,8 @@ registrar diagnostico
 
 .form-group {
   margin-bottom: 15px;
+  display: flex;  
+  flex-direction: column;
 }
 
 .form-group label {
