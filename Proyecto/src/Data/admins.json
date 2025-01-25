@@ -5,7 +5,8 @@
         "Celular": "60123456",
         "Correo": "gabriela.mora@gmail.com",
         "Usuario": "gabriela.mora",
-        "Contrasena": "Gabriela2025#"
+        "Contrasena": "Gabriela2025#",
+        "Tipo": 4
     },
     {
         "Nombre": "Esteban Rojas Chaves",
@@ -13,7 +14,8 @@
         "Celular": "77123456",
         "Correo": "esteban.rojas@gmail.com",
         "Usuario": "esteban.rojas",
-        "Contrasena": "Esteban2025$"
+        "Contrasena": "Esteban2025$",
+        "Tipo": 4
     },
     {
         "Nombre": "Natalia Campos Solano",
@@ -21,6 +23,7 @@
         "Celular": "82234567",
         "Correo": "natalia.campos@gmail.com",
         "Usuario": "natalia.campos",
-        "Contrasena": "Natalia2025@"
+        "Contrasena": "Natalia2025@",
+        "Tipo": 4
     }
 ]

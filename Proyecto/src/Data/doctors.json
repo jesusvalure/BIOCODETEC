@@ -7,6 +7,7 @@
         "Especialidad": "Medicina General",
         "Usuario": "ricardo.perez",
         "Contrasena": "Ricardo2025#",
+        "Tipo": 2,
         "DiasLaborales": [
             1,
             1,
@@ -66,6 +67,7 @@
         "Especialidad": "Pediatría",
         "Usuario": "anamaria.vargas",
         "Contrasena": "AnaMaria2025$",
+        "Tipo": 2,
         "DiasLaborales": [
             0,
             1,
@@ -125,6 +127,7 @@
         "Especialidad": "Cardiología",
         "Usuario": "felipe.gomez",
         "Contrasena": "Felipe2025@",
+        "Tipo": 2,
         "DiasLaborales": [
             1,
             1,
@@ -184,6 +187,7 @@
         "Especialidad": "Medicina General",
         "Usuario": "lucia.fernandez",
         "Contrasena": "Lucia2025%",
+        "Tipo": 2,
         "DiasLaborales": [
             1,
             0,
@@ -243,6 +247,7 @@
         "Especialidad": "Pediatría",
         "Usuario": "andres.ramirez",
         "Contrasena": "Andres2025!",
+        "Tipo": 2,
         "DiasLaborales": [
             1,
             1,
