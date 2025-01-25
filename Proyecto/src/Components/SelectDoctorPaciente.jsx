@@ -42,15 +42,15 @@ const App = () => {
   };
 
   return (
-    <div style="background">
-      <div style="container">
-        <h2 style="title">Registrar cita</h2>
-        <div style="field">
-          <label style="label">Especialidad:</label>
+    <div style={styles.background}>
+      <div style={styles.container}>
+        <h2 style={styles.title}>Registrar cita</h2>
+        <div style={styles.field}>
+          <label style={styles.label}>Especialidad:</label>
           <select
             value={especialidad}
             onChange={handleEspecialidadChange}
-            style="select"
+            style={styles.select}
           >
             <option value="">-- Selecciona una especialidad --</option>
             {especialidades.map((esp, index) => (
@@ -60,12 +60,12 @@ const App = () => {
             ))}
           </select>
         </div>
-        <div style="field">
-          <label style="label">Doctor:</label>
+        <div style={styles.field}>
+          <label style={styles.label}>Doctor:</label>
           <select
             value={doctor}
             onChange={handleDoctorChange}
-            style="select"
+            style={styles.select}
             disabled={!especialidad}
           >
             <option value="">-- Selecciona un doctor --</option>
@@ -76,11 +76,11 @@ const App = () => {
             ))}
           </select>
         </div>
-        <div style="buttons">
-          <button onClick={handleVolver} style="button">
+        <div style={styles.buttons}>
+          <button onClick={handleVolver} style={styles.button}>
             Atrás
           </button>
-          <button onClick={handleAceptar} style="button">
+          <button onClick={handleAceptar} style={styles.button}>
             Aceptar
           </button>
         </div>
@@ -89,5 +89,57 @@ const App = () => {
   );
 };
 
+const styles = {
+  background: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+    backgroundColor: "#090063", // Azul oscuro
+  },
+  container: {
+    backgroundColor: "white",
+    padding: "20px",
+    borderRadius: "10px",
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+    textAlign: "center",
+    width: "300px",
+  },
+  title: {
+    marginBottom: "20px",
+    fontSize: "18px",
+    fontWeight: "bold",
+  },
+  field: {
+    marginBottom: "15px",
+    textAlign: "left",
+  },
+  label: {
+    display: "block",
+    marginBottom: "5px",
+    fontWeight: "bold",
+  },
+  select: {
+    width: "100%",
+    padding: "8px",
+    borderRadius: "5px",
+    border: "1px solid #ccc",
+  },
+  buttons: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: "20px",
+  },
+  button: {
+    backgroundColor: "#fff",
+    border: "1px solid #ccc",
+    borderRadius: "5px",
+    padding: "8px 15px",
+    cursor: "pointer",
+    fontWeight: "bold",
+    width: "100px",
+    margin: "0 5px",
+  },
+};
 
 export default App;
