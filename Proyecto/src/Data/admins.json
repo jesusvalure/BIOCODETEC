@@ -1,16 +1,25 @@
 [
     {
         "Nombre": "Gabriela Mora Álvarez",
+        "Cedula": "1 0123 0456",
+        "Celular": "60123456",
+        "Correo": "gabriela.mora@gmail.com",
         "Usuario": "gabriela.mora",
         "Contrasena": "Gabriela2025#"
     },
     {
         "Nombre": "Esteban Rojas Chaves",
+        "Cedula": "1 0723 0426",
+        "Celular": "77123456",
+        "Correo": "esteban.rojas@gmail.com",
         "Usuario": "esteban.rojas",
         "Contrasena": "Esteban2025$"
     },
     {
         "Nombre": "Natalia Campos Solano",
+        "Cedula": "1 0541 0339",
+        "Celular": "82234567",
+        "Correo": "natalia.campos@gmail.com",
         "Usuario": "natalia.campos",
         "Contrasena": "Natalia2025@"
     }
