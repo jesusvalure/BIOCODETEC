@@ -95,10 +95,10 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    backgroundColor: "#090063", // Azul oscuro
+    backgroundColor: "#373f4f", // Azul oscuro
   },
   container: {
-    backgroundColor: "white",
+    backgroundColor: "#d0dcf5",
     padding: "20px",
     borderRadius: "10px",
     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
