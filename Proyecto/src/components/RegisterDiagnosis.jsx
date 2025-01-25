@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import pacientes from "../data/pacientes.json";
+import pacientes from "../Data/users.json";
 
 const RegistrarDiagnostico = () => {
   const [diagnostico, setDiagnostico] = useState("");
