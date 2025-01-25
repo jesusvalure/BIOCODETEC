@@ -10,7 +10,9 @@
         "Padecimientos": [
             "Ansiedad",
             "Hipertension"
-        ]
+        ],
+        "User": "michell.quiros",
+        "Password": "Michell2025!"
     },
     {
         "Nombre": "Andrés Villalobos Solano",
@@ -23,7 +25,9 @@
         "Padecimientos": [
             "Cardiopatia",
             "Colesterol alto"
-        ]
+        ],
+        "User": "andres.villalobos",
+        "Password": "Andres2025@"
     },
     {
         "Nombre": "Sofía Ramírez Pérez",
@@ -35,7 +39,9 @@
         "Estatura": 1.65,
         "Padecimientos": [
             "Ninguno"
-        ]
+        ],
+        "User": "sofia.ramirez",
+        "Password": "Sofia2025#"
     },
     {
         "Nombre": "Laura Gómez Campos",
@@ -48,7 +54,9 @@
         "Padecimientos": [
             "Obesidad",
             "Ansiedad"
-        ]
+        ],
+        "User": "laura.gomez",
+        "Password": "Laura2025$"
     },
     {
         "Nombre": "Carlos Fernández Mora",
@@ -61,7 +69,9 @@
         "Padecimientos": [
             "Colesterol alto",
             "Hipertension"
-        ]
+        ],
+        "User": "carlos.fernandez",
+        "Password": "Carlos2025%"
     },
     {
         "Nombre": "María José Delgado",
@@ -73,7 +83,9 @@
         "Estatura": 1.60,
         "Padecimientos": [
             "Anemia"
-        ]
+        ],
+        "User": "maria.delgado",
+        "Password": "Maria2025&"
     },
     {
         "Nombre": "Javier Sánchez López",
@@ -86,7 +98,9 @@
         "Padecimientos": [
             "Asma",
             "Cardiopatia"
-        ]
+        ],
+        "User": "javier.sanchez",
+        "Password": "Javier2025!"
     },
     {
         "Nombre": "Natalia Rojas Chaves",
@@ -98,7 +112,9 @@
         "Estatura": 1.70,
         "Padecimientos": [
             "Depresion"
-        ]
+        ],
+        "User": "natalia.rojas",
+        "Password": "Natalia2025#"
     },
     {
         "Nombre": "Roberto Jiménez Vega",
@@ -111,7 +127,9 @@
         "Padecimientos": [
             "Hipertension",
             "Obesidad"
-        ]
+        ],
+        "User": "roberto.jimenez",
+        "Password": "Roberto2025$"
     },
     {
         "Nombre": "Gabriela Castro Alvarado",
@@ -123,7 +141,9 @@
         "Estatura": 1.62,
         "Padecimientos": [
             "Ansiedad",
-            "Otros: Migrañas"
-        ]
+            "Migrañas"
+        ],
+        "User": "gabriela.castro",
+        "Password": "Gabriela2025@"
     }
 ]

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import doctors from '../Data/doctors.json';
-import Styles from './SelectDoctorPaciente.css';
+// import Styles from './SelectDoctorPaciente.css';
 
 const App = () => {
   const [especialidad, setEspecialidad] = useState("");
