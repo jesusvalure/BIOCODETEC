@@ -1,0 +1,19 @@
+[
+    {
+      "cedula": "123456789",
+      "nombre": "Juan",
+      "apellido1": "Pérez",
+      "apellido2": "García",
+      "edad": 45,
+      "diagnostico": "Hipertensión"
+    },
+    {
+      "cedula": "987654321",
+      "nombre": "María",
+      "apellido1": "López",
+      "apellido2": "Martínez",
+      "edad": 30,
+      "diagnostico": "Diabetes"
+    }
+  ]
+  
