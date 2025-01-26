@@ -7,6 +7,7 @@ import ClientProfile from './components/ClientProfile';
 import DoctorDashboard from './components/DoctorDashboard';
 import ReceptionistDashboard from './components/ReceptionistDashboard';
 import RegisterDiagnosis from './components/RegisterDiagnosis'; // Importa el componente
+import RegisterUsers from './components/RegisterUsers';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
@@ -17,6 +18,8 @@ root.render(
       <Routes>
         {/* Ruta para el login */}
         <Route path="/" element={<LoginForm />} />
+        {/* Ruta para el registro de usuarios */}
+        <Route path="/register" element={<RegisterUsers />} />
         {/* Ruta para el panel de administración */}
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/client-profile" element={<ClientProfile />} />

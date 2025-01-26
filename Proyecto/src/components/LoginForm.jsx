@@ -19,12 +19,10 @@ const LoginForm = () => {
         ...administradores
     ];
 
-    const simplifiedUsers = allUsers.map((user) =>({
-    
+    const simplifiedUsers = allUsers.map((user) => ({
         Usuario: user.Usuario,
         Contrasena: user.Contrasena,
         Tipo: user.Tipo
-    
     }));
     
     const handleSubmit = (event) => {
@@ -37,12 +35,11 @@ const LoginForm = () => {
 
         const inputUser = simplifiedUsers.find(u => u.Usuario === user);
 
-        //console.log(inputUser.Usuario);
         if (!inputUser) {
             setErrors(prev => ({ ...prev, user: 'El usuario no existe' }));
         } else if (inputUser.Contrasena !== password) {
             setErrors(prev => ({ ...prev, password: 'Contraseña incorrecta' }));
-        } else{
+        } else {
             // Aquí entra solo si el usuario existe
             switch (inputUser.Tipo) {
                 case 4:
@@ -59,8 +56,12 @@ const LoginForm = () => {
                     break;
                 default:
                     alert('Tipo de usuario no reconocido');
-                } 
             }
+        }
+    };
+
+    const handleCreateAccount = () => {
+        navigate('/register'); // Redirige a la pantalla de registro
     };
 
     return (
@@ -91,7 +92,6 @@ const LoginForm = () => {
                             className="form-control"
                             required
                         />
-                        
                     </div>
                     <div className="form-group mb-4">
                         <label htmlFor="password">Contraseña</label>
@@ -104,14 +104,13 @@ const LoginForm = () => {
                             className="form-control"
                             required
                         />
-                        
                     </div>
                     <button type="submit" className="btn btn-primary w-100">
                         Iniciar Sesión
                     </button>
                 </form>
                 <div className="text-center mt-3">
-                    <a href="#create-account" className="d-block">¿No estás registrado? Crea una cuenta</a>
+                    <a href="#create-account" onClick={handleCreateAccount} className="d-block">¿No estás registrado? Crea una cuenta</a>
                 </div>
             </div>
         </div>
