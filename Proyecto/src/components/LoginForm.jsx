@@ -6,6 +6,7 @@ import usuarios from '../Data/users.json';
 import doctores from '../Data/doctors.json';
 import recepcionistas from '../Data/receptionists.json'; 
 import administradores from '../Data/admins.json';
+import bcrypt from 'bcryptjs';
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -24,8 +25,14 @@ const LoginForm = () => {
         Contrasena: user.Contrasena,
         Tipo: user.Tipo
     }));
+
+    const comparePassword = async (password, hashedPassword) => {
+        const isMatch = await bcrypt.compare(password, hashedPassword);
+        console.log("Password Match:", isMatch);
+        return isMatch;
+      };
     
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault(); // Prevenir comportamiento por defecto del formulario
         
         const password = event.target.password.value.trim();
@@ -37,8 +44,8 @@ const LoginForm = () => {
 
         if (!inputUser) {
             setErrors(prev => ({ ...prev, user: 'El usuario no existe' }));
-        } else if (inputUser.Contrasena !== password) {
-            setErrors(prev => ({ ...prev, password: 'Contraseña incorrecta' }));
+        } else if (!(await comparePassword(password, inputUser.Contrasena))) {
+            setErrors((prev) => ({ ...prev, password: "Contraseña incorrecta" }));
         } else {
             // Aquí entra solo si el usuario existe
             switch (inputUser.Tipo) {

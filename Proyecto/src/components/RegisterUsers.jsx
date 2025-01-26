@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Importar el hook para navegar
-
+import bcrypt from 'bcryptjs';
 
 
 const RegisterUsers = () => {
   const navigate = useNavigate(); // Inicializar el hook
   const [formData, setFormData] = useState({
+    ombreUsuario: "", // Nuevo campo para nombre de usuario
+    contrasena: "", // Nuevo campo para contraseña
     apellidos: "",
     nombre: "",
     cedula: "",
@@ -27,6 +29,13 @@ const RegisterUsers = () => {
     },
   });
 
+  const encryptPassword = async (password) => {
+    const saltRounds = 10; // Nivel de complejidad del hash
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    console.log("Hashed Password:", hashedPassword);
+    return hashedPassword;
+  };
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (type === "checkbox") {
@@ -45,9 +54,17 @@ const RegisterUsers = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Usuario registrado:", formData);
+
+    const hashedPassword = await encryptPassword(formData.contrasena);
+
+    const updatedFormData = {
+      ...formData,
+      contrasena: hashedPassword, 
+    };
+
+    console.log("Usuario registrado con datos seguros:", updatedFormData);
   };
 
   const handleBack = () => {
@@ -60,6 +77,24 @@ const RegisterUsers = () => {
         <div style={styles.formRow}>
           <div>
             <h3>Nuevo Usuario</h3>
+            <label>Nombre de Usuario:</label>
+            <input
+              type="text"
+              name="nombreUsuario"
+              value={formData.nombreUsuario}
+              onChange={handleChange}
+              required
+              style={styles.input}
+            />
+            <label>Contraseña:</label>
+            <input
+              type="password"
+              name="contrasena"
+              value={formData.contrasena}
+              onChange={handleChange}
+              required
+              style={styles.input}
+            />
             <label>Apellidos:</label>
             <input type="text" name="apellidos" value={formData.apellidos} onChange={handleChange} required style={styles.input} />
             <label>Nombre:</label>
