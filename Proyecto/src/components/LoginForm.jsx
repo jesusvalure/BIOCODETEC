@@ -20,12 +20,6 @@ const LoginForm = () => {
         ...administradores
     ];
 
-    const simplifiedUsers = allUsers.map((user) => ({
-        Usuario: user.Usuario,
-        Contrasena: user.Contrasena,
-        Tipo: user.Tipo
-    }));
-
     const comparePassword = async (password, hashedPassword) => {
         const isMatch = await bcrypt.compare(password, hashedPassword);
         console.log("Password Match:", isMatch);
@@ -40,20 +34,23 @@ const LoginForm = () => {
 
         setErrors({ user: '', password: '' });
 
-        const inputUser = simplifiedUsers.find(u => u.Usuario === user);
+        const loggedInUser = allUsers.find((u) => u.Usuario === user);
 
-        if (!inputUser) {
+        console.log("Usuario encontrado:", loggedInUser.Nombre);
+        console.log("Contraseña:", loggedInUser.Contrasena);
+
+        if (!loggedInUser) {
             setErrors(prev => ({ ...prev, user: 'El usuario no existe' }));
-        } else if (inputUser.Contrasena !== password) {
+        } else if (loggedInUser.Contrasena !== password) {
             setErrors((prev) => ({ ...prev, password: "Contraseña incorrecta" }));
         } else {
             // Aquí entra solo si el usuario existe
-            switch (inputUser.Tipo) {
+            switch (loggedInUser.Tipo) {
                 case 4:
                     navigate('/admin-dashboard');
                     break;
                 case 1:
-                    navigate('/panel-paciente');
+                    navigate("/panel-paciente", { state: { user: loggedInUser } });
                     break;
                 case 2:
                     navigate('/doctor-dashboard');

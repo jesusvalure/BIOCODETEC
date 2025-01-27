@@ -7,11 +7,11 @@ const ClientProfile = () => {
   const [user, setUser] = useState({ name: '' });
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('loggedInUser'));
-    if (!storedUser) {
+    const loggedUser = location.state || {};
+    if (!loggedUser) {
       navigate('/'); 
     } else {
-      setUser(storedUser); 
+      setUser(loggedUser); 
     }
   }, [navigate]);
 
