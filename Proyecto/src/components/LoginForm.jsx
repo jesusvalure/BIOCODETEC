@@ -53,7 +53,7 @@ const LoginForm = () => {
                     navigate('/admin-dashboard');
                     break;
                 case 1:
-                    navigate('/client-profile');
+                    navigate('/panel-paciente');
                     break;
                 case 2:
                     navigate('/doctor-dashboard');
