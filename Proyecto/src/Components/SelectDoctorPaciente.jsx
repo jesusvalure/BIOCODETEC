@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import doctors from '../Data/doctors.json';
+import { useNavigate } from 'react-router-dom';
 // import Styles from './SelectDoctorPaciente.css';
 
-const App = () => {
+const SelectDoctorCliente = () => {
   const [especialidad, setEspecialidad] = useState("");
   const [doctor, setDoctor] = useState("");
   const [doctoresFiltrados, setDoctoresFiltrados] = useState([]);
+  const [errorEspecialidad, setErrorEspecialidad] = useState("");
+  const [errorDoctor, setErrorDoctor] = useState("");
+  const navigate = useNavigate();
 
   // Obtener las especialidades únicas del JSON
   const especialidades = [...new Set(doctors.map((doc) => doc.Especialidad))];
@@ -19,22 +23,31 @@ const App = () => {
       doctors.filter((doc) => doc.Especialidad === selectedEspecialidad)
     );
     setDoctor("");
+    setErrorEspecialidad("");
   };
 
   const handleDoctorChange = (e) => {
     setDoctor(e.target.value);
+    setErrorDoctor("");
   };
 
   const handleAceptar = () => {
+    let valid = true;
+
     if (!especialidad) {
-      alert("Por favor, selecciona una especialidad antes de continuar.");
-      return;
+      setErrorEspecialidad("Por favor, selecciona una especialidad.");
+      valid = false;
     }
     if (!doctor) {
-      alert("Por favor, selecciona un doctor antes de continuar.");
-      return;
+      setErrorDoctor("Por favor, selecciona un doctor.");
+      valid = false;
     }
-    alert(`Especialidad: ${especialidad}\nDoctor: ${doctor}`);
+    if (valid) {
+      const selectedDoctor = doctoresFiltrados.find((doc) => doc.Nombre === doctor);
+      console.log("Doctor seleccionado:", selectedDoctor);
+      console.log("Horario del doctor:", selectedDoctor.Horario);
+      navigate("/horario-doctor", { state: { doctor: selectedDoctor } });
+    }
   };
 
   const handleVolver = () => {
@@ -59,6 +72,7 @@ const App = () => {
               </option>
             ))}
           </select>
+          {errorEspecialidad && <p style={styles.error}>{errorEspecialidad}</p>}
         </div>
         <div style={styles.field}>
           <label style={styles.label}>Doctor:</label>
@@ -75,6 +89,7 @@ const App = () => {
               </option>
             ))}
           </select>
+          {errorDoctor && <p style={styles.error}>{errorDoctor}</p>}
         </div>
         <div style={styles.buttons}>
           <button onClick={handleVolver} style={styles.button}>
@@ -95,7 +110,7 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    backgroundColor: "#373f4f", // Azul oscuro
+    backgroundColor: "#373f4f",
   },
   container: {
     backgroundColor: "#d0dcf5",
@@ -125,6 +140,11 @@ const styles = {
     borderRadius: "5px",
     border: "1px solid #ccc",
   },
+  error: {
+    color: "red",
+    fontSize: "12px",
+    marginTop: "5px",
+  },
   buttons: {
     display: "flex",
     justifyContent: "space-between",
@@ -142,4 +162,5 @@ const styles = {
   },
 };
 
-export default App;
+
+export default SelectDoctorCliente;

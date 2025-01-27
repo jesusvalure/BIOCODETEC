@@ -32,7 +32,7 @@ const LoginForm = () => {
         return isMatch;
       };
     
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault(); // Prevenir comportamiento por defecto del formulario
         
         const password = event.target.password.value.trim();
@@ -44,7 +44,7 @@ const LoginForm = () => {
 
         if (!inputUser) {
             setErrors(prev => ({ ...prev, user: 'El usuario no existe' }));
-        } else if (!(await comparePassword(password, inputUser.Contrasena))) {
+        } else if (inputUser.Contrasena !== password) {
             setErrors((prev) => ({ ...prev, password: "Contraseña incorrecta" }));
         } else {
             // Aquí entra solo si el usuario existe
