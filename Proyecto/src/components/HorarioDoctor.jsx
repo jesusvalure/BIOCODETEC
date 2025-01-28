@@ -59,7 +59,7 @@ const HorarioDoctor = () => {
         <div style={styles.background}>
             <div style={styles.container}>
                 <div style={styles.info}>
-                    <h3>{doctor.Nombre}</h3>
+                    <h2 style={styles.title}>{doctor.Nombre}</h2>
                     <h3 style={styles.text1}>{doctor.Especialidad}</h3>
                 </div>
 
@@ -93,7 +93,10 @@ const HorarioDoctor = () => {
                     ))}
                 </div>
 
-                <button style={styles.buttonVolver} onClick={() => navigate("/")}>Volver</button>
+                <div style={styles.containerBtn}>
+                    <button style={styles.buttonVolver} onClick={() => navigate("/select-doctor")}>Volver</button>
+                    <button style={styles.buttonAceptar} onClick={() => navigate("/select-doctor")}>Aceptar</button>{/*TODO cambiar a la pantalla de confirmación*/}
+                </div>
             </div>
         </div>
     );
@@ -107,6 +110,10 @@ const styles = {
         height: "100vh",
         width: "100vw",
         backgroundColor: "#373f4f",
+    },
+    title: {
+        fontSize: "24px",
+        marginBottom: "5px"
     },
     datePickerDiv: {
         backgroundColor: "#d0dcf5",
@@ -122,21 +129,29 @@ const styles = {
         borderRadius: "10px",
         boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
         textAlign: "center",
-        width: "350px",
+        width: "400px",
+    },
+    containerBtn: {
+        backgroundColor: "#d0dcf5",
+        padding: "20px",
+        borderRadius: "10px",
+        textAlign: "column",
+        width: "360px"
     },
     info: {
         backgroundColor: "#d0dcf5",
         borderRadius: "10px",
         textAlign: "left",
-        width: "300px",
+        width: "390px"
     },
     text1: {
         fontSize: "16px",
-        marginTop: "5px",
+        marginTop: "5px"
     },
     text2: {
         fontSize: "16px",
-        marginRight: "30px",
+        marginLeft: "29px",
+        marginRight: "35px",
         marginTop: "2px",
     },
     grid: {
@@ -153,21 +168,34 @@ const styles = {
         width: "70px",
         padding: "10px",
         borderRadius: "5px",
-        border: "1px solid #ccc",
+        border: "1px solid #d0dcf5",
         cursor: "pointer",
         fontWeight: "bold",
         color: "black",
         textAlign: "center",
+        marginRight: "2px",
+        marginTop: "2px"
     },
     buttonVolver: {
         backgroundColor: "#373f4f",
         border: "1px solid #ccc",
         borderRadius: "5px",
-        marginTop: "20px",
+        marginRight: "30px",
         cursor: "pointer",
         fontWeight: "bold",
-        color: "white"
-      }
+        color: "white",
+        width: "100px",
+      },
+    buttonAceptar: {
+        backgroundColor: "#373f4f",
+        border: "1px solid #ccc",
+        borderRadius: "5px",
+        marginLeft: "30px",
+        cursor: "pointer",
+        fontWeight: "bold",
+        color: "white",
+        width: "100px",
+    }
 
 };
 
