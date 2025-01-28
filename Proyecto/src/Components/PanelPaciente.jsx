@@ -24,6 +24,10 @@ const ClientProfile = () => {
     navigate('/perfil-paciente'); 
   };
 
+  const handleRegisterCita = () => {
+    navigate('/select-doctor'); 
+  }
+
   return (
     <div className="client-profile container">
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -45,7 +49,7 @@ const ClientProfile = () => {
       <div className="client-actions mb-4">
         <button className="btn btn-primary me-2">Consultar Citas Pasadas</button>
         <button className="btn btn-secondary me-2">Revisar Recetas Médicas</button>
-        <button className="btn btn-success me-2">Programar Nueva Cita</button>
+        <button className="btn btn-success me-2" onClick={handleRegisterCita}>Programar Nueva Cita</button>
         <button className="btn btn-danger">Cancelar Cita</button>
       </div>
 

@@ -9,6 +9,8 @@ import ReceptionistDashboard from './components/ReceptionistDashboard';
 import RegisterDiagnosis from './components/RegisterDiagnosis';
 import RegisterUsers from './components/RegisterUsers';
 import PerfilPaciente from './components/PerfilPaciente';
+import SelectDoctorPaciente from './components/SelectDoctorPaciente';
+import HorarioDoctor from './components/HorarioDoctor';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
@@ -26,6 +28,8 @@ root.render(
         <Route path="/recepcionist-dashboard" element={<ReceptionistDashboard />} />
         <Route path="/register-diagnosis" element={<RegisterDiagnosis />} />
         <Route path="/perfil-paciente" element={<PerfilPaciente />} />
+        <Route path="/select-doctor" element={<SelectDoctorPaciente />} />
+        <Route path="/horario-doctor" element={<HorarioDoctor />} />
         {/* Redirección para rutas inexistentes */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

@@ -36,9 +36,6 @@ const LoginForm = () => {
 
         const loggedInUser = allUsers.find((u) => u.Usuario === user);
 
-        console.log("Usuario encontrado:", loggedInUser.Nombre);
-        console.log("Contraseña:", loggedInUser.Contrasena);
-
         if (!loggedInUser) {
             setErrors(prev => ({ ...prev, user: 'El usuario no existe' }));
         } else if (loggedInUser.Contrasena !== password) {

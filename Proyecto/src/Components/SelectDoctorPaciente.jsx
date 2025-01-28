@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import doctors from '../Data/doctors.json';
 import { useNavigate } from 'react-router-dom';
-// import Styles from './SelectDoctorPaciente.css';
 
 const SelectDoctorCliente = () => {
   const [especialidad, setEspecialidad] = useState("");
@@ -44,7 +43,7 @@ const SelectDoctorCliente = () => {
     }
     if (valid) {
       const selectedDoctor = doctoresFiltrados.find((doc) => doc.Nombre === doctor);
-      console.log("Doctor seleccionado:", selectedDoctor);
+      console.log("Doctor seleccionado:", selectedDoctor.Nombre);
       console.log("Horario del doctor:", selectedDoctor.Horario);
       navigate("/horario-doctor", { state: { doctor: selectedDoctor } });
     }
@@ -110,6 +109,7 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
+    width: "100vw",
     backgroundColor: "#373f4f",
   },
   container: {
@@ -157,6 +157,7 @@ const styles = {
     padding: "8px 15px",
     cursor: "pointer",
     fontWeight: "bold",
+    color: "black",
     width: "100px",
     margin: "0 5px",
   },
