@@ -157,28 +157,6 @@
     "Tipo": 1
   },
   {
-    "Nombre": "Joseph Quiros",
-    "Cedula": "123456789",
-    "Celular": "81234567",
-    "Correo": "josephquiros@gmail.com",
-    "Edad": "21",
-    "Peso": "65",
-    "Estatura": "175",
-    "Padecimientos": {
-      "Cardiopatia": false,
-      "Hipertension": false,
-      "Asma": true,
-      "Colesterol": false,
-      "Ansiedad": true,
-      "Depresion": false,
-      "Anemia": false,
-      "Obesidad": false,
-      "Otro": false
-    },
-    "Usuario": "joseph.quiros",
-    "Contrasena": "1234"
-  },
-  {
     "Nombre": "Jesus Valverde Urena",
     "Cedula": "118340220",
     "Celular": "86763222",
