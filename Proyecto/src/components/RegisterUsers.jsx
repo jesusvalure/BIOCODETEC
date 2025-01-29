@@ -24,6 +24,7 @@ const RegisterUsers = () => {
     },
     Usuario: "",
     Contrasena: "",
+    Tipo : 1,
   });
 
   const [error, setError] = useState("");
@@ -89,6 +90,7 @@ const RegisterUsers = () => {
         },
         Usuario: "",
         Contrasena: "",
+        Tipo : 1,
       });
     } catch (err) {
       setError(err.message);
