@@ -51,17 +51,32 @@ app.post("/login", (req, res) => {
 
     const { Usuario, Contrasena } = req.body;
     const users = loadData("users.json");
+    const doctors = loadData("doctors.json");
+    const admins = loadData("admins.json");
+    const receptionists = loadData("receptionists.json");
 
-    const user = users.find(u => 
-        u.Usuario.toLowerCase() === Usuario.toLowerCase() && u.Contrasena === Contrasena
-    );
+    let user = users.find(u => u.Usuario.toLowerCase() === Usuario.toLowerCase() && u.Contrasena === Contrasena);
+    let doctor = doctors.find(u => u.Usuario.toLowerCase() === Usuario.toLowerCase() && u.Contrasena === Contrasena);
+    let admin = admins.find(u => u.Usuario.toLowerCase() === Usuario.toLowerCase() && u.Contrasena === Contrasena);
+    let receptionist = receptionists.find(u => u.Usuario.toLowerCase() === Usuario.toLowerCase() && u.Contrasena === Contrasena);
 
-    if (user) {
-        res.json({ success: true, message: "✅ Login exitoso", user });
+    let userData = user || doctor || admin || receptionist;
+    
+    if (userData) {
+        res.json({
+            success: true,
+            message: "✅ Login exitoso",
+            user: {
+                Usuario: userData.Usuario,
+                Tipo: userData.Tipo,
+            }
+        });
     } else {
         res.status(401).json({ success: false, message: "❌ Usuario o contraseña incorrectos" });
     }
 });
+
+
 
 // Endpoint para registrar un nuevo usuario
 app.post("/register", (req, res) => {
@@ -82,6 +97,8 @@ app.post("/register", (req, res) => {
     fs.writeFileSync(path.resolve(__dirname, "Data", "users.json"), JSON.stringify(users, null, 2));
     res.json({ success: true, message: "✅ Usuario registrado exitosamente", user: newUser });
 });
+
+
 
 
 // Iniciar servidor

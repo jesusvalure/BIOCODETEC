@@ -18,17 +18,19 @@ const LoginForm = () => {
             const response = await fetch("http://localhost:5000/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ Usuario:usuario, Contrasena:contrasena }), // Asegúrate de que los nombres coincidan exactamente
-              });
-              
+                body: JSON.stringify({ Usuario: usuario, Contrasena: contrasena }),
+            });
+    
             const data = await response.json();
             
             if (data.success) {
-                localStorage.setItem("user", JSON.stringify(data.user)); // Guardar usuario en localStorage
+                localStorage.setItem("user", JSON.stringify(data.user));
                 const loggedUser = JSON.parse(localStorage.getItem("user"));
+    
                 console.log("Usuario logueado:", loggedUser);
-
-                switch (loggedUser.Tipo) {
+    
+                // Redirección según el tipo de usuario
+                switch (Number(loggedUser.Tipo)) {  // Asegura que Tipo sea numérico
                     case 4:
                         navigate("/admin-dashboard");
                         break;
@@ -45,12 +47,13 @@ const LoginForm = () => {
                         setMessage("❌ Error: Rol de usuario no válido");
                 }
             } else {
-                setMessage("❌ Error: " + data.message);
+                setMessage("❌ " + data.message);
             }
         } catch (error) {
             setMessage("❌ Error de conexión con el servidor");
         }
     };
+    
     
 
 
