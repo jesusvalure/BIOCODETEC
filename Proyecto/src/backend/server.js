@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 const PORT = 5000;
 
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: "http://localhost:5175" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -80,26 +80,33 @@ app.post("/login", (req, res) => {
 
 // Endpoint para registrar un nuevo usuario
 app.post("/register", (req, res) => {
-    console.log("Datos recibidos:", req.body);
+    try {
+        const { Nombre, Cedula, Celular, Correo, Edad, Peso, Estatura, Padecimientos, Usuario, Contrasena, Tipo} = req.body;
 
-    const { Usuario, Contrasena, Tipo } = req.body;
-    const users = loadData("users.json");
 
-    const existingUser = users.find(u => u.Usuario.toLowerCase() === Usuario.toLowerCase());
-    if (existingUser) {
-        res.status(400).json({ success: false, message: "❌ El usuario ya existe" });
-        return;
+        const users = loadData("users.json");
+
+        // Verificar si el usuario ya existe
+        if (users.some(user => user.Cedula === Cedula)) {
+            return res.status(409).json({ message: "❌ El usuario ya existe" });
+        }
+
+        // Crear nuevo usuario
+        const newUser = { Nombre, Cedula, Celular, Correo, Edad, Peso, Estatura, Padecimientos, Usuario, Contrasena, Tipo };
+        users.push(newUser);
+
+        // Guardar en users.json
+        fs.writeFileSync(
+            path.resolve(__dirname, "data", "users.json"),
+            JSON.stringify(users, null, 2)
+        );
+
+        res.json({ message: "✅ Usuario registrado con éxito", user: newUser });
+    } catch (error) {
+        console.error("❌ Error en /register:", error);
+        res.status(500).json({ message: "Error interno del servidor" });
     }
-
-    const newUser = { Usuario, Contrasena, Tipo };
-    users.push(newUser);
-
-    fs.writeFileSync(path.resolve(__dirname, "Data", "users.json"), JSON.stringify(users, null, 2));
-    res.json({ success: true, message: "✅ Usuario registrado exitosamente", user: newUser });
 });
-
-
-
 
 // Iniciar servidor
 app.listen(PORT, () => {
