@@ -1,159 +1,182 @@
 [
-    {
-        "Nombre": "Michell Quirós Alvares",
-        "Cedula": "1 0456 0321",
-        "Celular": "60123456",
-        "Correo": "miquial@gmail.com",
-        "Edad": 30,
-        "Peso": 72,
-        "Estatura": 1.75,
-        "Padecimientos": [
-            "Ansiedad",
-            "Hipertension"
-        ],
-        "Usuario": "michell.quiros",
-        "Contrasena": "Michell2025!",
-        "Tipo": 1
+  {
+    "Nombre": "Michell Quirós Alvares",
+    "Cedula": "1 0456 0321",
+    "Celular": "60123456",
+    "Correo": "miquial@gmail.com",
+    "Edad": 30,
+    "Peso": 72,
+    "Estatura": 1.75,
+    "Padecimientos": [
+      "Ansiedad",
+      "Hipertension"
+    ],
+    "Usuario": "michell.quiros",
+    "Contrasena": "Michell2025!",
+    "Tipo": 1
+  },
+  {
+    "Nombre": "Andrés Villalobos Solano",
+    "Cedula": "3 0123 0956",
+    "Celular": "72567890",
+    "Correo": "andvill@gmail.com",
+    "Edad": 45,
+    "Peso": 85,
+    "Estatura": 1.8,
+    "Padecimientos": [
+      "Cardiopatia",
+      "Colesterol alto"
+    ],
+    "Usuario": "andres.villalobos",
+    "Contrasena": "Andres2025@",
+    "Tipo": 1
+  },
+  {
+    "Nombre": "Sofía Ramírez Pérez",
+    "Cedula": "5 0854 0472",
+    "Celular": "87129087",
+    "Correo": "sofia.ramirez@gmail.com",
+    "Edad": 28,
+    "Peso": 60,
+    "Estatura": 1.65,
+    "Padecimientos": [
+      "Ninguno"
+    ],
+    "Usuario": "sofia.ramirez",
+    "Contrasena": "Sofia2025#",
+    "Tipo": 1
+  },
+  {
+    "Nombre": "Laura Gómez Campos",
+    "Cedula": "2 0437 0593",
+    "Celular": "78654321",
+    "Correo": "lauragc@gmail.com",
+    "Edad": 35,
+    "Peso": 78,
+    "Estatura": 1.68,
+    "Padecimientos": [
+      "Obesidad",
+      "Ansiedad"
+    ],
+    "Usuario": "laura.gomez",
+    "Contrasena": "Laura2025$",
+    "Tipo": 1
+  },
+  {
+    "Nombre": "Carlos Fernández Mora",
+    "Cedula": "7 0132 0984",
+    "Celular": "60345678",
+    "Correo": "carlosfm@gmail.com",
+    "Edad": 50,
+    "Peso": 92,
+    "Estatura": 1.7,
+    "Padecimientos": [
+      "Colesterol alto",
+      "Hipertension"
+    ],
+    "Usuario": "carlos.fernandez",
+    "Contrasena": "Carlos2025%",
+    "Tipo": 1
+  },
+  {
+    "Nombre": "María José Delgado",
+    "Cedula": "4 0942 0721",
+    "Celular": "71234567",
+    "Correo": "mariajose.d@gmail.com",
+    "Edad": 22,
+    "Peso": 55,
+    "Estatura": 1.6,
+    "Padecimientos": [
+      "Anemia"
+    ],
+    "Usuario": "maria.delgado",
+    "Contrasena": "Maria2025&",
+    "Tipo": 1
+  },
+  {
+    "Nombre": "Javier Sánchez López",
+    "Cedula": "6 0234 0598",
+    "Celular": "86341290",
+    "Correo": "javier.sl@gmail.com",
+    "Edad": 40,
+    "Peso": 80,
+    "Estatura": 1.78,
+    "Padecimientos": [
+      "Asma",
+      "Cardiopatia"
+    ],
+    "Usuario": "javier.sanchez",
+    "Contrasena": "Javier2025!",
+    "Tipo": 1
+  },
+  {
+    "Nombre": "Natalia Rojas Chaves",
+    "Cedula": "1 0723 0426",
+    "Celular": "77123456",
+    "Correo": "nat.rojas@gmail.com",
+    "Edad": 27,
+    "Peso": 65,
+    "Estatura": 1.7,
+    "Padecimientos": [
+      "Depresion"
+    ],
+    "Usuario": "natalia.rojas",
+    "Contrasena": "Natalia2025#",
+    "Tipo": 1
+  },
+  {
+    "Nombre": "Roberto Jiménez Vega",
+    "Cedula": "5 0541 0339",
+    "Celular": "82234567",
+    "Correo": "roberto.jv@gmail.com",
+    "Edad": 33,
+    "Peso": 75,
+    "Estatura": 1.72,
+    "Padecimientos": [
+      "Hipertension",
+      "Obesidad"
+    ],
+    "Usuario": "roberto.jimenez",
+    "Contrasena": "Roberto2025$",
+    "Tipo": 1
+  },
+  {
+    "Nombre": "Gabriela Castro Alvarado",
+    "Cedula": "3 0156 0912",
+    "Celular": "69127801",
+    "Correo": "gabyca@gmail.com",
+    "Edad": 24,
+    "Peso": 58,
+    "Estatura": 1.62,
+    "Padecimientos": [
+      "Ansiedad",
+      "Migrañas"
+    ],
+    "Usuario": "gabriela.castro",
+    "Contrasena": "Gabriela2025@",
+    "Tipo": 1
+  },
+  {
+    "Nombre": "Jesus Valverde Urena",
+    "Cedula": "118340220",
+    "Celular": "86763222",
+    "Correo": "jesusdavidvalverde@gmail.com",
+    "Edad": "23",
+    "Peso": "60",
+    "Estatura": "176",
+    "Padecimientos": {
+      "Cardiopatia": false,
+      "Hipertension": false,
+      "Asma": false,
+      "Colesterol": false,
+      "Ansiedad": true,
+      "Depresion": false,
+      "Anemia": false,
+      "Obesidad": false,
+      "Otro": ""
     },
-    {
-        "Nombre": "Andrés Villalobos Solano",
-        "Cedula": "3 0123 0956",
-        "Celular": "72567890",
-        "Correo": "andvill@gmail.com",
-        "Edad": 45,
-        "Peso": 85,
-        "Estatura": 1.80,
-        "Padecimientos": [
-            "Cardiopatia",
-            "Colesterol alto"
-        ],
-        "Usuario": "andres.villalobos",
-        "Contrasena": "Andres2025@",
-        "Tipo": 1
-    },
-    {
-        "Nombre": "Sofía Ramírez Pérez",
-        "Cedula": "5 0854 0472",
-        "Celular": "87129087",
-        "Correo": "sofia.ramirez@gmail.com",
-        "Edad": 28,
-        "Peso": 60,
-        "Estatura": 1.65,
-        "Padecimientos": [
-            "Ninguno"
-        ],
-        "Usuario": "sofia.ramirez",
-        "Contrasena": "Sofia2025#",
-        "Tipo": 1
-    },
-    {
-        "Nombre": "Laura Gómez Campos",
-        "Cedula": "2 0437 0593",
-        "Celular": "78654321",
-        "Correo": "lauragc@gmail.com",
-        "Edad": 35,
-        "Peso": 78,
-        "Estatura": 1.68,
-        "Padecimientos": [
-            "Obesidad",
-            "Ansiedad"
-        ],
-        "Usuario": "laura.gomez",
-        "Contrasena": "Laura2025$",
-        "Tipo": 1
-    },
-    {
-        "Nombre": "Carlos Fernández Mora",
-        "Cedula": "7 0132 0984",
-        "Celular": "60345678",
-        "Correo": "carlosfm@gmail.com",
-        "Edad": 50,
-        "Peso": 92,
-        "Estatura": 1.70,
-        "Padecimientos": [
-            "Colesterol alto",
-            "Hipertension"
-        ],
-        "Usuario": "carlos.fernandez",
-        "Contrasena": "Carlos2025%",
-        "Tipo": 1
-    },
-    {
-        "Nombre": "María José Delgado",
-        "Cedula": "4 0942 0721",
-        "Celular": "71234567",
-        "Correo": "mariajose.d@gmail.com",
-        "Edad": 22,
-        "Peso": 55,
-        "Estatura": 1.60,
-        "Padecimientos": [
-            "Anemia"
-        ],
-        "Usuario": "maria.delgado",
-        "Contrasena": "Maria2025&",
-        "Tipo": 1
-    },
-    {
-        "Nombre": "Javier Sánchez López",
-        "Cedula": "6 0234 0598",
-        "Celular": "86341290",
-        "Correo": "javier.sl@gmail.com",
-        "Edad": 40,
-        "Peso": 80,
-        "Estatura": 1.78,
-        "Padecimientos": [
-            "Asma",
-            "Cardiopatia"
-        ],
-        "Usuario": "javier.sanchez",
-        "Contrasena": "Javier2025!",
-        "Tipo": 1
-    },
-    {
-        "Nombre": "Natalia Rojas Chaves",
-        "Cedula": "1 0723 0426",
-        "Celular": "77123456",
-        "Correo": "nat.rojas@gmail.com",
-        "Edad": 27,
-        "Peso": 65,
-        "Estatura": 1.70,
-        "Padecimientos": [
-            "Depresion"
-        ],
-        "Usuario": "natalia.rojas",
-        "Contrasena": "Natalia2025#",
-        "Tipo": 1
-    },
-    {
-        "Nombre": "Roberto Jiménez Vega",
-        "Cedula": "5 0541 0339",
-        "Celular": "82234567",
-        "Correo": "roberto.jv@gmail.com",
-        "Edad": 33,
-        "Peso": 75,
-        "Estatura": 1.72,
-        "Padecimientos": [
-            "Hipertension",
-            "Obesidad"
-        ],
-        "Usuario": "roberto.jimenez",
-        "Contrasena": "Roberto2025$",
-        "Tipo": 1
-    },
-    {
-        "Nombre": "Gabriela Castro Alvarado",
-        "Cedula": "3 0156 0912",
-        "Celular": "69127801",
-        "Correo": "gabyca@gmail.com",
-        "Edad": 24,
-        "Peso": 58,
-        "Estatura": 1.62,
-        "Padecimientos": [
-            "Ansiedad",
-            "Migrañas"
-        ],
-        "Usuario": "gabriela.castro",
-        "Contrasena": "Gabriela2025@",
-        "Tipo": 1
-    }
+    "Usuario": "jesus.valverde",
+    "Contrasena": "1234",
+    "Tipo": 1
+  }
 ]

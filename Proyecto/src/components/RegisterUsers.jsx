@@ -1,47 +1,43 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Importar el hook para navegar
-import bcrypt from 'bcryptjs';
 
 const RegisterUsers = () => {
   const navigate = useNavigate(); // Inicializar el hook
   const [formData, setFormData] = useState({
-    nombreUsuario: "", // Nuevo campo para nombre de usuario
-    contrasena: "", // Nuevo campo para contraseña
-    apellidos: "",
-    nombre: "",
-    cedula: "",
-    correo: "",
-    telefono: "",
-    edad: "",
-    peso: "",
-    altura: "",
-    padecimientos: {
-      cardiopatia: false,
-      hipertension: false,
-      asma: false,
-      colesterol: false,
-      ansiedad: false,
-      depresion: false,
-      anemia: false,
-      obesidad: false,
-      otro: "",
+    Nombre: "",
+    Cedula: "",
+    Celular: "",
+    Correo: "",
+    Edad: "",
+    Peso: "",
+    Estatura: "",
+    Padecimientos: {
+      Cardiopatia: false,
+      Hipertension: false,
+      Asma: false,
+      Colesterol: false,
+      Ansiedad: false,
+      Depresion: false,
+      Anemia: false,
+      Obesidad: false,
+      Otro: "",
     },
+    Usuario: "",
+    Contrasena: "",
+    Tipo : 1,
   });
 
-  const encryptPassword = async (password) => {
-    const saltRounds = 10; // Nivel de complejidad del hash
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-    console.log("Hashed Password:", hashedPassword);
-    return hashedPassword;
-  };
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
+  // Manejo de cambios de campos
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (type === "checkbox") {
       setFormData({
         ...formData,
-        padecimientos: {
-          ...formData.padecimientos,
+        Padecimientos: {
+          ...formData.Padecimientos,
           [name]: checked,
         },
       });
@@ -53,17 +49,52 @@ const RegisterUsers = () => {
     }
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  // Manejo del envío del formulario
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(""); // Limpiar posibles errores
+    setSuccess(""); // Limpiar posibles mensajes de éxito
 
-    const hashedPassword = await encryptPassword(formData.contrasena);
+    try {
+      const response = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData), // Enviar todo el objeto formData
+      });
 
-    const updatedFormData = {
-      ...formData,
-      contrasena: hashedPassword, 
-    };
+      const data = await response.json();
 
-    console.log("Usuario registrado con datos seguros:", updatedFormData);
+      if (!response.ok) {
+        throw new Error(data.message || "Error en el registro");
+      }
+
+      setSuccess("✅ Usuario registrado con éxito");
+      setFormData({
+        Nombre: "",
+        Cedula: "",
+        Celular: "",
+        Correo: "",
+        Edad: "",
+        Peso: "",
+        Estatura: "",
+        Padecimientos: {
+          Cardiopatia: false,
+          Hipertension: false,
+          Asma: false,
+          Colesterol: false,
+          Ansiedad: false,
+          Depresion: false,
+          Anemia: false,
+          Obesidad: false,
+          Otro: "",
+        },
+        Usuario: "",
+        Contrasena: "",
+        Tipo : 1,
+      });
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   const handleBack = () => {
@@ -76,38 +107,11 @@ const RegisterUsers = () => {
         <div style={styles.formRow}>
           <div>
             <h3>Nuevo Usuario</h3>
-            <label>Nombre de Usuario:</label>
-            <input
-              type="text"
-              name="nombreUsuario"
-              value={formData.nombreUsuario}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-            <label>Contraseña:</label>
-            <input
-              type="password"
-              name="contrasena"
-              value={formData.contrasena}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-            <label>Apellidos:</label>
-            <input
-              type="text"
-              name="apellidos"
-              value={formData.apellidos}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
             <label>Nombre:</label>
             <input
               type="text"
-              name="nombre"
-              value={formData.nombre}
+              name="Nombre"
+              value={formData.Nombre}
               onChange={handleChange}
               required
               style={styles.input}
@@ -115,8 +119,17 @@ const RegisterUsers = () => {
             <label>Cédula:</label>
             <input
               type="text"
-              name="cedula"
-              value={formData.cedula}
+              name="Cedula"
+              value={formData.Cedula}
+              onChange={handleChange}
+              required
+              style={styles.input}
+            />
+            <label>Celular:</label>
+            <input
+              type="text"
+              name="Celular"
+              value={formData.Celular}
               onChange={handleChange}
               required
               style={styles.input}
@@ -124,17 +137,26 @@ const RegisterUsers = () => {
             <label>Correo:</label>
             <input
               type="email"
-              name="correo"
-              value={formData.correo}
+              name="Correo"
+              value={formData.Correo}
               onChange={handleChange}
               required
               style={styles.input}
             />
-            <label>Teléfono:</label>
+            <label>Usuario:</label>
             <input
               type="text"
-              name="telefono"
-              value={formData.telefono}
+              name="Usuario"
+              value={formData.Usuario}
+              onChange={handleChange}
+              required
+              style={styles.input}
+            />
+            <label>Contraseña:</label>
+            <input
+              type="password"
+              name="Contrasena"
+              value={formData.Contrasena}
               onChange={handleChange}
               required
               style={styles.input}
@@ -145,8 +167,8 @@ const RegisterUsers = () => {
             <label>Edad:</label>
             <input
               type="number"
-              name="edad"
-              value={formData.edad}
+              name="Edad"
+              value={formData.Edad}
               onChange={handleChange}
               required
               style={styles.input}
@@ -154,17 +176,17 @@ const RegisterUsers = () => {
             <label>Peso:</label>
             <input
               type="number"
-              name="peso"
-              value={formData.peso}
+              name="Peso"
+              value={formData.Peso}
               onChange={handleChange}
               required
               style={styles.input}
             />
-            <label>Altura:</label>
+            <label>Estatura:</label>
             <input
               type="number"
-              name="altura"
-              value={formData.altura}
+              name="Estatura"
+              value={formData.Estatura}
               onChange={handleChange}
               required
               style={styles.input}
@@ -173,87 +195,20 @@ const RegisterUsers = () => {
         </div>
         <div>
           <h3>Padecimientos</h3>
-          <label>
-            <input
-              type="checkbox"
-              name="cardiopatia"
-              checked={formData.padecimientos.cardiopatia}
-              onChange={handleChange}
-            />{" "}
-            Cardiopatía
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="hipertension"
-              checked={formData.padecimientos.hipertension}
-              onChange={handleChange}
-            />{" "}
-            Hipertensión
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="asma"
-              checked={formData.padecimientos.asma}
-              onChange={handleChange}
-            />{" "}
-            Asma
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="colesterol"
-              checked={formData.padecimientos.colesterol}
-              onChange={handleChange}
-            />{" "}
-            Colesterol Alto
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="ansiedad"
-              checked={formData.padecimientos.ansiedad}
-              onChange={handleChange}
-            />{" "}
-            Ansiedad
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="depresion"
-              checked={formData.padecimientos.depresion}
-              onChange={handleChange}
-            />{" "}
-            Depresión
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="anemia"
-              checked={formData.padecimientos.anemia}
-              onChange={handleChange}
-            />{" "}
-            Anemia
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="obesidad"
-              checked={formData.padecimientos.obesidad}
-              onChange={handleChange}
-            />{" "}
-            Obesidad
-          </label>
-          <label>Otro:</label>
-          <input
-            type="text"
-            name="otro"
-            value={formData.padecimientos.otro}
-            onChange={handleChange}
-            style={styles.input}
-          />
+          {Object.keys(formData.Padecimientos).map((padecimiento) => (
+            <label key={padecimiento}>
+              <input
+                type="checkbox"
+                name={padecimiento}
+                checked={formData.Padecimientos[padecimiento]}
+                onChange={handleChange}
+              />{" "}
+              {padecimiento}
+            </label>
+          ))}
         </div>
+        {error && <div style={{ color: "red" }}>{error}</div>}
+        {success && <div style={{ color: "green" }}>{success}</div>}
         <div style={styles.buttonContainer}>
           <button type="submit" style={styles.btnSubmit}>
             Crear Usuario
