@@ -50,7 +50,7 @@ const SelectDoctorCliente = () => {
   };
 
   const handleVolver = () => {
-    alert("Volviendo a la pantalla anterior.");
+    navigate("/panel-paciente");
   };
 
   return (

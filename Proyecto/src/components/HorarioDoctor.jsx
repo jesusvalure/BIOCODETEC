@@ -3,6 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
+import { BiSolidCalendar } from "react-icons/bi";
+import { TfiCheck } from "react-icons/tfi";
+import { TfiClose } from "react-icons/tfi";
 
 const HorarioDoctor = () => {
     const location = useLocation();
@@ -18,10 +21,17 @@ const HorarioDoctor = () => {
                       ["15:00", "15:20", "15:40"], 
                       ["16:00", "16:20", "16:40"]];
 
-    // Estado para la matriz de botones
-    const [buttonStates, setButtonStates] = useState(
-        Array(8).fill(null).map(() => Array(3).fill(false)) // 8 filas x 3 columnas inicializadas como "false"
-    );
+    const matrizPrueba = [[1, 0, 0], 
+                          [0, 0, 0], 
+                          [0, 0, 1], 
+                          [1, 1, 1], 
+                          [1, 0, 1], 
+                          [1, 0, 0], 
+                          [1, 1, 1], 
+                          [1, 1, 1]];  
+
+    // Inicializar estado con los valores de matrizPrueba
+    const [buttonStates, setButtonStates] = useState(matrizPrueba);
 
     const { doctor } = location.state || {};
 
@@ -32,7 +42,7 @@ const HorarioDoctor = () => {
                 <button onClick={() => navigate("/select-doctor")}>Volver</button>
             </div>
         );
-    } 
+    }
 
     const handleChange = (date) => {
         if (date instanceof Date) {
@@ -45,57 +55,64 @@ const HorarioDoctor = () => {
     };
 
     const handleButtonClick = (row, col) => {
-        // Modificar el estado del botón seleccionado
+        // Alternar entre 0 y 1 en la matriz de estados
         setButtonStates((prevStates) => {
-            const newStates = [...prevStates];
-            newStates[row][col] = !newStates[row][col]; // Alterna entre true/false
+            const newStates = prevStates.map((r, rowIndex) =>
+                r.map((val, colIndex) => 
+                    rowIndex === row && colIndex === col ? (val === 0 ? 1 : 0) : val
+                )
+            );
             return newStates;
         });
 
-        console.log(`Botón en (${row}, ${col}) presionado. Nuevo estado: ${!buttonStates[row][col]}`);
+        console.log(`Botón en (${row}, ${col}) cambiado a: ${buttonStates[row][col] === 0 ? 1 : 0}`);
     };
 
     return (
         <div style={styles.background}>
             <div style={styles.container}>
-                <div style={styles.info}>
-                    <h2 style={styles.title}>{doctor.Nombre}</h2>
-                    <h3 style={styles.text1}>{doctor.Especialidad}</h3>
-                </div>
+                <h2>{doctor.Nombre}</h2>
+                <h3>{doctor.Especialidad}</h3>
 
+                {/* Selector de fecha */}
                 <div style={styles.datePickerDiv}>
-                    <p style={styles.text2}>Fecha: </p>
+                    <p style={styles.text2}><BiSolidCalendar style={{ fontSize: "20px" }} /> </p>
                     <DatePicker
                         selected={selectedDate}
                         onChange={handleChange}
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
+                        className="customDatepicker"
                     />
-                </div>                
+                </div>
 
                 {/* Matriz de botones */}
                 <div style={styles.grid}>
                     {buttonStates.map((row, rowIndex) => (
                         <div key={`row-${rowIndex}`} style={styles.row}>
-                            {row.map((col, colIndex) => (
+                            {row.map((value, colIndex) => (
                                 <button
                                     key={`button-${rowIndex}-${colIndex}`}
                                     style={{
                                         ...styles.button,
-                                        backgroundColor: buttonStates[rowIndex][colIndex] ? "#4CAF50" : "#fff",
+                                        backgroundColor: value === 0 ? "#4CAF50" : "#E74C3C", // Verde si 0, rojo si 1
+                                        color: "white"
                                     }}
                                     onClick={() => handleButtonClick(rowIndex, colIndex)}
                                 >
-                                     {horarios[rowIndex][colIndex]} {/* Etiqueta del botón */}
+                                    {value === 0 ? <TfiCheck /> : <TfiClose />}
+                                    {/* Horario debajo del ícono */}
+                                    <div style={styles.textHorario}>{horarios[rowIndex][colIndex]}</div>
                                 </button>
                             ))}
                         </div>
                     ))}
                 </div>
 
+                {/* Botones de navegación */}
                 <div style={styles.containerBtn}>
                     <button style={styles.buttonVolver} onClick={() => navigate("/select-doctor")}>Volver</button>
-                    <button style={styles.buttonAceptar} onClick={() => navigate("/select-doctor")}>Aceptar</button>{/*TODO cambiar a la pantalla de confirmación*/}
+                    <button style={styles.buttonAceptar} onClick={() => navigate("/select-doctor")}>Aceptar</button>
                 </div>
             </div>
         </div>
@@ -111,17 +128,11 @@ const styles = {
         width: "100vw",
         backgroundColor: "#373f4f",
     },
-    title: {
-        fontSize: "24px",
-        marginBottom: "5px"
-    },
-    datePickerDiv: {
-        backgroundColor: "#d0dcf5",
-        display: "flex",
-        justifyContent: "left",
-        alignItems: "column",
-        height: "20px",
-        width: "350px",
+    text2: {
+        fontSize: "16px",
+        marginLeft: "95px",
+        marginRight: "10px",
+        marginTop: "1px",
     },
     container: {
         backgroundColor: "#d0dcf5",
@@ -131,32 +142,17 @@ const styles = {
         textAlign: "center",
         width: "400px",
     },
-    containerBtn: {
-        backgroundColor: "#d0dcf5",
-        padding: "20px",
-        borderRadius: "10px",
-        textAlign: "column",
-        width: "360px"
-    },
-    info: {
-        backgroundColor: "#d0dcf5",
-        borderRadius: "10px",
-        textAlign: "left",
-        width: "390px"
-    },
-    text1: {
-        fontSize: "16px",
-        marginTop: "5px"
-    },
-    text2: {
-        fontSize: "16px",
-        marginLeft: "29px",
-        marginRight: "35px",
-        marginTop: "2px",
+    datePickerDiv: {
+        background: "#d0dcf5",
+        display: "flex",
+        justifyContent: "left",
+        alignItems: "column",
+        height: "20px",
+        width: "350px",
     },
     grid: {
         display: "grid",
-        gridTemplateColumns: "repeat(1, 1fr)", // 3 columnas
+        gridTemplateColumns: "repeat(1, 1fr)",
         gap: "1px",
         marginTop: "20px",
     },
@@ -165,13 +161,14 @@ const styles = {
         justifyContent: "center",
     },
     button: {
-        width: "70px",
+        width: "65px",
+        height: "45px",
         padding: "10px",
         borderRadius: "5px",
         border: "1px solid #d0dcf5",
         cursor: "pointer",
         fontWeight: "bold",
-        color: "black",
+        fontSize: "11px",
         textAlign: "center",
         marginRight: "2px",
         marginTop: "2px"
@@ -181,22 +178,23 @@ const styles = {
         border: "1px solid #ccc",
         borderRadius: "5px",
         marginRight: "30px",
+        marginTop: "20px",
         cursor: "pointer",
         fontWeight: "bold",
         color: "white",
         width: "100px",
-      },
+    },
     buttonAceptar: {
         backgroundColor: "#373f4f",
         border: "1px solid #ccc",
         borderRadius: "5px",
-        marginLeft: "30px",
+        marginLeft: "45px",
+        marginTop: "20px",
         cursor: "pointer",
         fontWeight: "bold",
         color: "white",
         width: "100px",
     }
-
 };
 
 export default HorarioDoctor;
