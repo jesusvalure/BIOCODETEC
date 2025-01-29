@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import doctors from '../Data/doctors.json';
+import doctors from '../backend/Data/doctors.json';
 import { useNavigate } from 'react-router-dom';
 
 const SelectDoctorCliente = () => {

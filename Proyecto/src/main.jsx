@@ -12,8 +12,11 @@ import PerfilPaciente from './components/PerfilPaciente';
 import SelectDoctorPaciente from './components/SelectDoctorPaciente';
 import HorarioDoctor from './components/HorarioDoctor';
 
+
+
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
+
 
 root.render(
   <StrictMode>
