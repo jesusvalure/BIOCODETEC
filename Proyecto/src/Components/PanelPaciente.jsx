@@ -1,38 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import '../assets/Style.css';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ClientProfile = () => {
+const PanelPaciente = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState({ name: '' });
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const loggedUser = location.state || {};
+    const loggedUser = JSON.parse(localStorage.getItem('user'));  // Recuperamos el usuario del localStorage
+
     if (!loggedUser) {
-      navigate('/'); 
+      console.log('No hay usuario logueado');
+      navigate('/');  // Redirige al login si no hay usuario
     } else {
-      setUser(loggedUser); 
+      console.log('Usuario logueado:', loggedUser);
+      setUser(loggedUser);  // Guardamos los datos del usuario en el estado
     }
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem('loggedInUser'); 
-    navigate('/'); 
+    localStorage.removeItem('user');  // Eliminamos el usuario del localStorage
+    navigate('/');  // Redirigimos al login
   };
 
   const handleGoToProfile = () => {
-    navigate('/perfil-paciente'); 
+    navigate('/perfil-paciente');  // Redirige al perfil del paciente
   };
 
   const handleRegisterCita = () => {
-    navigate('/select-doctor'); 
+    navigate('/select-doctor');  // Redirige para seleccionar un doctor
+  };
+
+  if (!user) {
+    return null; // Si no hay usuario, no renderizamos nada
   }
 
   return (
     <div className="client-profile container">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div className="user-info">
-          <h4>Bienvenido, {user.name}</h4>
+          <h4>Bienvenido, {user.nombre}</h4>  {/* Mostramos el nombre del usuario */}
         </div>
         <div className="user-actions">
           <button className="btn btn-outline-primary me-2" onClick={handleGoToProfile}>
@@ -48,9 +54,7 @@ const ClientProfile = () => {
 
       <div className="client-actions mb-4">
         <button className="btn btn-primary me-2">Consultar Citas Pasadas</button>
-        <button className="btn btn-secondary me-2">Revisar Recetas Médicas</button>
         <button className="btn btn-success me-2" onClick={handleRegisterCita}>Programar Nueva Cita</button>
-        <button className="btn btn-danger">Cancelar Cita</button>
       </div>
 
       <div className="client-info mt-4">
@@ -87,4 +91,4 @@ const ClientProfile = () => {
   );
 };
 
-export default ClientProfile;
+export default PanelPaciente;

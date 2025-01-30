@@ -24,9 +24,8 @@ const LoginForm = () => {
             const data = await response.json();
             
             if (data.success) {
-                localStorage.setItem("user", JSON.stringify(data.user));
-                const loggedUser = JSON.parse(localStorage.getItem("user"));
-    
+                const loggedUser = { ...data.user, nombre: data.user.usuario }; 
+                localStorage.setItem("user", JSON.stringify(loggedUser));
                 console.log("Usuario logueado:", loggedUser);
     
                 // Redirección según el tipo de usuario
