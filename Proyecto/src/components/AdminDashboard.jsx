@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ManageRoles from './ManageRoles';
 import RegisterUsers from './RegisterUsers';
 import ConfigureSchedules from './ConfigureSchedules';
+import ChangeRole from './ChangeRole';
 import '../assets/Style.css';
 
 const AdminDashboard = () => {
@@ -10,13 +11,15 @@ const AdminDashboard = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'roles':
-        return <ManageRoles />;
+        return <ManageRoles setActiveTab={setActiveTab}/>;
       case 'register':
         return <RegisterUsers />;
       case 'schedules':
         return <ConfigureSchedules />;
+      case 'change role':
+        return <ChangeRole />;
       default:
-        return <ManageRoles />;
+        return <ManageRoles setActiveTab={setActiveTab}/>;
     }
   };
 

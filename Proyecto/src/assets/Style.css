@@ -467,3 +467,55 @@ registrar diagnostico
 .btn-save:hover {
   background-color: #45a049;
 }
+
+
+label{
+  font-size: 16px;
+  padding: 8px 12px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+  display: inline-block; /* Útil si necesitas separación vertical */
+}
+
+select {
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+}
+
+select {
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  width: 200px;
+}
+
+select:hover {
+  border-color: #007bff;
+  background-color: #f0f8ff;
+}
+
+select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+select option {
+  font-size: 14px;
+  padding: 8px;
+  color: #333;
+  background-color: #fff;
+}
+
+select option:hover {
+  background-color: #f0f8ff;
+}

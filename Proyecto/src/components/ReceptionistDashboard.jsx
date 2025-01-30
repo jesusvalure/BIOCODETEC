@@ -1,22 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ListDoctors from './ListDoctors';
+import ReceptionistRegisterAppointment from './ReceptionistRegisterAppointment';
 
 const ReceptionistDashboard = () => {
+  const [activeTab, setActiveTab] = useState('schedules');
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'schedules':
+        return <ListDoctors />;
+      case 'newAppointment':
+        return <ReceptionistRegisterAppointment />;
+      default:
+        return <ListDoctors />;
+    }
+  };
+
+
+
     return (
+
       <div className="receptionist-dashboard">
-        <h1>Panel de Recepcionista</h1>
-        <h2>Gestión de Citas</h2>
-        <ul>
-          <li>Consultar horarios y disponibilidad de los doctores.</li>
-          <li>Registrar nuevas citas en horarios disponibles.</li>
-          <li>Cancelar o reprogramar citas según solicitud del cliente.</li>
-        </ul>
-        <div className="button-group">
-          <button>Consultar Horarios</button>
-          <button>Registrar Nueva Cita</button>
-          <button>Cancelar/Reprogramar Cita</button>
-        </div>
-      </div>
-    );
+      <h1>Panel de Recepcionista</h1>
+      <nav className="nav nav-pills justify-content-center mb-4">
+        <button
+          className={`nav-link ${activeTab === 'schedules' ? 'active' : ''}`}
+          onClick={() => setActiveTab('schedules')}
+        >
+          Consultar Horarios
+        </button>
+        <button
+          className={`nav-link ${activeTab === 'newAppointment' ? 'active' : ''}`}
+          onClick={() => setActiveTab('newAppointment')}
+        >
+          Registrar nueva cita
+        </button>
+
+      </nav>
+      <div className="gestion-roles">{renderContent()}</div>
+    </div>
+  );
+
+
   };
   
   export default ReceptionistDashboard;

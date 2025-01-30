@@ -1,6 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 
-const ManageRoles = () => {
+const ManageRoles = ({ setActiveTab }) => {
+
+  const users = [
+    { name: "Juan Pérez", role: "Doctor" },
+    { name: "María Gómez", role: "Recepcionista" },
+    { name: "Carlos López", role: "Administrador" },
+    { name: "Ana Martínez", role: "Paciente" },
+  ];
+
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const handleEdit = (user) => {
+    setSelectedUser(user);
+    setActiveTab('change role');
+  };
+
   return (
     <div>
       <h2>Gestión de Roles</h2>
@@ -15,13 +30,20 @@ const ManageRoles = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Juan Pérez</td>
-            <td>Doctor</td>
-            <td>
-              <button className="btn btn-primary btn-sm">Editar</button>
-            </td>
-          </tr>
+          {users.map((user, index) => (
+            <tr key={index}>
+              <td>{user.name}</td>
+              <td>{user.role}</td>
+              <td>
+                <button
+                  className="nav-link"
+                  onClick={() => handleEdit(user)}
+                >
+                  Editar
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
