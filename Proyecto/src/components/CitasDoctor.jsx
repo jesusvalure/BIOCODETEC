@@ -3,8 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
-import { RiCalendar2Fill } from "react-icons/ri";
-import { TfiCheck, TfiClose } from "react-icons/tfi";
+import { RiCalendar2Fill, RiSubtractFill, RiCloseLine, RiCheckLine  } from "react-icons/ri";
 
 const CitasDoctor = () => {
     const location = useLocation();
@@ -20,17 +19,17 @@ const CitasDoctor = () => {
                       ["15:00", "15:20", "15:40"], 
                       ["16:00", "16:20", "16:40"]];
 
-    const matrizPrueba = [[1, 0, 0], 
-                          [0, 0, 0], 
-                          [0, 0, 1], 
-                          [1, 1, 1], 
-                          [1, 0, 1], 
-                          [1, 0, 0], 
-                          [1, 1, 1], 
-                          [1, 1, 1]];  
+    const matrizCitas = [[-1, -1, -1], 
+                         [-1, -1, -1], 
+                         [-1, -1, -1], 
+                         [-1, -1, -1], 
+                         [-1, -1, -1], 
+                         [-1, -1, -1], 
+                         [-1, -1, -1], 
+                         [-1, -1, -1]];  
 
-    // Inicializar estado con los valores de matrizPrueba
-    const [buttonStates, setButtonStates] = useState(matrizPrueba);
+    // Inicializar estado con los valores de matrizCitas
+    const [buttonStates, setButtonStates] = useState(matrizCitas);
 
     const { doctor } = location.state || {};
 
@@ -44,14 +43,19 @@ const CitasDoctor = () => {
     }
 
     const handleChange = (date) => {
-        if (date instanceof Date) {
-            setSelectedDate(date);
-            const formattedDate = format(date, "yyyy-MM-dd");
-            console.log("Fecha seleccionada (YYYY-MM-DD):", formattedDate);
-        } else {
-            console.error("Fecha inválida seleccionada:", date);
-        }
-    };
+            if (date instanceof Date) {
+                setSelectedDate(date);
+                const formattedDate = format(date, "yyyy-MM-dd");
+    
+                if (doctor.Horario[formattedDate]) {
+                    setButtonStates(doctor.Horario[formattedDate]);
+                } else {
+                    setButtonStates(Array(8).fill().map(() => Array(3).fill(0))); // Llenar con ceros si la fecha no existe
+                }
+            } else {
+                console.error("Fecha inválida seleccionada:", date);
+            }
+        };
 
     const handleButtonClick = (row, col) => {
         // Alternar entre 0 y 1 en la matriz de estados
@@ -63,8 +67,15 @@ const CitasDoctor = () => {
             );
             return newStates;
         });
+    };
 
-        console.log(`Botón en (${row}, ${col}) cambiado a: ${buttonStates[row][col] === 0 ? 1 : 0}`);
+    const handleAccept = () => {
+        if (selectedDate) {
+            const formattedDate = format(selectedDate, "yyyy-MM-dd");
+            doctor.Horario[formattedDate] = buttonStates;
+            console.log("Horario actualizado:", doctor.Horario[formattedDate]);
+        }
+        navigate("/nueva-cita-recept");
     };
 
     return (
@@ -94,12 +105,15 @@ const CitasDoctor = () => {
                                     key={`button-${rowIndex}-${colIndex}`}
                                     style={{
                                         ...styles.button,
-                                        backgroundColor: value === 0 ? "#4CAF50" : "#E74C3C", // Verde si 0, rojo si 1
-                                        color: "white"
+                                        backgroundColor: 
+                                            value === 0 ? "#4CAF50" : 
+                                            value === 1 ? "#E74C3C" : "white", // Verde, Rojo o Blanco
+                                        color: value === -1 ? "black" : "white",
+                                        border: value === -1 ? "1px solid black" : "none",
                                     }}
                                     onClick={() => handleButtonClick(rowIndex, colIndex)}
                                 >
-                                    {value === 0 ? <TfiCheck /> : <TfiClose />}
+                                    {value === 0 ? <RiCheckLine /> : value === 1 ? <RiCloseLine /> : <RiSubtractFill />}
                                     {/* Horario debajo del ícono */}
                                     <div style={styles.textHorario}>{horarios[rowIndex][colIndex]}</div>
                                 </button>
@@ -111,7 +125,7 @@ const CitasDoctor = () => {
                 {/* Botones de navegación */}
                 <div style={styles.containerBtn}>
                     <button style={styles.buttonVolver} onClick={() => navigate("/select-doctor")}>Volver</button>
-                    <button style={styles.buttonAceptar} onClick={() => navigate("/select-doctor")}>Aceptar</button>
+                    <button style={styles.buttonAceptar} onClick={handleAccept}>Aceptar</button>
                 </div>
             </div>
         </div>
