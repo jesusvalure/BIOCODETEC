@@ -1,11 +1,12 @@
 import { React, useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import doctors from "../backend/Data/doctors.json";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { GrSchedules } from "react-icons/gr";
 import { HiArrowRightStartOnRectangle } from "react-icons/hi2";
 
 const ListTable = () => {
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("/doctors.json")
@@ -23,7 +24,7 @@ const ListTable = () => {
             <th className="border border-gray-300 px-4 py-2">Nombre</th>
             <th className="border border-gray-300 px-4 py-2">Especialidad</th>
             <th className="border border-gray-300 px-4 py-2">
-              <button title="Volver" style={styles.btnVolver}><HiArrowRightStartOnRectangle /></button>
+              <button title="Volver" style={styles.btnVolver} onClick={() => navigate("/recepcionist-dashboard")}><HiArrowRightStartOnRectangle /></button>
             </th>
           </tr>
         </thead>
@@ -108,7 +109,7 @@ const styles = {
     height: "30px",
     padding: "10px",
     borderRadius: "5px",
-    marginLeft: "10px",
+    marginLeft: "15px",
     border: "none",
     background: "transparent",
     cursor: "pointer",
@@ -119,7 +120,7 @@ const styles = {
     height: "30px",
     borderRadius: "5px",
     position: "relative",
-    left: "50%",
+    left: "40%",
     marginDown: "5px",
     border: "none",
     background: "transparent",

@@ -103,7 +103,7 @@ const LoginForm = () => {
             onChange={(e) => setContrasena(e.target.value)} // Actualiza el estado
         />
     </div>
-    <button type="submit" className="btn btn-primary w-100">
+    <button type="submit" style={styles.button}>
         Iniciar Sesión
     </button>
 </form>
@@ -116,5 +116,20 @@ const LoginForm = () => {
         
     );
 };
+
+const styles = {
+    button: {
+        backgroundColor: "#373f4f",
+        border: "1px solid #ccc",
+        borderRadius: "5px",
+        padding: "8px 15px",
+        cursor: "pointer",
+        fontWeight: "bold",
+        color: "white",
+        width: "150px",
+        margin: "0 5px",
+      },
+    };
+
 
 export default LoginForm;
