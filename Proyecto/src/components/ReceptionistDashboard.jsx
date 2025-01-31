@@ -32,7 +32,7 @@ const ReceptionistDashboard = () => {
           <p>Hola {user.Nombre}!</p>
           <div style={styles.buttons}>
             <button style={styles.button} onClick={() => navigate("/list-doctors")}>Consultar Horarios</button>
-            <button style={styles.button}>Registrar Cita</button>
+            <button style={styles.button} onClick={() => navigate("/nueva-cita-recept")}>Registrar Cita</button>
           </div>
         </div>
       </div>
@@ -88,13 +88,12 @@ const ReceptionistDashboard = () => {
       marginTop: "30px",
     },
     button: {
-      backgroundColor: "#373f4f",
+      backgroundColor: "#4b5c7d",
       border: "1px solid #ccc",
       borderRadius: "5px",
       padding: "8px 15px",
       cursor: "pointer",
       fontWeight: "bold",
-      fontSize: "18px",
       color: "white",
       width: "200px",
       margin: "0 5px",
@@ -112,7 +111,7 @@ const ReceptionistDashboard = () => {
       color: "#373f4f",
       fontSize: "25px"
     },
-  }
+  };
   
   export default ReceptionistDashboard;
   

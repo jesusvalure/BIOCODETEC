@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import doctors from '../backend/Data/doctors.json';
+import pacientes from '../backend/Data/users.json';
 import { useNavigate } from 'react-router-dom';
+import { RiUserFollowFill } from "react-icons/ri";
 
-const SelectDoctorCliente = () => {
+const FormNuevaCitaRecept = () => {
   const [especialidad, setEspecialidad] = useState("");
   const [doctor, setDoctor] = useState("");
   const [doctoresFiltrados, setDoctoresFiltrados] = useState([]);
   const [errorEspecialidad, setErrorEspecialidad] = useState("");
   const [errorDoctor, setErrorDoctor] = useState("");
+  const [cedula, setCedula] = useState("");
+  const [pacienteEncontrado, setPacienteEncontrado] = useState(null);
+  const [errorCedula, setErrorCedula] = useState("");
   const navigate = useNavigate();
 
   // Obtener las especialidades únicas del JSON
@@ -28,6 +33,38 @@ const SelectDoctorCliente = () => {
   const handleDoctorChange = (e) => {
     setDoctor(e.target.value);
     setErrorDoctor("");
+  };
+
+  const handleCedulaChange = (e) => {
+    let value = e.target.value;
+  
+    // Permitir solo números y guiones, pero sin forzar el formato desde el principio
+    value = value.replace(/[^0-9-]/g, "");
+  
+    // Aplicar el límite de caracteres
+    if (value.length > 10) return;
+  
+    setCedula(value);
+  
+    // Validar solo si tiene el formato completo
+    if (value.length === 10 && !/^\d{1}-\d{4}-\d{4}$/.test(value)) {
+      setErrorCedula("Formato incorrecto. Debe ser X-XXXX-XXXX");
+    } else {
+      setErrorCedula("");
+    }
+  };
+  
+  // Buscar paciente al presionar "Verificar"
+  const handleVerificarCedula = () => {
+    const paciente = pacientes.find((p) => p.Cedula === cedula);
+
+    if (paciente) {
+      setPacienteEncontrado(paciente);
+      setErrorCedula(""); // Borrar errores previos
+    } else {
+      setPacienteEncontrado(null);
+      setErrorCedula("Cédula no encontrada.");
+    }
   };
 
   const handleAceptar = () => {
@@ -58,22 +95,44 @@ const SelectDoctorCliente = () => {
       <div style={styles.container}>
         <h2 style={styles.title}>Registrar cita</h2>
         <div style={styles.field}>
+          <label style={styles.label}>Número de Cédula:</label>
+          <div style={styles.divField}>
+            <input
+              type="text"
+              value={cedula}
+              onChange={handleCedulaChange}
+              style={styles.input}
+              placeholder="X-XXXX-XXXX"
+            />
+            <button title="Verificar" onClick={handleVerificarCedula} style={styles.buttonSmall}>
+              <RiUserFollowFill />
+            </button>
+          </div>
+          {errorCedula && <p style={styles.error}>{errorCedula}</p>}
+          {pacienteEncontrado && (
+            <div style={styles.pacienteInfo}>
+              <p><strong>Nombre:</strong> {pacienteEncontrado.Nombre}</p>
+              <p><strong>Correo:</strong> {pacienteEncontrado.Correo}</p>
+            </div>
+          )}
+        </div>
+        <div style={styles.field}>
           <label style={styles.label}>Especialidad:</label>
           <select
             value={especialidad}
             onChange={handleEspecialidadChange}
             style={styles.select}
+            disabled={!pacienteEncontrado} // Bloqueado si no hay paciente
           >
             <option value="">-- Selecciona una especialidad --</option>
             {especialidades.map((esp, index) => (
-              <option key={index} value={esp}>
-                {esp}
-              </option>
+              <option key={index} value={esp}>{esp}</option>
             ))}
           </select>
           {errorEspecialidad && <p style={styles.error}>{errorEspecialidad}</p>}
         </div>
         <div style={styles.field}>
+          
           <label style={styles.label}>Doctor:</label>
           <select
             value={doctor}
@@ -161,7 +220,49 @@ const styles = {
     width: "200px",
     margin: "0 5px",
   },
+  success: {
+    color: "green",
+    fontSize: "12px",
+    marginTop: "5px",
+  },
+  input: {
+    width: "75%",
+    height: "10px",
+    padding: "8px",
+    borderRadius: "5px",
+    border: "1px solid #ccc",
+  },
+  buttonSmall: {
+    backgroundColor: "transparent",
+    border: "none",
+    color: "green",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginTop: "0px",
+    marginLeft: "1px",
+    marginBottom: "0px",
+    fontSize: "25px",
+    height: "40px",
+    padding: "8px",
+  },
+  pacienteInfo: {
+    backgroundColor: "#e0f7fa", // Azul claro
+    padding: "10px",
+    borderRadius: "5px",
+    marginTop: "10px",
+    border: "1px solid #4CAF50",
+    color: "#00796b",
+    textAlign: "left",
+    fontSize: "14px"
+  },
+  divField: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    alignItems: "center",
+  },
 };
 
 
-export default SelectDoctorCliente;
+export default FormNuevaCitaRecept;

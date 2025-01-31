@@ -1,7 +1,7 @@
 [
     {
         "Nombre": "Gabriela Mora Álvarez",
-        "Cedula": "1 0123 0456",
+        "Cedula": "101230456",
         "Celular": "60123456",
         "Correo": "gabriela.mora@gmail.com",
         "Usuario": "gabriela.mora",
@@ -10,7 +10,7 @@
     },
     {
         "Nombre": "Esteban Rojas Chaves",
-        "Cedula": "1 0723 0426",
+        "Cedula": "107230426",
         "Celular": "77123456",
         "Correo": "esteban.rojas@gmail.com",
         "Usuario": "esteban.rojas",
@@ -19,7 +19,7 @@
     },
     {
         "Nombre": "Natalia Campos Solano",
-        "Cedula": "1 0541 0339",
+        "Cedula": "105410339",
         "Celular": "82234567",
         "Correo": "natalia.campos@gmail.com",
         "Usuario": "natalia.campos",

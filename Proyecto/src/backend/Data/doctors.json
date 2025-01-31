@@ -1,7 +1,7 @@
 [
     {
         "Nombre": "Dr. Ricardo Pérez Mora",
-        "Cedula": "1 0458 0987",
+        "Cedula": "104580987",
         "Celular": "60127890",
         "Correo": "ricardo.perez@gmail.com",
         "Especialidad": "Medicina General",
@@ -147,7 +147,7 @@
     },
     {
         "Nombre": "Dra. Ana María Vargas Solís",
-        "Cedula": "2 0123 0456",
+        "Cedula": "201230456",
         "Celular": "72561234",
         "Correo": "anamaria.vargas@gmail.com",
         "Especialidad": "Pediatría",
@@ -293,7 +293,7 @@
     },
     {
         "Nombre": "Dr. Felipe Gómez Calderón",
-        "Cedula": "3 0987 0543",
+        "Cedula": "309870543",
         "Celular": "87129043",
         "Correo": "felipe.gomez@gmail.com",
         "Especialidad": "Cardiología",
@@ -397,7 +397,7 @@
     },
     {
         "Nombre": "Dra. Lucía Fernández Rojas",
-        "Cedula": "4 0876 0321",
+        "Cedula": "408760321",
         "Celular": "78654321",
         "Correo": "lucia.fernandez@gmail.com",
         "Especialidad": "Medicina General",
