@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaRegUser } from "react-icons/fa";
+import { TbLogout2 } from "react-icons/tb";
 
 const PanelPaciente = () => {
   const navigate = useNavigate();
@@ -38,14 +40,14 @@ const PanelPaciente = () => {
     <div className="client-profile container">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div className="user-info">
-          <h4>Bienvenido, {user.nombre}</h4>  {/* Mostramos el nombre del usuario */}
+          <h4>Bienvenido, {user.Nombre}</h4>  {/* Mostramos el nombre del usuario */}
         </div>
         <div className="user-actions">
           <button className="btn btn-outline-primary me-2" onClick={handleGoToProfile}>
-            Ir al Perfil
+            <FaRegUser />
           </button>
           <button className="btn btn-outline-danger" onClick={handleLogout}>
-            Cerrar Sesión
+            <TbLogout2 />
           </button>
         </div>
       </div>

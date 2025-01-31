@@ -1,9 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import doctors from "../backend/Data/doctors.json";
-import { RiCalendarScheduleLine } from "react-icons/ri";
-import { GrSchedules } from "react-icons/gr";
-import { HiArrowRightStartOnRectangle } from "react-icons/hi2";
+import { RiCalendar2Fill, RiCalendarCheckFill, RiLogoutBoxLine } from "react-icons/ri";
 
 const ListTable = () => {
   const navigate = useNavigate();
@@ -18,13 +16,24 @@ const ListTable = () => {
   return (
     <div style={styles.background}>
       <div style={styles.container}>
+      <button 
+                title="Volver" 
+                style={styles.btnVolver} 
+                onClick={() => navigate("/recepcionist-dashboard")}>
+                  <RiLogoutBoxLine />
+              </button>
+      <h1 style={styles.title}>Panel de Recepcionista</h1>
+      <div style={styles.buttons}>
+            <button style={styles.buttonHere}>Consultar Horarios</button>
+            <button style={styles.button}>Registrar Cita</button>
+      </div>
       <table className="min-w-full border-collapse border border-gray-300">
         <thead>
           <tr className="bg-gray-100">
             <th className="border border-gray-300 px-4 py-2">Nombre</th>
             <th className="border border-gray-300 px-4 py-2">Especialidad</th>
             <th className="border border-gray-300 px-4 py-2">
-              <button title="Volver" style={styles.btnVolver} onClick={() => navigate("/recepcionist-dashboard")}><HiArrowRightStartOnRectangle /></button>
+              
             </th>
           </tr>
         </thead>
@@ -34,8 +43,18 @@ const ListTable = () => {
               <td className="border border-gray-300 px-4 py-2">{doctor.Nombre}</td>
               <td className="border border-gray-300 px-4 py-2">{doctor.Especialidad}</td>
               <td className="border border-gray-300 px-4 py-2 flex gap-2">
-                <button title="Citas" style={styles.btnAction} onClick={() => navigate("/recept-citas-doc", { state: { doctor: doctor } })}><GrSchedules /></button>
-                <button title="Horarios" style={styles.btnAction}><RiCalendarScheduleLine /></button>
+                <button 
+                  title="Citas" 
+                  style={styles.btnAction} 
+                  onClick={() => navigate("/recept-citas-doc", { state: { doctor: doctor } })}>
+                    <RiCalendar2Fill  />
+                </button>
+                <button 
+                  title="Horarios" 
+                  style={styles.btnAction} 
+                  onClick={() => navigate("/horario-doctor", { state: { doctor: doctor } })}>
+                    <RiCalendarCheckFill  />
+                </button>
               </td>
             </tr>
           ))}
@@ -56,6 +75,9 @@ const styles = {
     backgroundColor: "#373f4f",
   },
   container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     backgroundColor: "#d0dcf5",
     padding: "20px",
     borderRadius: "10px",
@@ -64,8 +86,8 @@ const styles = {
     width: "600px",
   },
   title: {
-    marginBottom: "20px",
-    fontSize: "18px",
+    marginBottom: "10px",
+    fontSize: "35px",
     fontWeight: "bold",
   },
   field: {
@@ -90,18 +112,32 @@ const styles = {
   },
   buttons: {
     display: "flex",
+    flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: "20px",
+    padding: "20px",
+    width: "500px",
+    marginBottom: "20px",
   },
   button: {
-    backgroundColor: "#fff",
-    border: "1px solid #ccc",
+    backgroundColor: "#4b5c7d",
+    border: "3px solid #4b5c7d",
     borderRadius: "5px",
     padding: "8px 15px",
     cursor: "pointer",
     fontWeight: "bold",
-    color: "black",
-    width: "100px",
+    color: "white",
+    width: "200px",
+    margin: "0 5px",
+  },
+  buttonHere: {
+    backgroundColor: "#4b5c7d",
+    border: "3px solid #222d45",
+    borderRadius: "5px",
+    padding: "8px 15px",
+    cursor: "pointer",
+    fontWeight: "bold",
+    color: "white",
+    width: "200px",
     margin: "0 5px",
   },
   btnAction: {
@@ -113,19 +149,21 @@ const styles = {
     border: "none",
     background: "transparent",
     cursor: "pointer",
-    color: "black"
+    color: "black",
+    fontSize: "20px"
   },
   btnVolver: {
     width: "30px",
     height: "30px",
     borderRadius: "5px",
-    position: "relative",
-    left: "40%",
+    position: "absolute",
+    left: "67%",
+    top: "17%",
     marginDown: "5px",
     border: "none",
     background: "transparent",
     cursor: "pointer",
-    color: "white",
+    color: "#373f4f",
     fontSize: "20px"
   },
 }

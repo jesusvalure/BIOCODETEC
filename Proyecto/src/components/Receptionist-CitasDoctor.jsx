@@ -3,9 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
-import { BiSolidCalendar } from "react-icons/bi";
-import { TfiCheck } from "react-icons/tfi";
-import { TfiClose } from "react-icons/tfi";
+import { RiCalendar2Fill } from "react-icons/ri";;
+import { TfiCheck, TfiClose } from "react-icons/tfi";
 
 const ReceptionistHorarioDoc = () => {
     const location = useLocation();
@@ -76,7 +75,7 @@ const ReceptionistHorarioDoc = () => {
 
                 {/* Selector de fecha */}
                 <div style={styles.datePickerDiv}>
-                    <p style={styles.text2}><BiSolidCalendar style={{ fontSize: "20px" }} /> </p>
+                    <p style={styles.text2}><RiCalendar2Fill style={{ fontSize: "20px" }} /> </p>
                     <DatePicker
                         selected={selectedDate}
                         onChange={handleChange}

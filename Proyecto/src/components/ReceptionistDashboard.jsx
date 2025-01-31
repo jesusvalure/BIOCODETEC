@@ -1,17 +1,35 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HiArrowRightStartOnRectangle } from "react-icons/hi2";
+import { RiLogoutBoxLine } from "react-icons/ri";
 
 
 const ReceptionistDashboard = () => {
     const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+    
+    useEffect(() => {
+      const loggedUser = JSON.parse(localStorage.getItem('user'));  // Recuperamos el usuario del localStorage
   
+      if (!loggedUser) {
+        console.log('No hay usuario logueado');
+        navigate('/');  // Redirige al login si no hay usuario
+      } else {
+        console.log('Usuario logueado:', loggedUser);
+        setUser(loggedUser);  // Guardamos los datos del usuario en el estado
+      }
+    }, [navigate]);
+
+    if (!user) {
+      return null; // Si no hay usuario, no renderizamos nada
+    }
+
     return (
       <div style={styles.background}>
         <div style={styles.container}>
-          <button title="Volver" style={styles.btnVolver} onClick={() => navigate("/")}><HiArrowRightStartOnRectangle /></button>
+          <button title="Volver" style={styles.btnVolver} onClick={() => navigate("/")}><RiLogoutBoxLine /></button>
           <h1 style={styles.title}>Panel de Recepcionista</h1>
           <h2>HealthLink</h2>
+          <p>Hola {user.Nombre}!</p>
           <div style={styles.buttons}>
             <button style={styles.button} onClick={() => navigate("/list-doctors")}>Consultar Horarios</button>
             <button style={styles.button}>Registrar Cita</button>
@@ -67,7 +85,7 @@ const ReceptionistDashboard = () => {
     buttons: {
       display: "flex",
       justifyContent: "space-between",
-      marginTop: "75px",
+      marginTop: "30px",
     },
     button: {
       backgroundColor: "#373f4f",
@@ -86,8 +104,8 @@ const ReceptionistDashboard = () => {
       height: "30px",
       borderRadius: "5px",
       position: "absolute",
-      right: "900px",
-      top: "230px",
+      left: "64%",
+      top: "30%",
       border: "none",
       background: "transparent",
       cursor: "pointer",
