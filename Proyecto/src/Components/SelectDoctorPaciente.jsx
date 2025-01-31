@@ -43,8 +43,7 @@ const SelectDoctorCliente = () => {
     }
     if (valid) {
       const selectedDoctor = doctoresFiltrados.find((doc) => doc.Nombre === doctor);
-      console.log("Doctor seleccionado:", selectedDoctor.Nombre);
-      console.log("Horario del doctor:", selectedDoctor.Horario);
+      
       navigate("/citas-doctor", { state: { doctor: selectedDoctor } });
     }
   };

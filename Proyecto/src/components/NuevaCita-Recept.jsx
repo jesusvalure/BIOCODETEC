@@ -69,7 +69,7 @@ const FormNuevaCitaRecept = () => {
 
   const handleAceptar = () => {
     let valid = true;
-
+  
     if (!especialidad) {
       setErrorEspecialidad("Por favor, selecciona una especialidad.");
       valid = false;
@@ -78,16 +78,25 @@ const FormNuevaCitaRecept = () => {
       setErrorDoctor("Por favor, selecciona un doctor.");
       valid = false;
     }
+    if (!pacienteEncontrado) {
+      setErrorCedula("Debes verificar la cédula antes de continuar.");
+      valid = false;
+    }
+  
     if (valid) {
       const selectedDoctor = doctoresFiltrados.find((doc) => doc.Nombre === doctor);
-      console.log("Doctor seleccionado:", selectedDoctor.Nombre);
-      console.log("Horario del doctor:", selectedDoctor.Horario);
-      navigate("/citas-doctor", { state: { doctor: selectedDoctor } });
+  
+      navigate("/citas-doctor-recept", { 
+        state: { 
+          doctor: selectedDoctor, 
+          paciente: pacienteEncontrado 
+        } 
+      });
     }
   };
 
   const handleVolver = () => {
-    navigate("/panel-paciente");
+    navigate("/recepcionist-dashboard");
   };
 
   return (
