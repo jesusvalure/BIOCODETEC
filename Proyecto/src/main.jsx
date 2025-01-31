@@ -11,6 +11,7 @@ import RegisterUsers from './components/RegisterUsers';
 import PerfilPaciente from './components/PerfilPaciente';
 import SelectDoctorPaciente from './components/SelectDoctorPaciente';
 import HorarioDoctor from './components/HorarioDoctor';
+import ListDoctors from './components/ListDoctors';
 
 
 
@@ -33,6 +34,7 @@ root.render(
         <Route path="/perfil-paciente" element={<PerfilPaciente />} />
         <Route path="/select-doctor" element={<SelectDoctorPaciente />} />
         <Route path="/horario-doctor" element={<HorarioDoctor />} />
+        <Route path="/list-doctors" element={<ListDoctors />} />
         {/* Redirección para rutas inexistentes */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
