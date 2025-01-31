@@ -34,7 +34,7 @@ const ListTable = () => {
               <td className="border border-gray-300 px-4 py-2">{doctor.Nombre}</td>
               <td className="border border-gray-300 px-4 py-2">{doctor.Especialidad}</td>
               <td className="border border-gray-300 px-4 py-2 flex gap-2">
-                <button title="Citas" style={styles.btnAction}><GrSchedules /></button>
+                <button title="Citas" style={styles.btnAction} onClick={() => navigate("/recept-citas-doc", { state: { doctor: doctor } })}><GrSchedules /></button>
                 <button title="Horarios" style={styles.btnAction}><RiCalendarScheduleLine /></button>
               </td>
             </tr>
