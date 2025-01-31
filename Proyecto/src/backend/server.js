@@ -14,17 +14,15 @@ app.use(express.urlencoded({ extended: true }));
 function loadData(fileName) {
     try {
         const filePath = path.resolve(__dirname, "Data", fileName);
-        
         if (!fs.existsSync(filePath)) {
-            console.warn(`⚠️ Archivo no encontrado: ${filePath}`);
-            return []; // Devuelve un array vacío si el archivo no existe
+            throw new Error(`Archivo no encontrado: ${filePath}`);
         }
 
         const jsonData = fs.readFileSync(filePath, "utf8");
         return JSON.parse(jsonData);
     } catch (error) {
-        console.error("❌ Error cargando el archivo:", error);
-        return [];
+        console.error("Error al cargar el archivo:", error);
+        return []; // o lanzar error
     }
 }
 
@@ -67,6 +65,7 @@ app.post("/login", (req, res) => {
             success: true,
             message: "✅ Login exitoso",
             user: {
+                Nombre: userData.Nombre,
                 Usuario: userData.Usuario,
                 Tipo: userData.Tipo,
             }
@@ -88,8 +87,9 @@ app.post("/register", (req, res) => {
 
         // Verificar si el usuario ya existe
         if (users.some(user => user.Cedula === Cedula)) {
-            return res.status(409).json({ message: "❌ El usuario ya existe" });
+            return res.status(409).json({ message: "❌ El usuario con esta cédula ya existe" });
         }
+        
 
         // Crear nuevo usuario
         const newUser = { Nombre, Cedula, Celular, Correo, Edad, Peso, Estatura, Padecimientos, Usuario, Contrasena, Tipo };
@@ -97,7 +97,7 @@ app.post("/register", (req, res) => {
 
         // Guardar en users.json
         fs.writeFileSync(
-            path.resolve(__dirname, "data", "users.json"),
+            path.resolve(__dirname, "Data", "users.json"),
             JSON.stringify(users, null, 2)
         );
 
