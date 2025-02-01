@@ -1,265 +1,284 @@
 [
-    {
-        "Nombre": "Dr. Ricardo Pérez Mora",
-        "Cedula": "104580987",
-        "Celular": "60127890",
-        "Correo": "ricardo.perez@gmail.com",
-        "Especialidad": "Medicina General",
-        "Usuario": "ricardo.perez",
-        "Contrasena": "Ricardo2025#",
-        "Tipo": 2,
-        "DiasLaborales": [
-            1,
-            1,
-            1,
+  {
+    "Nombre": "Dr. Ricardo Pérez Mora",
+    "Cedula": "104580987",
+    "Celular": "60127890",
+    "Correo": "ricardo.perez@gmail.com",
+    "Especialidad": "Medicina General",
+    "Usuario": "ricardo.perez",
+    "Contrasena": "Ricardo2025#",
+    "Tipo": 2,
+    "DiasLaborales": [
+      1,
+      1,
+      1,
+      0,
+      1,
+      1
+    ],
+    "Horario": {
+      "2025-02-01": [
+        [
+          [
             0,
+            {
+              "Paciente": "",
+              "Cedula": ""
+            }
+          ],
+          [
             1,
-            1
+            {
+              "Paciente": "Michell Quirós Alvares",
+              "Cedula": "104560321"
+            }
+          ],
+          [
+            1,
+            {
+              "Paciente": "Carlos Fernández Mora",
+              "Cedula": "701320984"
+            }
+          ]
         ],
-        "Horario": {
-            "2025-02-01": [
-                [
-                    [
-                        0,
-                        {
-                            "Paciente": "",
-                            "Cedula": ""
-                        }
-                    ],
-                    [
-                        1,
-                        {
-                            "Paciente": "Michell Quirós Alvares",
-                            "Cedula": "104560321"
-                        }
-                    ],
-                    [
-                        1,
-                        {
-                            "Paciente": "Carlos Fernández Mora",
-                            "Cedula": "701320984"
-                        }
-                    ]
-                ],
-                [
-                    [
-                        0,
-                        {
-                            "Paciente": "",
-                            "Cedula": ""
-                        }
-                    ],
-                    [
-                        1,
-                        {
-                            "Paciente": "Michell Quirós Alvares",
-                            "Cedula": "104560321"
-                        }
-                    ],
-                    [
-                        1,
-                        {
-                            "Paciente": "Carlos Fernández Mora",
-                            "Cedula": "701320984"
-                        }
-                    ]
-                ],
-                [
-                    [
-                        0,
-                        {
-                            "Paciente": "",
-                            "Cedula": ""
-                        }
-                    ],
-                    [
-                        1,
-                        {
-                            "Paciente": "Michell Quirós Alvares",
-                            "Cedula": "104560321"
-                        }
-                    ],
-                    [
-                        1,
-                        {
-                            "Paciente": "Carlos Fernández Mora",
-                            "Cedula": "701320984"
-                        }
-                    ]
-                ],
-                [
-                    [
-                        0,
-                        {
-                            "Paciente": "",
-                            "Cedula": ""
-                        }
-                    ],
-                    [
-                        1,
-                        {
-                            "Paciente": "Michell Quirós Alvares",
-                            "Cedula": "104560321"
-                        }
-                    ],
-                    [
-                        1,
-                        {
-                            "Paciente": "Carlos Fernández Mora",
-                            "Cedula": "701320984"
-                        }
-                    ]
-                ],
-                [
-                    [
-                        0,
-                        {
-                            "Paciente": "",
-                            "Cedula": ""
-                        }
-                    ],
-                    [
-                        1,
-                        {
-                            "Paciente": "Michell Quirós Alvares",
-                            "Cedula": "104560321"
-                        }
-                    ],
-                    [
-                        1,
-                        {
-                            "Paciente": "Carlos Fernández Mora",
-                            "Cedula": "701320984"
-                        }
-                    ]
-                ],
-                [
-                    [
-                        0,
-                        {
-                            "Paciente": "",
-                            "Cedula": ""
-                        }
-                    ],
-                    [
-                        1,
-                        {
-                            "Paciente": "Michell Quirós Alvares",
-                            "Cedula": "104560321"
-                        }
-                    ],
-                    [
-                        1,
-                        {
-                            "Paciente": "Carlos Fernández Mora",
-                            "Cedula": "701320984"
-                        }
-                    ]
-                ],
-                [
-                    [
-                        0,
-                        {
-                            "Paciente": "",
-                            "Cedula": ""
-                        }
-                    ],
-                    [
-                        1,
-                        {
-                            "Paciente": "Michell Quirós Alvares",
-                            "Cedula": "104560321"
-                        }
-                    ],
-                    [
-                        1,
-                        {
-                            "Paciente": "Carlos Fernández Mora",
-                            "Cedula": "701320984"
-                        }
-                    ]
-                ],
-                [
-                    [
-                        0,
-                        {
-                            "Paciente": "",
-                            "Cedula": ""
-                        }
-                    ],
-                    [
-                        1,
-                        {
-                            "Paciente": "Michell Quirós Alvares",
-                            "Cedula": "104560321"
-                        }
-                    ],
-                    [
-                        1,
-                        {
-                            "Paciente": "Carlos Fernández Mora",
-                            "Cedula": "701320984"
-                        }
-                    ]
-                ]
-            ]
-        }
-    },
-    {
-        "Nombre": "Dra. Ana María Vargas Solís",
-        "Cedula": "201230456",
-        "Celular": "72561234",
-        "Correo": "anamaria.vargas@gmail.com",
-        "Especialidad": "Pediatría",
-        "Usuario": "anamaria.vargas",
-        "Contrasena": "AnaMaria2025$",
-        "Tipo": 2,
-        "DiasLaborales": [
+        [
+          [
             0,
+            {
+              "Paciente": "",
+              "Cedula": ""
+            }
+          ],
+          [
             1,
+            {
+              "Paciente": "Michell Quirós Alvares",
+              "Cedula": "104560321"
+            }
+          ],
+          [
             1,
-            1,
-            1,
-            0
+            {
+              "Paciente": "Carlos Fernández Mora",
+              "Cedula": "701320984"
+            }
+          ]
         ],
-        "Horario": {}
-    },
-    {
-        "Nombre": "Dr. Felipe Gómez Calderón",
-        "Cedula": "309870543",
-        "Celular": "87129043",
-        "Correo": "felipe.gomez@gmail.com",
-        "Especialidad": "Cardiología",
-        "Usuario": "felipe.gomez",
-        "Contrasena": "Felipe2025@",
-        "Tipo": 2,
-        "DiasLaborales": [
-            1,
-            1,
+        [
+          [
             0,
+            {
+              "Paciente": "",
+              "Cedula": ""
+            }
+          ],
+          [
             1,
+            {
+              "Paciente": "Michell Quirós Alvares",
+              "Cedula": "104560321"
+            }
+          ],
+          [
             1,
-            1
+            {
+              "Paciente": "Carlos Fernández Mora",
+              "Cedula": "701320984"
+            }
+          ]
         ],
-        "Horario": {}
-    },
-    {
-        "Nombre": "Dra. Lucía Fernández Rojas",
-        "Cedula": "408760321",
-        "Celular": "78654321",
-        "Correo": "lucia.fernandez@gmail.com",
-        "Especialidad": "Medicina General",
-        "Usuario": "lucia.fernandez",
-        "Contrasena": "Lucia2025%",
-        "Tipo": 2,
-        "DiasLaborales": [
-            1,
+        [
+          [
             0,
-            0,
+            {
+              "Paciente": "",
+              "Cedula": ""
+            }
+          ],
+          [
             1,
+            {
+              "Paciente": "Michell Quirós Alvares",
+              "Cedula": "104560321"
+            }
+          ],
+          [
             1,
-            0
+            {
+              "Paciente": "Carlos Fernández Mora",
+              "Cedula": "701320984"
+            }
+          ]
         ],
-        "Horario": {}
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": ""
+            }
+          ],
+          [
+            1,
+            {
+              "Paciente": "Michell Quirós Alvares",
+              "Cedula": "104560321"
+            }
+          ],
+          [
+            1,
+            {
+              "Paciente": "Carlos Fernández Mora",
+              "Cedula": "701320984"
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": ""
+            }
+          ],
+          [
+            1,
+            {
+              "Paciente": "Michell Quirós Alvares",
+              "Cedula": "104560321"
+            }
+          ],
+          [
+            1,
+            {
+              "Paciente": "Carlos Fernández Mora",
+              "Cedula": "701320984"
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": ""
+            }
+          ],
+          [
+            1,
+            {
+              "Paciente": "Michell Quirós Alvares",
+              "Cedula": "104560321"
+            }
+          ],
+          [
+            1,
+            {
+              "Paciente": "Carlos Fernández Mora",
+              "Cedula": "701320984"
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": ""
+            }
+          ],
+          [
+            1,
+            {
+              "Paciente": "Michell Quirós Alvares",
+              "Cedula": "104560321"
+            }
+          ],
+          [
+            1,
+            {
+              "Paciente": "Carlos Fernández Mora",
+              "Cedula": "701320984"
+            }
+          ]
+        ]
+      ]
     }
+  },
+  {
+    "Nombre": "Dra. Ana María Vargas Solís",
+    "Cedula": "201230456",
+    "Celular": "72561234",
+    "Correo": "anamaria.vargas@gmail.com",
+    "Especialidad": "Pediatría",
+    "Usuario": "anamaria.vargas",
+    "Contrasena": "AnaMaria2025$",
+    "Tipo": 2,
+    "DiasLaborales": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      0
+    ],
+    "Horario": {}
+  },
+  {
+    "Nombre": "Dr. Felipe Gómez Calderón",
+    "Cedula": "309870543",
+    "Celular": "87129043",
+    "Correo": "felipe.gomez@gmail.com",
+    "Especialidad": "Cardiología",
+    "Usuario": "felipe.gomez",
+    "Contrasena": "Felipe2025@",
+    "Tipo": 2,
+    "DiasLaborales": [
+      1,
+      1,
+      0,
+      1,
+      1,
+      1
+    ],
+    "Horario": {}
+  },
+  {
+    "Nombre": "Dra. Lucía Fernández Rojas",
+    "Cedula": "408760321",
+    "Celular": "78654321",
+    "Correo": "lucia.fernandez@gmail.com",
+    "Especialidad": "Medicina General",
+    "Usuario": "lucia.fernandez",
+    "Contrasena": "Lucia2025%",
+    "Tipo": 2,
+    "DiasLaborales": [
+      1,
+      0,
+      0,
+      1,
+      1,
+      0
+    ],
+    "Horario": {}
+  },
+  {
+    "Cedula": "303610821",
+    "Nombre": "Melina Urena Retana",
+    "Correo": "meliur@gmail.com",
+    "Celular": "88523232",
+    "Usuario": "melina.urena",
+    "Contrasena": "1234",
+    "Especialidad": "Medicina General",
+    "Tipo": 2,
+    "DiasLaborales": [
+      1,
+      0,
+      1,
+      0,
+      1,
+      0
+    ],
+    "Horario": {}
+  }
 ]
