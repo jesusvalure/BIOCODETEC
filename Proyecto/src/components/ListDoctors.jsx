@@ -1,18 +1,18 @@
-import { React, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import doctors from "../backend/Data/doctors.json";
 import { RiCalendar2Fill, RiCalendarCheckFill, RiLogoutBoxLine } from "react-icons/ri";
 
 const ListTable = () => {
   const navigate = useNavigate();
+  const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
-    fetch("/doctors.json")
+    fetch("http://localhost:5000/doctors") 
       .then((response) => response.json())
-      .then((data) => setDoctors(data))
-      .catch((error) => {});
+      .then((data) => setDoctors(data)) 
+      .catch((error) => console.error("Error al obtener los datos:", error)); 
   }, []);
-
+  
   return (
     <div style={styles.background}>
       <div style={styles.container}>

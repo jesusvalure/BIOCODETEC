@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import doctors from '../backend/Data/doctors.json';
 import pacientes from '../backend/Data/users.json';
 import { useNavigate } from 'react-router-dom';
