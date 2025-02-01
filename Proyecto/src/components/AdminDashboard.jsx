@@ -1,24 +1,25 @@
-import React, { useState } from 'react';
-import ManageRoles from './ManageRoles';
-import RegisterUsers from './RegisterUsers';
-import ConfigureSchedules from './ConfigureSchedules';
+import { useState } from 'react';
 import '../assets/Style.css';
+import AdministrarRoles from './AdministrarRoles';
+import ConfigurarHorarios from './ConfigurarHorarioDoctor';
+import RegistrarEmpleados from './RegistrarUsuarioAdmin';
+
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('roles');
-
-  const renderContent = () => {
+  const render = () => {
     switch (activeTab) {
       case 'roles':
-        return <ManageRoles />;
-      case 'register':
-        return <RegisterUsers />;
+        return <AdministrarRoles />;
       case 'schedules':
-        return <ConfigureSchedules />;
+        return <ConfigurarHorarios />;
+      case 'register':
+        return <RegistrarEmpleados />;
       default:
-        return <ManageRoles />;
+        return <AdministrarRoles />;
     }
-  };
+  }
+  
 
   return (
     <div className="admin-dashboard">
@@ -31,19 +32,20 @@ const AdminDashboard = () => {
           Gestionar Roles
         </button>
         <button
-          className={`nav-link ${activeTab === 'register' ? 'active' : ''}`}
-          onClick={() => setActiveTab('register')}
-        >
-          Registrar Usuarios
-        </button>
-        <button
           className={`nav-link ${activeTab === 'schedules' ? 'active' : ''}`}
           onClick={() => setActiveTab('schedules')}
         >
           Configurar Horarios
         </button>
+        <button
+          className={`nav-link ${activeTab === 'register' ? 'active' : ''}`}
+          onClick={() => setActiveTab('register')}
+        >
+          Registrar Usuarios
+        </button>
+
       </nav>
-      <div className="gestion-roles">{renderContent()}</div>
+      {render()}
     </div>
   );
 };

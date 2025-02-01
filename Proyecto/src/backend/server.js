@@ -10,6 +10,16 @@ app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+function saveData(fileName, data) {
+    const filePath = path.join(__dirname, "data", fileName);
+    try {
+        fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
+    } catch (error) {
+        console.error("❌ Error al guardar datos:", error);
+    }
+}
+
 // Función para cargar datos de un archivo JSON
 function loadData(fileName) {
     try {
@@ -127,7 +137,65 @@ app.post("/register", (req, res) => {
     }
 });
 
-// Iniciar servidor
+app.post("/registerEmployee", (req, res) => {
+    try {
+        const { Cedula, Nombre, Correo, Telefono, Usuario, Contrasena, Tipo, Especialidad } = req.body;
+        
+        let fileName;
+        if (Tipo === "Doctor") {
+            fileName = "doctors.json";
+        } else if (Tipo === "Recepcionista") {
+            fileName = "receptionists.json";
+        } else {
+            return res.status(400).json({ message: "❌ Tipo de usuario inválido" });
+        }
+
+        const employees = loadData(fileName);
+
+        // Validar duplicados por Cédula o Usuario
+        if (employees.some(emp => emp.Cedula === Cedula || emp.Usuario.toLowerCase() === Usuario.toLowerCase())) {
+            return res.status(409).json({ message: "❌ El usuario ya existe" });
+        }
+
+        // Formato correcto del JSON
+        let newEmployee;
+        if (Tipo === "Doctor") {
+            newEmployee = {
+                Cedula,
+                Nombre,
+                Correo,
+                Telefono,
+                Usuario,
+                Contrasena,
+                Especialidad,
+                Tipo : 2,
+                DiasLaborales: [1, 0, 1, 0, 1, 0], // Lunes, Miércoles, Viernes
+                Horario: {}, // Siempre vacío
+            };
+        } else if (Tipo === "Recepcionista") {
+            newEmployee = {
+                Cedula,
+                Nombre,
+                Correo,
+                Telefono,
+                Usuario,
+                Contrasena,
+                Tipo : 3,
+            };
+        }
+
+        // Agregar al archivo correspondiente
+        employees.push(newEmployee);
+        saveData(fileName, employees);
+
+        res.json({ message: `✅ ${Tipo} registrado con éxito`, user: newEmployee });
+    } catch (error) {
+        console.error("❌ Error en /registerEmployee:", error);
+        res.status(500).json({ message: "Error interno del servidor" });
+    }
+});
+
+
 app.listen(PORT, () => {
     console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
 });

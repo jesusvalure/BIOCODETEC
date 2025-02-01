@@ -269,7 +269,6 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    alignItems: "center",
   },
 };
 
