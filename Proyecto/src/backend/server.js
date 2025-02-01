@@ -71,7 +71,26 @@ app.post("/login", (req, res) => {
             }
         });
     } else {
-        res.status(401).json({ success: false, message: "❌ Usuario o contraseña incorrectos" });
+        let userU = users.find(x => x.Usuario.toLowerCase() === Usuario.toLowerCase() );
+        let userC = users.find(x => x.Contrasena === Contrasena);
+        let doctorU = doctors.find(x => x.Usuario.toLowerCase() === Usuario.toLowerCase());
+        let doctorC = doctors.find(x => x.Contrasena === Contrasena);
+        let adminU = admins.find(x => x.Usuario.toLowerCase() === Usuario.toLowerCase());
+        let adminC = admins.find(x => x.Contrasena === Contrasena);
+        let receptionistU = receptionists.find(x => x.Usuario.toLowerCase() === Usuario.toLowerCase());
+        let receptionistC = receptionists.find(x => x.Contrasena === Contrasena);
+
+        if (userU && !userC) {
+            res.status(401).json({ success: false, message: "Contraseña incorrecta" });
+        } else if (doctorU && !doctorC) {
+            res.status(401).json({ success: false, message: "Contraseña incorrecta" });
+        } else if (adminU && !adminC) {
+            res.status(401).json({ success: false, message: "Contraseña incorrecta" });
+        } else if (receptionistU && !receptionistC) {
+            res.status(401).json({ success: false, message: "Contraseña incorrecta" });
+        } else {
+            res.status(401).json({ success: false, message: "Usuario no encontrado" });
+        }
     }
 });
 

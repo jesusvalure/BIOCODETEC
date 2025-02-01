@@ -48,7 +48,7 @@ const FormNuevaCitaRecept = () => {
   
     // Validar solo si tiene el formato completo
     if (value.length === 10 && !/^\d{1}-\d{4}-\d{4}$/.test(value)) {
-      setErrorCedula("Formato incorrecto. Debe ser X-XXXX-XXXX");
+      setErrorCedula("Formato incorrecto. Debe ser 112341234");
     } else {
       setErrorCedula("");
     }
@@ -111,7 +111,7 @@ const FormNuevaCitaRecept = () => {
               value={cedula}
               onChange={handleCedulaChange}
               style={styles.input}
-              placeholder="X-XXXX-XXXX"
+              placeholder="Ej: 112341234"
             />
             <button title="Verificar" onClick={handleVerificarCedula} style={styles.buttonSmall}>
               <RiUserFollowFill />
