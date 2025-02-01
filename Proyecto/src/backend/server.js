@@ -161,10 +161,10 @@ app.post("/registerEmployee", (req, res) => {
         let newEmployee;
         if (Tipo === "Doctor") {
             newEmployee = {
-                Cedula,
                 Nombre,
+                Cedula,
+                Celular : Telefono,
                 Correo,
-                Telefono,
                 Usuario,
                 Contrasena,
                 Especialidad,
@@ -174,10 +174,10 @@ app.post("/registerEmployee", (req, res) => {
             };
         } else if (Tipo === "Recepcionista") {
             newEmployee = {
-                Cedula,
                 Nombre,
+                Cedula,
+                Celular : Telefono,
                 Correo,
-                Telefono,
                 Usuario,
                 Contrasena,
                 Tipo : 3,
