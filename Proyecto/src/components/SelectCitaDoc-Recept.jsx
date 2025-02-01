@@ -10,6 +10,8 @@ const CitasDoctorRecept = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedTime, setSelectedTime] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
     const horarios = [["8:00", "8:20", "8:40"], 
                       ["9:00", "9:20", "9:40"], 
@@ -62,17 +64,17 @@ const CitasDoctorRecept = () => {
             } else {
                 setButtonStates(Array(8).fill().map(() => Array(3).fill(0))); // Llenar con ceros si la fecha no existe
             }
-        } else {
-            console.error("Fecha inválida seleccionada:", date);
-        }
+        } 
     };
 
     const handleButtonClick = (row, col) => {
-        // Alternar entre 0 y 1 en la matriz de estados
+        const selectedHour = horarios[row][col];
+        setSelectedTime(selectedHour);
+
         setButtonStates((prevStates) => {
             const newStates = prevStates.map((r, rowIndex) =>
                 r.map((val, colIndex) => 
-                    rowIndex === row && colIndex === col ? (val === 0 ? 1 : 0) : val
+                    rowIndex === row && colIndex === col ? (val === 0 ? 1 : 0) : 0
                 )
             );
             return newStates;
@@ -80,12 +82,29 @@ const CitasDoctorRecept = () => {
     };
 
     const handleAccept = () => {
-        if (selectedDate) {
-            const formattedDate = format(selectedDate, "yyyy-MM-dd");
-            doctor.Horario[formattedDate] = buttonStates;
-            console.log("Horario actualizado:", doctor.Horario[formattedDate]);
+        if (selectedDate && selectedTime) {
+            setShowModal(true);
+        } else {
+            alert("Selecciona una fecha y una hora antes de continuar.");
         }
-        navigate("/nueva-cita-recept");
+    };
+
+    const handleConfirm = () => {
+        const formattedDate = format(selectedDate, "yyyy-MM-dd");
+        doctor.Horario[formattedDate] = buttonStates;
+        console.log("Cita confirmada:", {
+            doctor: doctor.Nombre,
+            especialidad: doctor.Especialidad,
+            paciente: paciente.Nombre,
+            cedula: paciente.Cedula,
+            fecha: formattedDate,
+            hora: selectedTime
+        });
+
+        // Aquí puedes hacer un fetch para guardar la cita en la base de datos
+
+        setShowModal(false);
+        navigate("/recepcionist-dashboard");
     };
 
     return (
@@ -141,6 +160,26 @@ const CitasDoctorRecept = () => {
                     <button style={styles.buttonAceptar} onClick={handleAccept}>Aceptar</button>
                 </div>
             </div>
+
+             {/* Modal de Confirmación */}
+             {showModal && (
+                <div style={styles.modalOverlay}>
+                    <div style={styles.modal}>
+                        <h3>Confirmar Cita</h3>
+                        <p><strong>Doctor:</strong> {doctor.Nombre}</p>
+                        <p><strong>Especialidad:</strong> {doctor.Especialidad}</p>
+                        <p><strong>Paciente:</strong> {paciente.Nombre}</p>
+                        <p><strong>Cedula:</strong> {paciente.Cedula}</p>
+                        <p><strong>Fecha:</strong> {format(selectedDate, "yyyy-MM-dd")}</p>
+                        <p><strong>Hora:</strong> {selectedTime}</p>
+
+                        <div style={styles.containerBtn}>
+                            <button style={styles.buttonVolver} onClick={() => setShowModal(false)}>Atrás</button>
+                            <button style={styles.buttonAceptar} onClick={handleConfirm}>Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
@@ -220,7 +259,24 @@ const styles = {
         fontWeight: "bold",
         color: "white",
         width: "100px",
-    }
+    },
+    modalOverlay: { 
+        position: "fixed", 
+        top: 0, 
+        left: 0,
+        width: "100%", 
+        height: "100%", 
+        backgroundColor: "rgba(0, 0, 0, 0.5)", 
+        display: "flex", 
+        justifyContent: "center", 
+        alignItems: "center" 
+    },
+    modal: { 
+        backgroundColor: "white", 
+        padding: "20px", 
+        borderRadius: "10px", 
+        textAlign: "center" 
+    },
 };
 
 export default CitasDoctorRecept;

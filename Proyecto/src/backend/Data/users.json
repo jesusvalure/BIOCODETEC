@@ -13,7 +13,8 @@
     ],
     "Usuario": "michell.quiros",
     "Contrasena": "Michell2025!",
-    "Tipo": 1
+    "Tipo": 1,
+    "Citas": []
   },
   {
     "Nombre": "Andrés Villalobos Solano",
@@ -29,7 +30,8 @@
     ],
     "Usuario": "andres.villalobos",
     "Contrasena": "Andres2025@",
-    "Tipo": 1
+    "Tipo": 1,
+    "Citas": []
   },
   {
     "Nombre": "Sofía Ramírez Pérez",
@@ -44,7 +46,8 @@
     ],
     "Usuario": "sofia.ramirez",
     "Contrasena": "Sofia2025#",
-    "Tipo": 1
+    "Tipo": 1,
+    "Citas": []
   },
   {
     "Nombre": "Laura Gómez Campos",
@@ -60,7 +63,8 @@
     ],
     "Usuario": "laura.gomez",
     "Contrasena": "Laura2025$",
-    "Tipo": 1
+    "Tipo": 1,
+    "Citas": []
   },
   {
     "Nombre": "Carlos Fernández Mora",
@@ -76,7 +80,8 @@
     ],
     "Usuario": "carlos.fernandez",
     "Contrasena": "Carlos2025%",
-    "Tipo": 1
+    "Tipo": 1,
+    "Citas": []
   },
   {
     "Nombre": "María José Delgado",
@@ -91,7 +96,8 @@
     ],
     "Usuario": "maria.delgado",
     "Contrasena": "Maria2025&",
-    "Tipo": 1
+    "Tipo": 1,
+    "Citas": []
   },
   {
     "Nombre": "Javier Sánchez López",
@@ -107,7 +113,8 @@
     ],
     "Usuario": "javier.sanchez",
     "Contrasena": "Javier2025!",
-    "Tipo": 1
+    "Tipo": 1,
+    "Citas": []
   },
   {
     "Nombre": "Natalia Rojas Chaves",
@@ -122,7 +129,8 @@
     ],
     "Usuario": "natalia.rojas",
     "Contrasena": "Natalia2025#",
-    "Tipo": 1
+    "Tipo": 1,
+    "Citas": []
   },
   {
     "Nombre": "Roberto Jiménez Vega",
@@ -138,7 +146,8 @@
     ],
     "Usuario": "roberto.jimenez",
     "Contrasena": "Roberto2025$",
-    "Tipo": 1
+    "Tipo": 1,
+    "Citas": []
   },
   {
     "Nombre": "Gabriela Castro Alvarado",
@@ -154,7 +163,8 @@
     ],
     "Usuario": "gabriela.castro",
     "Contrasena": "Gabriela2025@",
-    "Tipo": 1
+    "Tipo": 1,
+    "Citas": []
   },
   {
     "Nombre": "Jesus Valverde Urena",
@@ -177,6 +187,7 @@
     },
     "Usuario": "jesus.valverde",
     "Contrasena": "1234",
-    "Tipo": 1
+    "Tipo": 1,
+    "Citas": []
   }
 ]
