@@ -82,6 +82,7 @@ const CitasDoctorRecept = () => {
     };
 
     const handleAccept = () => {
+        
         if (selectedDate && selectedTime) {
             setShowModal(true);
         } else {

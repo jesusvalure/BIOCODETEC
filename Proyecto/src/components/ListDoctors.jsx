@@ -32,9 +32,7 @@ const ListTable = () => {
           <tr className="bg-gray-100">
             <th className="border border-gray-300 px-4 py-2">Nombre</th>
             <th className="border border-gray-300 px-4 py-2">Especialidad</th>
-            <th className="border border-gray-300 px-4 py-2">
-              
-            </th>
+            <th className="border border-gray-300 px-4 py-2"></th>
           </tr>
         </thead>
         <tbody>

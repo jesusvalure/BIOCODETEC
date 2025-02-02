@@ -9,6 +9,12 @@ const CitasDoctor = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedTime, setSelectedTime] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [matrizCitas, setMatrizCitas] = useState(
+        Array(8).fill().map(() => Array(3).fill(-1)) //Matriz con todo = -1
+    );
 
     const horarios = [["8:00", "8:20", "8:40"], 
                       ["9:00", "9:20", "9:40"], 
@@ -19,25 +25,27 @@ const CitasDoctor = () => {
                       ["15:00", "15:20", "15:40"], 
                       ["16:00", "16:20", "16:40"]];
 
-    const matrizCitas = [[-1, -1, -1], 
-                         [-1, -1, -1], 
-                         [-1, -1, -1], 
-                         [-1, -1, -1], 
-                         [-1, -1, -1], 
-                         [-1, -1, -1], 
-                         [-1, -1, -1], 
-                         [-1, -1, -1]];  
+                      
 
-    // Inicializar estado con los valores de matrizCitas
     const [buttonStates, setButtonStates] = useState(matrizCitas);
 
-    const { doctor } = location.state || {};
+    const { doctor, paciente } = location.state || {}; 
+    
 
     if (!doctor || typeof doctor.Nombre !== "string") {
         return (
             <div>
                 <p>No se encontró información del doctor. Redirigiendo...</p>
-                <button onClick={() => navigate("/select-doctor")}>Volver</button>
+                <button onClick={() => navigate("/select-doctor", { state: {paciente: paciente} })}>Volver</button>
+            </div>
+        );
+    }
+
+    if (!paciente || typeof paciente.Nombre !== "string") {
+        return (
+            <div>
+                <p>No se encontró información del paciente. Redirigiendo...</p>
+                <button onClick={() => navigate("/select-doctor", { state: {paciente: paciente} })}>Volver</button>
             </div>
         );
     }
@@ -48,34 +56,60 @@ const CitasDoctor = () => {
                 const formattedDate = format(date, "yyyy-MM-dd");
     
                 if (doctor.Horario[formattedDate]) {
+                    setMatrizCitas(doctor.Horario[formattedDate]);
                     setButtonStates(doctor.Horario[formattedDate]);
                 } else {
-                    setButtonStates(Array(8).fill().map(() => Array(3).fill(0))); // Llenar con ceros si la fecha no existe
+                    const nuevaMatriz = Array(8).fill().map(() => Array(3).fill(0));
+                    setMatrizCitas(nuevaMatriz);
+                    setButtonStates(nuevaMatriz);
                 }
-            } else {
-                console.error("Fecha inválida seleccionada:", date);
-            }
+            } 
         };
 
     const handleButtonClick = (row, col) => {
-        // Alternar entre 0 y 1 en la matriz de estados
-        setButtonStates((prevStates) => {
-            const newStates = prevStates.map((r, rowIndex) =>
-                r.map((val, colIndex) => 
-                    rowIndex === row && colIndex === col ? (val === 0 ? 1 : 0) : val
-                )
-            );
-            return newStates;
-        });
+        const selectedHour = horarios[row][col];
+        setSelectedTime(selectedHour);
+        console.log(matrizCitas[row][col]);
+        if (matrizCitas[row][col] !== -1) {
+            console.log("2");
+            // Alternar entre 0 y 1 en la matriz de estados
+            setButtonStates((prevStates) => {
+                const newStates = prevStates.map((r, rowIndex) =>
+                    r.map((val, colIndex) => 
+                        rowIndex === row && colIndex === col ? (val === 0 ? 1 : 0) : val
+                    )
+                );
+                return newStates;
+            });
+        }
     };
 
     const handleAccept = () => {
-        if (selectedDate) {
-            const formattedDate = format(selectedDate, "yyyy-MM-dd");
-            doctor.Horario[formattedDate] = buttonStates;
-            console.log("Horario actualizado:", doctor.Horario[formattedDate]);
+        setErrorMessage("");
+
+        if (selectedDate && selectedTime) {
+            setShowModal(true);
+        } else {
+            setErrorMessage("Selecciona una fecha y una hora antes de continuar.");
         }
-        navigate("/nueva-cita-recept");
+    };
+
+    const handleConfirm = () => {
+        const formattedDate = format(selectedDate, "yyyy-MM-dd");
+        doctor.Horario[formattedDate] = buttonStates;
+        console.log("Cita confirmada:", {
+            doctor: doctor.Nombre,
+            especialidad: doctor.Especialidad,
+            paciente: paciente.Nombre,
+            cedula: paciente.Cedula,
+            fecha: formattedDate,
+            hora: selectedTime
+        });
+
+        // Lógica para guardar la cita en la base de datos
+
+        setShowModal(false);
+        navigate("/panel-paciente", { state: {paciente: paciente} });
     };
 
     return (
@@ -124,9 +158,31 @@ const CitasDoctor = () => {
 
                 {/* Botones de navegación */}
                 <div style={styles.containerBtn}>
-                    <button style={styles.buttonVolver} onClick={() => navigate("/select-doctor")}>Volver</button>
+                    <button style={styles.buttonVolver} onClick={() => navigate("/select-doctor", { state: {paciente: paciente} })}>Volver</button>
                     <button style={styles.buttonAceptar} onClick={handleAccept}>Aceptar</button>
                 </div>
+
+                {/* Modal de Confirmación */}
+                {showModal && (
+                    <div style={styles.modalOverlay}>
+                        <div style={styles.modal}>
+                            {console.log(paciente)}
+                            <h3>Confirmar Cita</h3>
+                            <p><strong>Doctor:</strong> {doctor.Nombre}</p>
+                            <p><strong>Especialidad:</strong> {doctor.Especialidad}</p>
+                            <p><strong>Paciente:</strong> {paciente.Nombre}</p>
+                            <p><strong>Cedula:</strong> {paciente.Cedula}</p>
+                            <p><strong>Fecha:</strong> {format(selectedDate, "yyyy-MM-dd")}</p>
+                            <p><strong>Hora:</strong> {selectedTime}</p>
+                            
+
+                            <div style={styles.containerBtn}>
+                                <button style={styles.buttonVolver} onClick={() => setShowModal(false)}>Atrás</button>
+                                <button style={styles.buttonAceptar} onClick={handleConfirm}>Confirmar</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
@@ -195,7 +251,7 @@ const styles = {
         cursor: "pointer",
         fontWeight: "bold",
         color: "white",
-        width: "100px",
+        width: "130px",
     },
     buttonAceptar: {
         backgroundColor: "#373f4f",
@@ -206,8 +262,25 @@ const styles = {
         cursor: "pointer",
         fontWeight: "bold",
         color: "white",
-        width: "100px",
-    }
+        width: "130px",
+    },
+    modalOverlay: { 
+        position: "fixed", 
+        top: 0, 
+        left: 0,
+        width: "100%", 
+        height: "100%", 
+        backgroundColor: "rgba(0, 0, 0, 0.5)", 
+        display: "flex", 
+        justifyContent: "center", 
+        alignItems: "center" 
+    },
+    modal: { 
+        backgroundColor: "white", 
+        padding: "20px", 
+        borderRadius: "10px", 
+        textAlign: "center" 
+    },
 };
 
 export default CitasDoctor;

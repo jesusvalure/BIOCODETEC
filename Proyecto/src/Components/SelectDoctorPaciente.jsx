@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import doctors from '../backend/Data/doctors.json';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const SelectDoctorCliente = () => {
   const [especialidad, setEspecialidad] = useState("");
@@ -9,6 +9,9 @@ const SelectDoctorCliente = () => {
   const [errorEspecialidad, setErrorEspecialidad] = useState("");
   const [errorDoctor, setErrorDoctor] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const pacienteLogueado = location.state?.paciente;
 
   // Obtener las especialidades únicas del JSON
   const especialidades = [...new Set(doctors.map((doc) => doc.Especialidad))];
@@ -43,13 +46,14 @@ const SelectDoctorCliente = () => {
     }
     if (valid) {
       const selectedDoctor = doctoresFiltrados.find((doc) => doc.Nombre === doctor);
-      
-      navigate("/citas-doctor", { state: { doctor: selectedDoctor } });
+      console.log(selectedDoctor);
+      console.log(pacienteLogueado)
+      navigate("/citas-doctor", { state: { doctor: selectedDoctor, paciente: pacienteLogueado } });
     }
   };
 
   const handleVolver = () => {
-    navigate("/panel-paciente");
+    navigate("/panel-paciente", { state: {paciente: pacienteLogueado} });
   };
 
   return (

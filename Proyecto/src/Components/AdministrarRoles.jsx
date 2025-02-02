@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import '../assets/Style.css';
 
 const AdministrarRoles = () => {
-    const [users, setUsers] = useState([]);
+    const [patients, setPatients] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const [newRole, setNewRole] = useState('');
   
     useEffect(() => {
-      const fetchUsers = async () => {
+      const fetchPatients = async () => {
         try {
           const doctorsResponse = await fetch('http://localhost:5000/doctors');
           const receptionistsResponse = await fetch('http://localhost:5000/receptionists');
@@ -19,13 +19,13 @@ const AdministrarRoles = () => {
           const formattedDoctors = doctors.map(user => ({ ...user, Rol: 'Doctor' }));
           const formattedReceptionists = receptionists.map(user => ({ ...user, Rol: 'Recepcionista' }));
           
-          setUsers([...formattedDoctors, ...formattedReceptionists]);
+          setPatients([...formattedDoctors, ...formattedReceptionists]);
         } catch (error) {
           console.error('Error al obtener los datos:', error);
         }
       };
   
-      fetchUsers();
+      fetchPatients();
     }, []);
   
     const handleEditRole = (user) => {
@@ -37,13 +37,13 @@ const AdministrarRoles = () => {
       if (!selectedUser) return;
       
       try {
-        await fetch(`http://localhost:5000/users/${selectedUser.Cedula}`, {
+        await fetch(`http://localhost:5000/patients/${selectedUser.Cedula}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ Tipo: newRole === 'Doctor' ? 2 : 3 })
         });
   
-        setUsers(users.map(user => user.Cedula === selectedUser.Cedula ? { ...user, Rol: newRole } : user));
+        setPatients(patients.map(user => user.Cedula === selectedUser.Cedula ? { ...user, Rol: newRole } : user));
         setSelectedUser(null);
       } catch (error) {
         console.error('Error al actualizar el rol:', error);
@@ -65,7 +65,7 @@ const AdministrarRoles = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
+            {patients.map(user => (
               <tr key={user.Cedula}>
                 <td>{user.Nombre}</td>
                 <td>{user.Cedula}</td>

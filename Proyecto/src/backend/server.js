@@ -37,8 +37,8 @@ function loadData(fileName) {
 }
 
 // Endpoints para obtener datos
-app.get("/users", (req, res) => {
-    res.json(loadData("users.json"));
+app.get("/patients", (req, res) => {
+    res.json(loadData("patients.json"));
 });
 
 app.get("/doctors", (req, res) => {
@@ -58,17 +58,17 @@ app.post("/login", (req, res) => {
     console.log("Datos recibidos:", req.body);
 
     const { Usuario, Contrasena } = req.body;
-    const users = loadData("users.json");
+    const patients = loadData("patients.json");
     const doctors = loadData("doctors.json");
     const admins = loadData("admins.json");
     const receptionists = loadData("receptionists.json");
 
-    let user = users.find(u => u.Usuario.toLowerCase() === Usuario.toLowerCase() && u.Contrasena === Contrasena);
+    let patient = patients.find(u => u.Usuario.toLowerCase() === Usuario.toLowerCase() && u.Contrasena === Contrasena);
     let doctor = doctors.find(u => u.Usuario.toLowerCase() === Usuario.toLowerCase() && u.Contrasena === Contrasena);
     let admin = admins.find(u => u.Usuario.toLowerCase() === Usuario.toLowerCase() && u.Contrasena === Contrasena);
     let receptionist = receptionists.find(u => u.Usuario.toLowerCase() === Usuario.toLowerCase() && u.Contrasena === Contrasena);
 
-    let userData = user || doctor || admin || receptionist;
+    let userData = patient || doctor || admin || receptionist;
     
     if (userData) {
         res.json({
@@ -81,8 +81,8 @@ app.post("/login", (req, res) => {
             }
         });
     } else {
-        let userU = users.find(x => x.Usuario.toLowerCase() === Usuario.toLowerCase() );
-        let userC = users.find(x => x.Contrasena === Contrasena);
+        let patientU = patients.find(x => x.Usuario.toLowerCase() === Usuario.toLowerCase() );
+        let patientC = patients.find(x => x.Contrasena === Contrasena);
         let doctorU = doctors.find(x => x.Usuario.toLowerCase() === Usuario.toLowerCase());
         let doctorC = doctors.find(x => x.Contrasena === Contrasena);
         let adminU = admins.find(x => x.Usuario.toLowerCase() === Usuario.toLowerCase());
@@ -90,7 +90,7 @@ app.post("/login", (req, res) => {
         let receptionistU = receptionists.find(x => x.Usuario.toLowerCase() === Usuario.toLowerCase());
         let receptionistC = receptionists.find(x => x.Contrasena === Contrasena);
 
-        if (userU && !userC) {
+        if (patientU && !patientC) {
             res.status(401).json({ success: false, message: "Contraseña incorrecta" });
         } else if (doctorU && !doctorC) {
             res.status(401).json({ success: false, message: "Contraseña incorrecta" });
@@ -112,22 +112,22 @@ app.post("/register", (req, res) => {
         const { Nombre, Cedula, Celular, Correo, Edad, Peso, Estatura, Padecimientos, Usuario, Contrasena, Tipo} = req.body;
 
 
-        const users = loadData("users.json");
+        const patients = loadData("patients.json");
 
         // Verificar si el usuario ya existe
-        if (users.some(user => user.Cedula === Cedula)) {
+        if (patients.some(user => user.Cedula === Cedula)) {
             return res.status(409).json({ message: "❌ El usuario con esta cédula ya existe" });
         }
         
 
         // Crear nuevo usuario
         const newUser = { Nombre, Cedula, Celular, Correo, Edad, Peso, Estatura, Padecimientos, Usuario, Contrasena, Tipo };
-        users.push(newUser);
+        patients.push(newUser);
 
-        // Guardar en users.json
+        // Guardar en patients.json
         fs.writeFileSync(
-            path.resolve(__dirname, "Data", "users.json"),
-            JSON.stringify(users, null, 2)
+            path.resolve(__dirname, "Data", "patients.json"),
+            JSON.stringify(patients, null, 2)
         );
 
         res.json({ message: "✅ Usuario registrado con éxito", user: newUser });

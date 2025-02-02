@@ -3,6 +3,10 @@ import '../assets/Style.css';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.jpg';
 import { TbContainer } from 'react-icons/tb';
+import pacientes from '../backend/Data/patients.json'
+import doctores from '../backend/Data/doctors.json'
+import recepcionistas from '../backend/Data/receptionists.json'
+import admins from '../backend/Data/admins.json'
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -10,6 +14,20 @@ const LoginForm = () => {
     const [contrasena, setContrasena] = useState("");
     const [errorUsuario, setErrorUsuario] = useState("");
     const [errorContrasena, setErrorContrasena] = useState("");
+    const [message, setMessage] = useState("");
+
+    const buscarUsuario = (nombreUsuario) => {
+        const listas = [pacientes, doctores, recepcionistas, admins];
+    
+        for (const lista of listas) {
+            const usuarioEncontrar = lista.find(u => u.Usuario === nombreUsuario);
+            if (usuarioEncontrar) {
+                return usuarioEncontrar; // Retorna el objeto tal cual está en la lista
+            }
+        }
+    
+        return null; // No se encontró el usuario
+    };
     
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -19,11 +37,13 @@ const LoginForm = () => {
         if (!usuario) {
             setErrorUsuario("⚠️ Ingresa tu usuario");
             return;
-        }
+        } 
         if (!contrasena) {
             setErrorContrasena("⚠️ Ingresa tu contraseña");
             return;
         }
+
+        const enviarUsuario = buscarUsuario(usuario);
     
         try {
             const response = await fetch("http://localhost:5000/login", {
@@ -31,27 +51,30 @@ const LoginForm = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ Usuario: usuario, Contrasena: contrasena }),
             });
+            console.log("Point 1");
     
             const data = await response.json();
             
             if (data.success) {
+                
                 const loggedUser = { ...data.user, nombre: data.user.usuario }; 
                 localStorage.setItem("user", JSON.stringify(loggedUser));
                 console.log("Usuario logueado:", loggedUser);
-    
+                console.log("Point 2");
                 // Redirección según el tipo de usuario
                 switch (Number(loggedUser.Tipo)) {  // Asegura que Tipo sea numérico
                     case 4:
-                        navigate("/admin-dashboard");
+                        navigate("/admin-dashboard", {state: { paciente: enviarUsuario }});
                         break;
                     case 2:
-                        navigate("/doctor-dashboard");
+                        navigate("/doctor-dashboard", {state: { paciente: enviarUsuario }});
                         break;
                     case 3:
-                        navigate("/recepcionist-dashboard");
+                        navigate("/recepcionist-dashboard", {state: { paciente: enviarUsuario }});
                         break;
                     case 1:
-                        navigate("/panel-paciente");
+                        console.log("Point 3");
+                        navigate("/panel-paciente", {state: { paciente: enviarUsuario }});
                         break;
                     default:
                         setMessage("❌ Error: Rol de usuario no válido");
