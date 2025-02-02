@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../assets/Style.css';
+import { RiEdit2Line } from "react-icons/ri";
 
 const AdministrarRoles = () => {
     const [patients, setPatients] = useState([]);
@@ -51,7 +52,7 @@ const AdministrarRoles = () => {
     };
   
     return (
-      <div className="admin-dashboard">
+      <div className="admin-dashboard" style={{ backgroundColor: '#d0dcf5' }}>
         <h1>Panel de Administración</h1>
         <h2>Gestión de Roles</h2>
         <p>Aquí puedes gestionar los permisos y roles de los usuarios.</p>
@@ -71,7 +72,7 @@ const AdministrarRoles = () => {
                 <td>{user.Cedula}</td>
                 <td>{user.Rol}</td>
                 <td>
-                  <button className="btn btn-primary btn-sm" onClick={() => handleEditRole(user)}>Editar</button>
+                  <button style={styles.btn} title="Editar" onClick={() => handleEditRole(user)}><RiEdit2Line /></button>
                 </td>
               </tr>
             ))}
@@ -94,4 +95,21 @@ const AdministrarRoles = () => {
       </div>
     );
   };
+
+  const styles = {
+    btn: {
+      width: "30px",
+      height: "30px",
+      borderRadius: "5px",
+      left: "66%",
+      top: "33%",
+      marginDown: "5px",
+      border: "none",
+      background: "transparent",
+      cursor: "pointer",
+      color: "#373f4f",
+      fontSize: "20px"
+    }
+  };
+
 export default AdministrarRoles;
