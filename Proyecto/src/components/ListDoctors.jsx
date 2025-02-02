@@ -156,7 +156,7 @@ const styles = {
     borderRadius: "5px",
     position: "absolute",
     left: "67%",
-    top: "17%",
+    top: "13%",
     marginDown: "5px",
     border: "none",
     background: "transparent",

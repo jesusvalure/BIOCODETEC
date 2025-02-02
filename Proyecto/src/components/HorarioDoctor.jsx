@@ -8,7 +8,7 @@ const HorarioDoctor = () => {
     const location = useLocation();
     const { doctor } = location.state || {};
 
-    const diasSemana = ["Lun", "Mar", "Mié", "Juv", "Vie", "Sab"];
+    const diasSemana = ["Dom", "Lun", "Mar", "Mié", "Juv", "Vie", "Sab"];
 
     if (!doctor || typeof doctor.Nombre !== "string") {
         return (
@@ -44,18 +44,20 @@ const HorarioDoctor = () => {
     return (
         <div style={styles.background}>
             <div style={styles.container}>
-                <h2 style={styles.title}>Horario de {doctor.Nombre}</h2>
+                <h2 style={styles.title}>Horario de Dr. {doctor.Nombre}</h2>
                 <h3>{doctor.Especialidad}</h3>
                 <p>Días Laborales</p>
                 <div>
                     {diasSemana.map((dia, index) => (
                         <button
                             key={index}
-                            onClick={() => toggleEstado(index)} // Cambia el estado al hacer clic
+                            onClick={() => index !== 0 && toggleEstado(index)} 
                             style={{
                                 ...styles.button,
                                 backgroundColor: vectorEstado[index] === 1 ? "#4CAF50" : "#E74C3C",
                                 color: "white",
+                                cursor: index === 0 ? "not-allowed" : "pointer", 
+                                opacity: index === 0 ? 0.6 : 1, 
                             }}
                         >
                             {vectorEstado[index] === 1 ? <TfiCheck /> : <TfiClose />}

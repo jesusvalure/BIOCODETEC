@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -15,6 +15,7 @@ const CitasDoctor = () => {
     const [matrizCitas, setMatrizCitas] = useState(
         Array(8).fill().map(() => Array(3).fill(-1)) //Matriz con todo = -1
     );
+    const [diasLaboralesDoc, setDiasLaboralesDoc] = useState(null);
 
     const horarios = [["8:00", "8:20", "8:40"], 
                       ["9:00", "9:20", "9:40"], 
@@ -24,6 +25,8 @@ const CitasDoctor = () => {
                       ["14:00", "14:20", "14:40"], 
                       ["15:00", "15:20", "15:40"], 
                       ["16:00", "16:20", "16:40"]];
+    
+     
 
                       
 
@@ -40,6 +43,13 @@ const CitasDoctor = () => {
             </div>
         );
     }
+
+    useEffect(() => {
+        if (doctor && doctor.DiasLaborales) {
+            setDiasLaboralesDoc(doctor.DiasLaborales);
+            console.log(diasLaboralesDoc);
+        }
+    }, [doctor]); 
 
     if (!paciente || typeof paciente.Nombre !== "string") {
         return (
@@ -115,7 +125,7 @@ const CitasDoctor = () => {
     return (
         <div style={styles.background}>
             <div style={styles.container}>
-                <h2>{doctor.Nombre}</h2>
+                <h2>Dr. {doctor.Nombre}</h2>
                 <h3>{doctor.Especialidad}</h3>
 
                 {/* Selector de fecha */}
@@ -127,6 +137,7 @@ const CitasDoctor = () => {
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
                         className="customDatepicker"
+                        filterDate={(date) => diasLaboralesDoc[date.getDay()] === 1}
                     />
                 </div>
 

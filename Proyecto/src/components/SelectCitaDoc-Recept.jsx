@@ -111,7 +111,7 @@ const CitasDoctorRecept = () => {
     return (
         <div style={styles.background}>
             <div style={styles.container}>
-                <h2>{doctor.Nombre}</h2>
+                <h2>Dr. {doctor.Nombre}</h2>
                 <h3>{doctor.Especialidad}</h3>
 
                 <p><strong>Paciente: </strong>{paciente.Nombre}</p>

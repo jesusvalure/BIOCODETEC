@@ -6,7 +6,6 @@ import AdminDashboard from './components/AdminDashboard';
 import PanelPaciente from './components/PanelPaciente';
 import DoctorDashboard from './components/DoctorDashboard';
 import ReceptionistDashboard from './components/ReceptionistDashboard';
-import RegisterDiagnosis from './components/RegisterDiagnosis';
 import RegisterUsers from './components/RegisterUsers';
 import PerfilPaciente from './components/PerfilPaciente';
 import SelectDoctorPaciente from './components/SelectDoctorPaciente';
@@ -32,7 +31,6 @@ root.render(
         <Route path="/panel-paciente" element={<PanelPaciente />} />
         <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
         <Route path="/recepcionist-dashboard" element={<ReceptionistDashboard />} />
-        <Route path="/register-diagnosis" element={<RegisterDiagnosis />} />
         <Route path="/perfil-paciente" element={<PerfilPaciente />} />
         <Route path="/select-doctor" element={<SelectDoctorPaciente />} />
         <Route path="/citas-doctor" element={<CitasDoctor />} />

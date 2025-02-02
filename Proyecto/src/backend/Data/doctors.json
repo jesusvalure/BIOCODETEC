@@ -1,6 +1,6 @@
 [
   {
-    "Nombre": "Dr. Ricardo Pérez Mora",
+    "Nombre": "Ricardo Pérez Mora",
     "Cedula": "104580987",
     "Celular": "60127890",
     "Correo": "ricardo.perez@gmail.com",
@@ -9,6 +9,7 @@
     "Contrasena": "Ricardo2025#",
     "Tipo": 2,
     "DiasLaborales": [
+      0,
       1,
       1,
       1,
@@ -206,7 +207,7 @@
     }
   },
   {
-    "Nombre": "Dra. Ana María Vargas Solís",
+    "Nombre": "Ana María Vargas Solís",
     "Cedula": "201230456",
     "Celular": "72561234",
     "Correo": "anamaria.vargas@gmail.com",
@@ -215,6 +216,7 @@
     "Contrasena": "AnaMaria2025$",
     "Tipo": 2,
     "DiasLaborales": [
+      0,
       0,
       1,
       1,
@@ -225,7 +227,7 @@
     "Horario": {}
   },
   {
-    "Nombre": "Dr. Felipe Gómez Calderón",
+    "Nombre": "Felipe Gómez Calderón",
     "Cedula": "309870543",
     "Celular": "87129043",
     "Correo": "felipe.gomez@gmail.com",
@@ -234,6 +236,7 @@
     "Contrasena": "Felipe2025@",
     "Tipo": 2,
     "DiasLaborales": [
+      0,
       1,
       1,
       0,
@@ -244,7 +247,7 @@
     "Horario": {}
   },
   {
-    "Nombre": "Dra. Lucía Fernández Rojas",
+    "Nombre": "Lucía Fernández Rojas",
     "Cedula": "408760321",
     "Celular": "78654321",
     "Correo": "lucia.fernandez@gmail.com",
@@ -253,6 +256,7 @@
     "Contrasena": "Lucia2025%",
     "Tipo": 2,
     "DiasLaborales": [
+      0,
       1,
       0,
       0,
@@ -272,6 +276,7 @@
     "Especialidad": "Medicina General",
     "Tipo": 2,
     "DiasLaborales": [
+      0,
       1,
       0,
       1,
