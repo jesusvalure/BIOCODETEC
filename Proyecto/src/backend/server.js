@@ -206,46 +206,42 @@ app.post("/registerEmployee", (req, res) => {
 
 
 // Endpoint para guardar una nueva cita
+// Endpoint para guardar una nueva cita
 app.post('/guardarcita', (req, res) => {
     console.log(req.body);
-    const { Nombre, Especialidad, NombrePaciente, CedulaPaciente, fecha, hora } = req.body;
+    const { NombreDoctor, Especialidad, NombrePaciente, CedulaPaciente, Fecha, Hora } = req.body;
 
     // Cargar los datos de doctores y pacientes
     const doctores = loadData('doctors.json');
     const pacientes = loadData('patients.json');
 
+    console.log(req.body.NombreDoctor);
     // Buscar el doctor en los datos cargados
-    let doctor = doctores.find(d => d.Nombre === Nombre);
+    let doctor = doctores.find(d => d.Nombre === req.body.NombreDoctor);
     if (!doctor) {
-        return res.status(404).send('Doctor no encontrado');
+        return res.status(404).json({ success: false, message: "Doctor no encontrado" }); // Cambio aquí
     }
 
     // Inicializar la propiedad Horario si no existe
     if (!doctor.Horario) {
         doctor.Horario = {};
     }
-    if (!doctor.Horario[fecha]) {
-        doctor.Horario[fecha] = [];
-    }
-
-    // Verificar si ya existe una cita en esa fecha/hora para el doctor
-    const existingAppointment = doctor.Horario[fecha].find(cita => cita.Hora === hora);
-    if (existingAppointment) {
-        return res.status(400).send('❌ Ya existe una cita en ese horario para este doctor.');
+    if (!doctor.Horario[Fecha]) {
+        doctor.Horario[Fecha] = [];
     }
 
     // Guardar la cita en el horario del doctor
-    doctor.Horario[fecha].push({
+    doctor.Horario[Fecha].push({
         Paciente: NombrePaciente,
         Cedula: CedulaPaciente,
         Tipo: "Consulta",
-        Hora: hora
+        Hora: Hora
     });
-
+    console.log(req.body.CedulaPaciente);
     // Buscar el paciente
-    let paciente = pacientes.find(p => p.Cedula === CedulaPaciente);
+    let paciente = pacientes.find(p => p.Cedula === req.body.CedulaPaciente);
     if (!paciente) {
-        return res.status(404).send('Paciente no encontrado');
+        return res.status(404).json({ success: false, message: "Paciente no encontrado" }); // Cambio aquí
     }
 
     // Asegurar que el paciente tiene la propiedad Citas
@@ -253,18 +249,12 @@ app.post('/guardarcita', (req, res) => {
         paciente.Citas = [];
     }
 
-    // Verificar si ya existe una cita para el paciente en esa fecha
-    const existingPatientAppointment = paciente.Citas.find(cita => cita.Fecha === fecha && cita.Hora === hora);
-    if (existingPatientAppointment) {
-        return res.status(400).send('❌ El paciente ya tiene una cita en esa fecha y hora.');
-    }
-
     // Guardar la cita en la lista de citas del paciente
     paciente.Citas.push({
-        Doctor: Nombre,
+        Doctor: NombreDoctor,
         Especialidad: Especialidad,
-        Fecha: fecha,
-        Hora: hora,
+        Fecha: Fecha,
+        Hora: Hora,
         Tipo: "Consulta",
         Sintomas: "",
         Diagnostico: "",
@@ -279,8 +269,9 @@ app.post('/guardarcita', (req, res) => {
     saveData("doctors.json", doctores);
     saveData("patients.json", pacientes);
 
-    res.status(200).send({ message: '✅ Cita confirmada y guardada correctamente' });
+    res.status(200).json({ success: true, message: '✅ Cita confirmada y guardada correctamente' }); // Cambio aquí
 });
+
 
 app.listen(PORT, () => {
     console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);

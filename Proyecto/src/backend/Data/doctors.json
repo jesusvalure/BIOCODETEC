@@ -248,7 +248,15 @@
       1,
       0
     ],
-    "Horario": {}
+    "Horario": {
+      "undefined": [
+        {
+          "Paciente": "Jesus Valverde Urena",
+          "Cedula": "118340220",
+          "Tipo": "Consulta"
+        }
+      ]
+    }
   },
   {
     "Nombre": "Felipe Gómez Calderón",
@@ -268,7 +276,23 @@
       1,
       1
     ],
-    "Horario": {}
+    "Horario": {
+      "undefined": [
+        {
+          "Paciente": "Michell Quirós Alvares",
+          "Cedula": "104560321",
+          "Tipo": "Consulta"
+        }
+      ],
+      "2025-02-19": [
+        {
+          "Paciente": "Michell Quirós Alvares",
+          "Cedula": "104560321",
+          "Tipo": "Consulta",
+          "Hora": "16:00"
+        }
+      ]
+    }
   },
   {
     "Nombre": "Lucía Fernández Rojas",

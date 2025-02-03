@@ -102,7 +102,6 @@ const CitasDoctor = () => {
                     hora: selectedTime
                 }),
             });
-    
             if (response.ok) {
                 console.log('Cita confirmada y guardada');
                 setShowModal(false);

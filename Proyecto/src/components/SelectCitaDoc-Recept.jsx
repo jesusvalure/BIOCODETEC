@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -12,6 +12,7 @@ const CitasDoctorRecept = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const horarios = [["8:00", "8:20", "8:40"], 
                       ["9:00", "9:20", "9:40"], 
@@ -34,9 +35,10 @@ const CitasDoctorRecept = () => {
     // Inicializar estado con los valores de matrizCitas
     const [buttonStates, setButtonStates] = useState(matrizCitas);
 
-    const { doctor, paciente } = location.state || {}; 
+    const Paciente  = location.state?.paciente;
+    const Doctor = location.state?.doctor;
 
-    if (!doctor || typeof doctor.Nombre !== "string") {
+    if (!Doctor || typeof Doctor.Nombre !== "string") {
         return (
             <div>
                 <p>No se encontró información del doctor. Redirigiendo...</p>
@@ -45,7 +47,7 @@ const CitasDoctorRecept = () => {
         );
     }
 
-    if (!paciente || typeof paciente.Nombre !== "string") {
+    if (!Paciente || typeof Paciente.Nombre !== "string") {
         return (
             <div>
                 <p>No se encontró información del paciente. Redirigiendo...</p>
@@ -59,8 +61,8 @@ const CitasDoctorRecept = () => {
             setSelectedDate(date);
             const formattedDate = format(date, "yyyy-MM-dd");
 
-            if (doctor.Horario[formattedDate]) {
-                setButtonStates(doctor.Horario[formattedDate]);
+            if (Doctor.Horario[formattedDate]) {
+                setButtonStates(Doctor.Horario[formattedDate]);
             } else {
                 setButtonStates(Array(8).fill().map(() => Array(3).fill(0))); // Llenar con ceros si la fecha no existe
             }
@@ -90,32 +92,54 @@ const CitasDoctorRecept = () => {
         }
     };
 
-    const handleConfirm = () => {
+    const handleConfirm = async () => {
         const formattedDate = format(selectedDate, "yyyy-MM-dd");
-        doctor.Horario[formattedDate] = buttonStates;
-        console.log("Cita confirmada:", {
-            doctor: doctor.Nombre,
-            especialidad: doctor.Especialidad,
-            paciente: paciente.Nombre,
-            cedula: paciente.Cedula,
-            fecha: formattedDate,
-            hora: selectedTime
-        });
-
-        // Aquí puedes hacer un fetch para guardar la cita en la base de datos
-
-        setShowModal(false);
-        navigate("/recepcionist-dashboard");
+    
+        try {
+            const response = await fetch('http://localhost:5000/guardarcita', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    NombreDoctor: Doctor.Nombre,
+                    Especialidad: Doctor.Especialidad,
+                    NombrePaciente: Paciente.Nombre,
+                    CedulaPaciente: Paciente.Cedula,
+                    Fecha: formattedDate,
+                    Hora: selectedTime
+                }),
+            });
+    
+            if (response.ok) {
+                console.log('Cita confirmada y guardada');
+                setShowModal(false);
+                navigate("/recepcionist-dashboard", { state: { paciente: Paciente } });
+            } else {
+                // Intenta obtener la respuesta como JSON
+                try {
+                    const errorData = await response.json();
+                    console.error('Error en la respuesta del servidor:', response.status, errorData);
+                    setErrorMessage('Hubo un problema al confirmar la cita. Intenta nuevamente.');
+                } catch (jsonError) {
+                    // Si no es un JSON válido, maneja como texto
+                    const errorText = await response.text();
+                    console.error('Error en la respuesta del servidor (texto):', response.status, errorText);
+                    setErrorMessage('Hubo un problema con la conexión. Intenta más tarde.');
+                }
+            }
+        } catch (error) {
+            console.error('Error de conexión:', error);
+            setErrorMessage('Hubo un problema con la conexión. Intenta más tarde.');
+        }
     };
-
+    
     return (
         <div style={styles.background}>
             <div style={styles.container}>
-                <h2>Dr. {doctor.Nombre}</h2>
-                <h3>{doctor.Especialidad}</h3>
+                <h2>Dr. {Doctor.Nombre}</h2>
+                <h3>{Doctor.Especialidad}</h3>
 
-                <p><strong>Paciente: </strong>{paciente.Nombre}</p>
-                <p><strong>Cedula: </strong>{paciente.Cedula}</p>
+                <p><strong>Paciente: </strong>{Paciente.Nombre}</p>
+                <p><strong>Cedula: </strong>{Paciente.Cedula}</p>
 
                 {/* Selector de fecha */}
                 <div style={styles.datePickerDiv}>
@@ -167,10 +191,10 @@ const CitasDoctorRecept = () => {
                 <div style={styles.modalOverlay}>
                     <div style={styles.modal}>
                         <h3>Confirmar Cita</h3>
-                        <p><strong>Doctor:</strong> {doctor.Nombre}</p>
-                        <p><strong>Especialidad:</strong> {doctor.Especialidad}</p>
-                        <p><strong>Paciente:</strong> {paciente.Nombre}</p>
-                        <p><strong>Cedula:</strong> {paciente.Cedula}</p>
+                        <p><strong>Doctor:</strong> {Doctor.Nombre}</p>
+                        <p><strong>Especialidad:</strong> {Doctor.Especialidad}</p>
+                        <p><strong>Paciente:</strong> {Paciente.Nombre}</p>
+                        <p><strong>Cedula:</strong> {Paciente.Cedula}</p>
                         <p><strong>Fecha:</strong> {format(selectedDate, "yyyy-MM-dd")}</p>
                         <p><strong>Hora:</strong> {selectedTime}</p>
 
