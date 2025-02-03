@@ -13,6 +13,8 @@ const CitasDoctorRecept = () => {
     const [selectedTime, setSelectedTime] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [coordx, setCoordx] = useState(0);
+    const [coordy, setCoordy] = useState(0);
 
     const horarios = [["8:00", "8:20", "8:40"], 
                       ["9:00", "9:20", "9:40"], 
@@ -72,6 +74,8 @@ const CitasDoctorRecept = () => {
     const handleButtonClick = (row, col) => {
         const selectedHour = horarios[row][col];
         setSelectedTime(selectedHour);
+        setCoordx(row);
+        setCoordy(col);
 
         setButtonStates((prevStates) => {
             const newStates = prevStates.map((r, rowIndex) =>
@@ -105,7 +109,9 @@ const CitasDoctorRecept = () => {
                     NombrePaciente: Paciente.Nombre,
                     CedulaPaciente: Paciente.Cedula,
                     Fecha: formattedDate,
-                    Hora: selectedTime
+                    Hora: selectedTime,
+                    coordx: coordx,
+                    coordy: coordy
                 }),
             });
     

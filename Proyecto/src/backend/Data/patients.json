@@ -215,6 +215,13 @@
         "Sintomas": "",
         "Diagnostico": "",
         "Receta": ""
+      },
+      {
+        "Doctor": "Felipe Gómez Calderón",
+        "Especialidad": "Cardiología",
+        "Fecha": "2025-02-20",
+        "Hora": "11:20",
+        "Tipo": "Consulta"
       }
     ]
   }

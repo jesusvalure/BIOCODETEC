@@ -248,15 +248,7 @@
       1,
       0
     ],
-    "Horario": {
-      "undefined": [
-        {
-          "Paciente": "Jesus Valverde Urena",
-          "Cedula": "118340220",
-          "Tipo": "Consulta"
-        }
-      ]
-    }
+    "Horario": {}
   },
   {
     "Nombre": "Felipe Gómez Calderón",
@@ -277,13 +269,6 @@
       1
     ],
     "Horario": {
-      "undefined": [
-        {
-          "Paciente": "Michell Quirós Alvares",
-          "Cedula": "104560321",
-          "Tipo": "Consulta"
-        }
-      ],
       "2025-02-19": [
         {
           "Paciente": "Michell Quirós Alvares",
@@ -291,6 +276,268 @@
           "Tipo": "Consulta",
           "Hora": "16:00"
         }
+      ],
+      "2025-02-20": [
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            1,
+            {
+              "Paciente": "Jesus Valverde Urena",
+              "Cedula": "118340220",
+              "Tipo": "Consulta"
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ]
       ]
     }
   },
