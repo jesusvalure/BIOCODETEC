@@ -98,39 +98,26 @@ const CitasDoctor = () => {
 
     const handleConfirm = async () => {
         const formattedDate = format(selectedDate, "yyyy-MM-dd");
-    
         try {
             const response = await fetch('http://localhost:5000/guardarcita', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    doctor: {
-                        nombre: Doctor.Nombre,
-                        especialidad: Doctor.Especialidad
-                    },
-                    paciente: {
-                        nombre: Paciente.Nombre,
-                        cedula: Paciente.Cedula
-                    },
-                    fecha: formattedDate,
-                    hora: selectedTime
-                }),
+                body: JSON.stringify(Doctor.Nombre,Doctor.Especialidad,Paciente.Nombre,Paciente.Cedula,formattedDate,selectedTime),
             });
+    
             if (response.ok) {
                 console.log('Cita confirmada y guardada');
                 setShowModal(false);
                 navigate("/panel-paciente", { state: { paciente: Paciente } });
             } else {
-                const errorData = await response.json(); // Obtener el mensaje de error del backend
-                console.error('Error en la respuesta del servidor:', response.status, errorData);
+                console.log('Error en la respuesta del servidor:', response.status);
                 setErrorMessage('Hubo un problema al confirmar la cita. Intenta nuevamente.');
             }
         } catch (error) {
-            console.error('Error de conexión:', error);
+            console.log('Error de conexión:', error);
             setErrorMessage('Hubo un problema con la conexión. Intenta más tarde.');
         }
     };
-    
     
 
     return (

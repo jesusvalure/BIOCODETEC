@@ -348,11 +348,11 @@
             }
           ],
           [
-            0,
+            1,
             {
-              "Paciente": "",
-              "Cedula": "",
-              "Tipo": ""
+              "Paciente": "Michell Quirós Alvares",
+              "Cedula": "104560321",
+              "Tipo": "Consulta"
             }
           ]
         ],

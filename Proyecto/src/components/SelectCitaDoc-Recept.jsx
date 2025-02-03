@@ -64,7 +64,8 @@ const CitasDoctorRecept = () => {
             const formattedDate = format(date, "yyyy-MM-dd");
 
             if (Doctor.Horario[formattedDate]) {
-                setButtonStates(Doctor.Horario[formattedDate]);
+                const matrizJson = Doctor.Horario[formattedDate];
+                setButtonStates(matrizJson.map(fila => fila.map(celda => celda[0])));
             } else {
                 setButtonStates(Array(8).fill().map(() => Array(3).fill(0))); // Llenar con ceros si la fecha no existe
             }
@@ -72,19 +73,25 @@ const CitasDoctorRecept = () => {
     };
 
     const handleButtonClick = (row, col) => {
-        const selectedHour = horarios[row][col];
-        setSelectedTime(selectedHour);
-        setCoordx(row);
-        setCoordy(col);
-
+        if (buttonStates[row][col] === -1) {
+            return; // Si la cita está ocupada (-1), no hacer nada
+        }
+    
         setButtonStates((prevStates) => {
             const newStates = prevStates.map((r, rowIndex) =>
-                r.map((val, colIndex) => 
-                    rowIndex === row && colIndex === col ? (val === 0 ? 1 : 0) : 0
-                )
+                r.map((val, colIndex) => {
+                    if (rowIndex === row && colIndex === col) {
+                        return val === 0 ? 1 : 0; // Alternar entre disponible (0) y seleccionada (1)
+                    }
+                    return val; // Mantener el estado actual para el resto
+                })
             );
             return newStates;
         });
+    
+        setSelectedTime(horarios[row][col]);
+        setCoordx(row);
+        setCoordy(col);
     };
 
     const handleAccept = () => {
@@ -161,28 +168,29 @@ const CitasDoctorRecept = () => {
 
                 {/* Matriz de botones */}
                 <div style={styles.grid}>
-                    {buttonStates.map((row, rowIndex) => (
-                        <div key={`row-${rowIndex}`} style={styles.row}>
-                            {row.map((value, colIndex) => (
+                {buttonStates.map((row, rowIndex) => (
+                    <div key={`row-${rowIndex}`} style={styles.row}>
+                        {row.map((value, colIndex) => (
+                            horarios[rowIndex] && horarios[rowIndex][colIndex] && (
                                 <button
-                                key={`button-${rowIndex}-${colIndex}`}
-                                style={{
-                                    ...styles.button,
-                                    backgroundColor: 
-                                        value === 0 ? "#4CAF50" : 
-                                        value === 1 ? "#E74C3C" : "white", // Verde, Rojo o Blanco
-                                    color: value === -1 ? "black" : "white",
-                                    border: value === -1 ? "1px solid black" : "none",
-                                }}
-                                onClick={() => handleButtonClick(rowIndex, colIndex)}
-                            >
-                                     {value === 0 ? <RiCheckLine /> : value === 1 ? <RiCloseLine /> : <RiSubtractFill />}
-                                    {/* Horario debajo del ícono */}
-                                    <div style={styles.textHorario}>{horarios[rowIndex][colIndex]}</div>
+                                    key={`button-${rowIndex}-${colIndex}`}
+                                    style={{
+                                        ...styles.button,
+                                        backgroundColor: 
+                                            value === 0 ? "#4CAF50" : 
+                                            value === 1 ? "#E74C3C" : "white",
+                                        color: value === -1 ? "black" : "white",
+                                        border: value === -1 ? "1px solid black" : "none",
+                                    }}
+                                    onClick={() => handleButtonClick(rowIndex, colIndex)}
+                                >
+                                    {value === 0 ? <RiCheckLine /> : value === 1 ? <RiCloseLine /> : <RiSubtractFill />}
+                                    <div>{horarios[rowIndex][colIndex]}</div>
                                 </button>
-                            ))}
-                        </div>
-                    ))}
+                            )
+                        ))}
+                    </div>
+                ))}
                 </div>
 
                 {/* Botones de navegación */}
