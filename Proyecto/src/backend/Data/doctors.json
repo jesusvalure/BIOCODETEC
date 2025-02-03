@@ -67,58 +67,6 @@
             {
               "Paciente": "Carlos Fernández Mora",
               "Cedula": "701320984",
-              "Tipo": "Consulta"
-            }
-          ]
-        ],
-        [
-          [
-            0,
-            {
-              "Paciente": "",
-              "Cedula": "",
-              "Tipo": ""
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Michell Quirós Alvares",
-              "Cedula": "104560321",
-              "Tipo": "Seguimiento"
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Carlos Fernández Mora",
-              "Cedula": "701320984",
-              "Tipo": "Consulta"
-            }
-          ]
-        ],
-        [
-          [
-            0,
-            {
-              "Paciente": "",
-              "Cedula": "",
-              "Tipo": ""
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Michell Quirós Alvares",
-              "Cedula": "104560321",
-              "Tipo": "Consulta"
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Carlos Fernández Mora",
-              "Cedula": "701320984",
               "Tipo": "Seguimiento"
             }
           ]
@@ -137,7 +85,7 @@
             {
               "Paciente": "Michell Quirós Alvares",
               "Cedula": "104560321",
-              "Tipo": "Seguimiento"
+              "Tipo": "Consulta"
             }
           ],
           [
@@ -215,34 +163,6 @@
             {
               "Paciente": "Michell Quirós Alvares",
               "Cedula": "104560321",
-              "Tipo": "Seguimiento"
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Carlos Fernández Mora",
-              "Cedula": "701320984",
-              "Tipo": "Consulta"
-            }
-          ]
-        ]
-      ],
-      "2025-02-02": [
-        [
-          [
-            0,
-            {
-              "Paciente": "",
-              "Cedula": "",
-              "Tipo": ""
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Michell Quirós Alvares",
-              "Cedula": "104560321",
               "Tipo": "Consulta"
             }
           ],
@@ -252,110 +172,6 @@
               "Paciente": "Carlos Fernández Mora",
               "Cedula": "701320984",
               "Tipo": "Seguimiento"
-            }
-          ]
-        ],
-        [
-          [
-            0,
-            {
-              "Paciente": "",
-              "Cedula": "",
-              "Tipo": ""
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Michell Quirós Alvares",
-              "Cedula": "104560321",
-              "Tipo": "Consulta"
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Carlos Fernández Mora",
-              "Cedula": "701320984",
-              "Tipo": "Consulta"
-            }
-          ]
-        ],
-        [
-          [
-            0,
-            {
-              "Paciente": "",
-              "Cedula": "",
-              "Tipo": ""
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Michell Quirós Alvares",
-              "Cedula": "104560321",
-              "Tipo": "Seguimiento"
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Carlos Fernández Mora",
-              "Cedula": "701320984",
-              "Tipo": "Consulta"
-            }
-          ]
-        ],
-        [
-          [
-            0,
-            {
-              "Paciente": "",
-              "Cedula": "",
-              "Tipo": ""
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Michell Quirós Alvares",
-              "Cedula": "104560321",
-              "Tipo": "Consulta"
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Carlos Fernández Mora",
-              "Cedula": "701320984",
-              "Tipo": "Seguimiento"
-            }
-          ]
-        ],
-        [
-          [
-            0,
-            {
-              "Paciente": "",
-              "Cedula": "",
-              "Tipo": ""
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Michell Quirós Alvares",
-              "Cedula": "104560321",
-              "Tipo": "Seguimiento"
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Carlos Fernández Mora",
-              "Cedula": "701320984",
-              "Tipo": "Consulta"
             }
           ]
         ],
@@ -400,32 +216,6 @@
               "Paciente": "Michell Quirós Alvares",
               "Cedula": "104560321",
               "Tipo": "Consulta"
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Carlos Fernández Mora",
-              "Cedula": "701320984",
-              "Tipo": "Consulta"
-            }
-          ]
-        ],
-        [
-          [
-            0,
-            {
-              "Paciente": "",
-              "Cedula": "",
-              "Tipo": ""
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Michell Quirós Alvares",
-              "Cedula": "104560321",
-              "Tipo": "Seguimiento"
             }
           ],
           [
