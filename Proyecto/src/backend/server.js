@@ -12,29 +12,38 @@ app.use(express.urlencoded({ extended: true }));
 
 
 function saveData(fileName, data) {
-    const filePath = path.join(__dirname, "data", fileName);
+    const dirPath = path.join(__dirname, "Data");
+    const filePath = path.join(dirPath, fileName);
+
     try {
+        if (!fs.existsSync(dirPath)) {
+            fs.mkdirSync(dirPath, { recursive: true });
+        }
+
         fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
+        console.log(`✅ Datos guardados en ${filePath}`);
     } catch (error) {
-        console.error("❌ Error al guardar datos:", error);
+        console.error(`❌ Error al guardar datos en ${filePath}:`, error);
     }
 }
+
 
 // Función para cargar datos de un archivo JSON
 function loadData(fileName) {
     try {
-        const filePath = path.resolve(__dirname, "Data", fileName);
+        const filePath = path.join(__dirname, "Data", fileName);
         if (!fs.existsSync(filePath)) {
-            throw new Error(`Archivo no encontrado: ${filePath}`);
+            fs.writeFileSync(filePath, JSON.stringify([], null, 2), "utf-8"); // Crear archivo si no existe
+            return [];
         }
-
         const jsonData = fs.readFileSync(filePath, "utf8");
         return JSON.parse(jsonData);
     } catch (error) {
         console.error("Error al cargar el archivo:", error);
-        return []; // o lanzar error
+        return [];
     }
 }
+
 
 // Endpoints para obtener datos
 app.get("/patients", (req, res) => {
@@ -196,79 +205,81 @@ app.post("/registerEmployee", (req, res) => {
 });
 
 
-// Ruta para guardar la cita
+// Endpoint para guardar una nueva cita
 app.post('/guardarcita', (req, res) => {
     console.log(req.body);
-    const {Nombre, Especialidad, NombrePaciente, CedulaPaciente, fecha, hora} = req.body;
+    const { Nombre, Especialidad, NombrePaciente, CedulaPaciente, fecha, hora } = req.body;
 
     // Cargar los datos de doctores y pacientes
     const doctores = loadData('doctors.json');
     const pacientes = loadData('patients.json');
 
     // Buscar el doctor en los datos cargados
-    const doctor = doctores.find(d => d.Nombre === Nombre && d.Especialidad === Especialidad);
-
+    let doctor = doctores.find(d => d.Nombre === Nombre);
     if (!doctor) {
         return res.status(404).send('Doctor no encontrado');
     }
 
-
-    // Verificar si ya existe ese día en el horario del doctor
+    // Inicializar la propiedad Horario si no existe
+    if (!doctor.Horario) {
+        doctor.Horario = {};
+    }
     if (!doctor.Horario[fecha]) {
-        doctor.Horario[fecha] = [
-            // Cada uno de los intervalos de hora
-            [[0, { "Paciente": "", "Cedula": "", "Tipo": "" }],
-             [1, { "Paciente": "", "Cedula": "", "Tipo": "" }]],
-        ];
+        doctor.Horario[fecha] = [];
     }
 
-    // Buscar un espacio vacío (0) en el horario
-    let espacioDisponible = false;
-    const horario = doctor.Horario[fecha];
-
-    for (let i = 0; i < horario.length; i++) {
-        for (let j = 0; j < horario[i].length; j++) {
-            if (horario[i][j][0] === 0) {
-                horario[i][j] = [1, {Paciente: NombrePaciente, Cedula: CedulaPaciente, Tipo: "Consulta"}];
-                espacioDisponible = true;
-                break;
-            }
-        }
-        if (espacioDisponible) break;
+    // Verificar si ya existe una cita en esa fecha/hora para el doctor
+    const existingAppointment = doctor.Horario[fecha].find(cita => cita.Hora === hora);
+    if (existingAppointment) {
+        return res.status(400).send('❌ Ya existe una cita en ese horario para este doctor.');
     }
 
-    if (!espacioDisponible) {
-        return res.status(400).send('No hay espacio disponible para la cita en la fecha seleccionada');
-    }
+    // Guardar la cita en el horario del doctor
+    doctor.Horario[fecha].push({
+        Paciente: NombrePaciente,
+        Cedula: CedulaPaciente,
+        Tipo: "Consulta",
+        Hora: hora
+    });
 
-    // Guardar los cambios en los doctores
-    saveData('doctors.json', doctores);
-
-    // Ahora actualizamos los datos del paciente
-    const paciente = pacientes.find(p => p.Cedula === CedulaPaciente);
-
+    // Buscar el paciente
+    let paciente = pacientes.find(p => p.Cedula === CedulaPaciente);
     if (!paciente) {
         return res.status(404).send('Paciente no encontrado');
     }
 
-    // Agregar la cita al historial del paciente
+    // Asegurar que el paciente tiene la propiedad Citas
     if (!paciente.Citas) {
         paciente.Citas = [];
     }
 
+    // Verificar si ya existe una cita para el paciente en esa fecha
+    const existingPatientAppointment = paciente.Citas.find(cita => cita.Fecha === fecha && cita.Hora === hora);
+    if (existingPatientAppointment) {
+        return res.status(400).send('❌ El paciente ya tiene una cita en esa fecha y hora.');
+    }
+
+    // Guardar la cita en la lista de citas del paciente
     paciente.Citas.push({
-        
         Doctor: Nombre,
         Especialidad: Especialidad,
         Fecha: fecha,
         Hora: hora,
         Tipo: "Consulta",
+        Sintomas: "",
+        Diagnostico: "",
+        Receta: "",
     });
 
-    // Guardar los cambios en los pacientes
-    saveData('patients.json', pacientes);
+    // Escribir los cambios en los archivos JSON
+    fs.writeFileSync(path.resolve(__dirname, 'Data', 'doctors.json'), JSON.stringify(doctores, null, 2));
+    fs.writeFileSync(path.resolve(__dirname, 'Data', 'patients.json'), JSON.stringify(pacientes, null, 2));
 
-    res.status(200).send({ message: 'Cita confirmada y guardada correctamente' });
+    // Guardar los cambios en los archivos JSON
+    saveData("doctors.json", doctores);
+    saveData("patients.json", pacientes);
+
+    res.status(200).send({ message: '✅ Cita confirmada y guardada correctamente' });
 });
 
 app.listen(PORT, () => {
