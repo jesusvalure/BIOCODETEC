@@ -1,28 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const ClientProfile = () => {
-  const [userData, setUserData] = useState(null);
   const location = useLocation();
+  const navigate = useNavigate();
   const pacienteLogueado = location.state?.paciente;
-
-  //useEffect(() => {
-  //  // Cargar datos desde el archivo JSON
-  //  fetch("../Data/patients.json")
-  //    .then((response) => {
-  //      if (!response.ok) {
-  //        throw new Error("Error al cargar los datos");
-  //      }
-  //      return response.json();
-  //    })
-  //    .then((data) => {
-  //      // Suponemos que el archivo JSON tiene un array y tomamos el primer usuario
-  //      setUserData(data[0]);
-  //    })
-  //    .catch((error) => {
-  //      console.error("Error al cargar el archivo JSON:", error);
-  //    });
-  //}, []);
 
   if (!pacienteLogueado) {
     return <p>Cargando datos...</p>;
@@ -31,7 +13,6 @@ const ClientProfile = () => {
   return (
     <div style={styles.background}>
       <div style={styles.container}>
-        {/* Encabezado */}
         <div style={styles.header}>
           <div>
             <h2>{pacienteLogueado.Nombre}</h2>
@@ -40,12 +21,21 @@ const ClientProfile = () => {
             <p>Teléfono: {pacienteLogueado.Celular}</p>
           </div>
           <div>
-            <button style={styles.primaryButton}>Actualizar</button>
-            <button style={styles.secondaryButton}>Historial</button>
+            <button
+              style={styles.primaryButton}
+              onClick={() => navigate("/update-profile", { state: { paciente: pacienteLogueado } })}
+            >
+              Actualizar
+            </button>
+            <button
+              style={styles.secondaryButton}
+              onClick={() => navigate("/appointment-history", { state: { paciente: pacienteLogueado } })}
+            >
+              Historial
+            </button>
           </div>
         </div>
 
-        {/* Contenido principal */}
         <div style={styles.details}>
           <div style={styles.column}>
             <h3>Información General</h3>

@@ -295,6 +295,30 @@ app.put("/updateDoctorSchedule", (req, res) => {
     res.json({ message: "✅ Días laborales actualizados con éxito", doctor: doctors[doctorIndex] });
 });
 
+app.put("/updatePatient", (req, res) => {
+    const { Cedula, Nombre, Correo, Celular, Edad, Peso, Estatura } = req.body;
+
+    let patients = loadData("patients.json");
+    let patientIndex = patients.findIndex(p => p.Cedula === Cedula);
+    if (patientIndex === -1) return res.status(404).json({ message: "Paciente no encontrado" });
+
+    patients[patientIndex] = { ...patients[patientIndex], Nombre, Correo, Celular, Edad, Peso, Estatura };
+    saveData("patients.json", patients);
+
+    res.json({ message: "Información actualizada con éxito", paciente: patients[patientIndex] });
+});
+
+app.get("/getPatientAppointments/:Cedula", (req, res) => {
+    const { Cedula } = req.params;
+
+    let patients = loadData("patients.json");
+    let patient = patients.find(p => p.Cedula === Cedula);
+    if (!patient) return res.status(404).json({ message: "Paciente no encontrado" });
+
+    res.json(patient.Citas || []);
+});
+
+
 app.listen(PORT, () => {
     console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
 });
