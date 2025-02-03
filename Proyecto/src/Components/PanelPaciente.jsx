@@ -32,6 +32,7 @@ const PanelPaciente = () => {
   };
 
   const handleRegisterCita = () => {
+    console.log(pacienteLogueado);
     navigate('/select-doctor', {state: { paciente: pacienteLogueado}});  // Redirige para seleccionar un doctor
   };
 

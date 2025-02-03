@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
-import { RiCalendar2Fill } from "react-icons/ri";;
-import { TfiCheck, TfiClose } from "react-icons/tfi";
+import { RiCalendar2Fill, RiSubtractFill, RiCloseLine, RiCheckLine } from "react-icons/ri";
 
 const ReceptionistHorarioDoc = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedTime, setSelectedTime] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [matrizCitas, setMatrizCitas] = useState(Array(8).fill().map(() => Array(3).fill(-1)));
+    const [diasLaboralesDoc, setDiasLaboralesDoc] = useState(null);
+    const [buttonStates, setButtonStates] = useState(null);
 
     const horarios = [["8:00", "8:20", "8:40"], 
                       ["9:00", "9:20", "9:40"], 
@@ -20,21 +25,11 @@ const ReceptionistHorarioDoc = () => {
                       ["15:00", "15:20", "15:40"], 
                       ["16:00", "16:20", "16:40"]];
 
-    const matrizPrueba = [[1, 0, 0], 
-                          [0, 0, 0], 
-                          [0, 0, 1], 
-                          [1, 1, 1], 
-                          [1, 0, 1], 
-                          [1, 0, 0], 
-                          [1, 1, 1], 
-                          [1, 1, 1]];  
+    const Doctor = location.state?.doctor;
 
-    // Inicializar estado con los valores de matrizPrueba
-    const [buttonStates, setButtonStates] = useState(matrizPrueba);
+    console.log(Doctor);
 
-    const { doctor } = location.state || {};
-
-    if (!doctor || typeof doctor.Nombre !== "string") {
+    if (!Doctor || typeof Doctor.Nombre !== "string") {
         return (
             <div>
                 <p>No se encontró información del doctor. Redirigiendo...</p>
@@ -43,35 +38,83 @@ const ReceptionistHorarioDoc = () => {
         );
     }
 
+    useEffect(() => {
+        if (Doctor && Doctor.DiasLaborales) {
+            setDiasLaboralesDoc(Doctor.DiasLaborales);
+        }
+    }, [Doctor]);
+
     const handleChange = (date) => {
         if (date instanceof Date) {
             setSelectedDate(date);
             const formattedDate = format(date, "yyyy-MM-dd");
-            console.log("Fecha seleccionada (YYYY-MM-DD):", formattedDate);
-        } else {
-            console.error("Fecha inválida seleccionada:", date);
-        }
+
+            if (Doctor.Horario[formattedDate]) {
+
+                setMatrizCitas(Doctor.Horario[formattedDate]);
+            } else {
+                setMatrizCitas(Array(8).fill().map(() => Array(3).fill(0)));
+            }
+        } 
     };
 
     const handleButtonClick = (row, col) => {
-        // Alternar entre 0 y 1 en la matriz de estados
-        setButtonStates((prevStates) => {
-            const newStates = prevStates.map((r, rowIndex) =>
-                r.map((val, colIndex) => 
-                    rowIndex === row && colIndex === col ? (val === 0 ? 1 : 0) : val
-                )
-            );
-            return newStates;
-        });
+        if (matrizCitas[row][col][0] === 1) {
+            // Si el cupo está ocupado, no hacer nada
+            return;
+        }
 
-        console.log(`Botón en (${row}, ${col}) cambiado a: ${buttonStates[row][col] === 0 ? 1 : 0}`);
+         if (date instanceof Date) {
+            setSelectedDate(date);
+            const formattedDate = format(date, "yyyy-MM-dd");
+
+            if (Doctor.Horario[formattedDate]) {
+                const matrizJson = Doctor.Horario[formattedDate];
+                setMatrizCitas(matrizJson.map(fila => fila.map(celda => celda[0])));
+                console.log("Matriz seteada desde el JSON");
+            } else {
+                setMatrizCitas(Array(8).fill().map(() => Array(3).fill(0))); // Llenar con ceros si la fecha no existe
+            }
+        } 
+    };
+
+    const handleAccept = () => {
+        setErrorMessage("");
+        if (selectedDate && selectedTime) {
+            setShowModal(true);
+        } else {
+            setErrorMessage("Selecciona una fecha y una hora antes de continuar.");
+        }
+    };
+
+    const handleConfirm = async () => {
+        const formattedDate = format(selectedDate, "yyyy-MM-dd");
+        try {
+            const response = await fetch('http://localhost:5000/guardarcita', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(Doctor.Nombre,Doctor.Especialidad,Paciente.Nombre,Paciente.Cedula,formattedDate,selectedTime),
+            });
+    
+            if (response.ok) {
+                console.log('Cita confirmada y guardada');
+                setShowModal(false);
+                navigate("/recepcionist-dashboard");
+            } else {
+                console.log('Error en la respuesta del servidor:', response.status);
+                setErrorMessage('Hubo un problema al confirmar la cita. Intenta nuevamente.');
+            }
+        } catch (error) {
+            console.log('Error de conexión:', error);
+            setErrorMessage('Hubo un problema con la conexión. Intenta más tarde.');
+        }
     };
 
     return (
         <div style={styles.background}>
             <div style={styles.container}>
-                <h2>{doctor.Nombre}</h2>
-                <h3>{doctor.Especialidad}</h3>
+                <h2>Dr. {Doctor.Nombre}</h2>
+                <h3>{Doctor.Especialidad}</h3>
 
                 {/* Selector de fecha */}
                 <div style={styles.datePickerDiv}>
@@ -82,25 +125,26 @@ const ReceptionistHorarioDoc = () => {
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
                         className="customDatepicker"
+                        filterDate={(date) => diasLaboralesDoc[date.getDay()] === 1}
                     />
                 </div>
 
                 {/* Matriz de botones */}
                 <div style={styles.grid}>
-                    {buttonStates.map((row, rowIndex) => (
+                    {matrizCitas.map((row, rowIndex) => (
                         <div key={`row-${rowIndex}`} style={styles.row}>
                             {row.map((value, colIndex) => (
                                 <button
                                     key={`button-${rowIndex}-${colIndex}`}
                                     style={{
                                         ...styles.button,
-                                        backgroundColor: value === 0 ? "#4CAF50" : "#E74C3C", // Verde si 0, rojo si 1
-                                        color: "white"
+                                        backgroundColor: value === 0 ? "#4CAF50" : value === 1 ? "#E74C3C" : "white",
+                                        color: value === -1 ? "black" : "white",
+                                        border: value === -1 ? "1px solid black" : "none",
                                     }}
                                     onClick={() => handleButtonClick(rowIndex, colIndex)}
                                 >
-                                    {value === 0 ? <TfiCheck /> : <TfiClose />}
-                                    {/* Horario debajo del ícono */}
+                                    {value === 0 ? <RiCheckLine /> : value === 1 ? <RiCloseLine /> : <RiSubtractFill />}
                                     <div style={styles.textHorario}>{horarios[rowIndex][colIndex]}</div>
                                 </button>
                             ))}
@@ -110,8 +154,8 @@ const ReceptionistHorarioDoc = () => {
 
                 {/* Botones de navegación */}
                 <div style={styles.containerBtn}>
-                    <button style={styles.buttonVolver} onClick={() => navigate("/list-doctors")}>Volver</button>
-                    <button style={styles.buttonAceptar} onClick={() => navigate("/list-doctors")}>Aceptar</button>
+                    <button style={styles.buttonVolver} onClick={() => navigate("/list-doctors", { state: { paciente: Paciente } })}>Volver</button>
+                    <button style={styles.buttonAceptar} onClick={handleAccept}>Aceptar</button>
                 </div>
             </div>
         </div>
@@ -140,6 +184,10 @@ const styles = {
         boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
         textAlign: "center",
         width: "400px",
+    },
+    containerBtn: {
+        backgroundColor: "#d0dcf5",
+        marginTop: "25px"
     },
     datePickerDiv: {
         background: "#d0dcf5",

@@ -14,7 +14,6 @@ import ListDoctors from './components/ListDoctors-Recepcionist';
 import ReceptionistCitasDoc from './components/Receptionist-CitasDoctor';
 import HorarioDoctor from './components/HorarioDoctor';
 import FormNuevaCitaRecept from './components/NuevaCita-Recept';
-import CitasDoctorRecept from './components/SelectCitaDoc-Recept';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
@@ -38,7 +37,6 @@ root.render(
         <Route path="/recept-citas-doc" element={<ReceptionistCitasDoc />} />
         <Route path="/horario-doctor" element={<HorarioDoctor />}/>
         <Route path="/nueva-cita-recept" element={<FormNuevaCitaRecept />} />
-        <Route path="/citas-doctor-recept" element={<CitasDoctorRecept />} />
         {/* Redirección para rutas inexistentes */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

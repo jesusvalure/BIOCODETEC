@@ -46,8 +46,6 @@ const SelectDoctorCliente = () => {
     }
     if (valid) {
       const selectedDoctor = doctoresFiltrados.find((doc) => doc.Nombre === doctor);
-      console.log(selectedDoctor);
-      console.log(pacienteLogueado)
       navigate("/citas-doctor", { state: { doctor: selectedDoctor, paciente: pacienteLogueado } });
     }
   };

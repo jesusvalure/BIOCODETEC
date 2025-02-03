@@ -232,13 +232,14 @@ const styles = {
     width: "80%",
   },
   buttonSmall: {
-    padding: "10px",
-    fontSize: "14px",
+    fontSize: "30px",
     cursor: "pointer",
     marginLeft: "10px",
-    backgroundColor: "#4caf50",
+    backgroundColor: "transparent",
     border: "none",
     borderRadius: "4px",
+    color: "#4caf50",
+    height: "50px"
   },
   select: {
     padding: "10px",
@@ -265,7 +266,7 @@ const styles = {
     padding: "10px",
     fontSize: "16px",
     cursor: "pointer",
-    backgroundColor: "#4caf50",
+    backgroundColor: "#373f4f",
     color: "white",
     border: "none",
     borderRadius: "4px",

@@ -24,9 +24,13 @@ const CitasDoctor = () => {
                       ["15:00", "15:20", "15:40"], 
                       ["16:00", "16:20", "16:40"]];
     
-    const { Doctor, Paciente } = location.state || {}; 
+    const Paciente  = location.state?.paciente;
+    const Doctor = location.state?.doctor;
 
-    if (!Doctor || typeof Doctor.Nombre !== "string") {
+    console.log(Paciente);
+    console.log(Doctor);
+
+    if (!Doctor ) {
         return (
             <div>
                 <p>No se encontró información del doctor. Redirigiendo...</p>
@@ -56,6 +60,7 @@ const CitasDoctor = () => {
             const formattedDate = format(date, "yyyy-MM-dd");
 
             if (Doctor.Horario[formattedDate]) {
+
                 setMatrizCitas(Doctor.Horario[formattedDate]);
             } else {
                 setMatrizCitas(Array(8).fill().map(() => Array(3).fill(0)));
@@ -64,13 +69,22 @@ const CitasDoctor = () => {
     };
 
     const handleButtonClick = (row, col) => {
-        const selectedHour = horarios[row][col];
-        setSelectedTime(selectedHour);
-        if (matrizCitas[row][col] !== -1) {
-            const newStates = [...matrizCitas];
-            newStates[row][col] = newStates[row][col] === 0 ? 1 : 0; // Toggle status (0 to 1 or vice versa)
-            setMatrizCitas(newStates);
+        if (matrizCitas[row][col][0] === 1) {
+            // Si el cupo está ocupado, no hacer nada
+            return;
         }
+
+         if (date instanceof Date) {
+            setSelectedDate(date);
+            const formattedDate = format(date, "yyyy-MM-dd");
+
+            if (Doctor.Horario[formattedDate]) {
+                const matrizJson = Doctor.Horario[formattedDate];
+                setMatrizCitas(matrizJson.map(fila => fila.map(celda => celda[0])));
+            } else {
+                setMatrizCitas(Array(8).fill().map(() => Array(3).fill(0))); // Llenar con ceros si la fecha no existe
+            }
+        } 
     };
 
     const handleAccept = () => {
@@ -124,6 +138,7 @@ const CitasDoctor = () => {
                     />
                 </div>
 
+                {/* Matriz de botones */}
                 <div style={styles.grid}>
                     {matrizCitas.map((row, rowIndex) => (
                         <div key={`row-${rowIndex}`} style={styles.row}>
@@ -177,114 +192,104 @@ const CitasDoctor = () => {
 };
 
 
-    // Estilos para el componente
-    const styles = {
-        background: {
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-            width: "100vw",
-            backgroundColor: "#373f4f",
-        },
-        text2: {
-            fontSize: "16px",
-            marginLeft: "95px",
-            marginRight: "10px",
-            marginTop: "1px",
-        },
-        container: {
-            backgroundColor: "#d0dcf5",
-            padding: "20px",
-            borderRadius: "10px",
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-            textAlign: "center",
-            width: "400px",
-        },
-        datePickerDiv: {
-            background: "#d0dcf5",
-            display: "flex",
-            justifyContent: "left",
-            alignItems: "column",
-            height: "20px",
-            width: "350px",
-        },
-        grid: {
-            display: "grid",
-            gridTemplateColumns: "repeat(1, 1fr)",
-            gap: "1px",
-            marginTop: "20px",
-        },
-        row: {
-            display: "flex",
-            justifyContent: "center",
-            marginBottom: "10px",
-        },
-        button: {
-            fontSize: "16px",
-            width: "40px",
-            height: "40px",
-            borderRadius: "50%",
-            margin: "10px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "10px",
-            cursor: "pointer",
-            transition: "0.3s",
-        },
-        textHorario: {
-            fontSize: "12px",
-            marginTop: "5px",
-            color: "#6c757d"
-        },
-        buttonVolver: {
-            backgroundColor: "#3498db",
-            border: "none",
-            color: "white",
-            padding: "10px 20px",
-            textAlign: "center",
-            textDecoration: "none",
-            display: "inline-block",
-            fontSize: "16px",
-            margin: "10px",
-            cursor: "pointer",
-            borderRadius: "5px",
-            width: "100px",
-        },
-        buttonAceptar: {
-            backgroundColor: "#2ecc71",
-            border: "none",
-            color: "white",
-            padding: "10px 20px",
-            textAlign: "center",
-            textDecoration: "none",
-            display: "inline-block",
-            fontSize: "16px",
-            margin: "10px",
-            cursor: "pointer",
-            borderRadius: "5px",
-            width: "100px",
-        },
-        modalOverlay: {
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-        },
-        modal: {
-            backgroundColor: "white",
-            padding: "20px",
-            borderRadius: "8px",
-            textAlign: "center",
-            boxShadow: "0 0 15px rgba(0, 0, 0, 0.2)",
-            width: "300px",
-        },
-    };
+// Estilos para el componente
+const styles = {
+    background: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        width: "100vw",
+        backgroundColor: "#373f4f",
+    },
+    text2: {
+        fontSize: "16px",
+        marginLeft: "95px",
+        marginRight: "10px",
+        marginTop: "1px",
+    },
+    container: {
+        backgroundColor: "#d0dcf5",
+        padding: "20px",
+        borderRadius: "10px",
+        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+        textAlign: "center",
+        width: "400px",
+    },
+    containerBtn: {
+        backgroundColor: "#d0dcf5",
+        marginTop: "25px"
+    },
+    datePickerDiv: {
+        background: "#d0dcf5",
+        display: "flex",
+        justifyContent: "left",
+        alignItems: "column",
+        height: "20px",
+        width: "350px",
+    },
+    grid: {
+        display: "grid",
+        gridTemplateColumns: "repeat(1, 1fr)",
+        gap: "1px",
+        marginTop: "20px",
+    },
+    row: {
+        display: "flex",
+        justifyContent: "center",
+    },
+    button: {
+        width: "65px",
+        height: "45px",
+        padding: "10px",
+        borderRadius: "5px",
+        border: "1px solid #d0dcf5",
+        cursor: "pointer",
+        fontWeight: "bold",
+        fontSize: "11px",
+        textAlign: "center",
+        marginRight: "2px",
+        marginTop: "2px"
+    },
+    buttonVolver: {
+        backgroundColor: "#373f4f",
+        border: "1px solid #ccc",
+        borderRadius: "5px",
+        marginRight: "30px",
+        marginTop: "20px",
+        cursor: "pointer",
+        fontWeight: "bold",
+        color: "white",
+        width: "100px",
+    },
+    buttonAceptar: {
+        backgroundColor: "#373f4f",
+        border: "1px solid #ccc",
+        borderRadius: "5px",
+        marginLeft: "45px",
+        marginTop: "20px",
+        cursor: "pointer",
+        fontWeight: "bold",
+        color: "white",
+        width: "100px",
+    },
+    modalOverlay: { 
+        position: "fixed", 
+        top: 0, 
+        left: 0,
+        width: "100%", 
+        height: "100%", 
+        backgroundColor: "rgba(0, 0, 0, 0.5)", 
+        display: "flex", 
+        justifyContent: "center", 
+        alignItems: "center" 
+    },
+    modal: { 
+        backgroundColor: "white", 
+        padding: "20px", 
+        borderRadius: "10px", 
+        textAlign: "center" 
+    },
+};
 
 export default CitasDoctor;
