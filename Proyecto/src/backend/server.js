@@ -206,7 +206,6 @@ app.post("/registerEmployee", (req, res) => {
 
 
 // Endpoint para guardar una nueva cita
-// Endpoint para guardar una nueva cita
 app.post('/guardarcita', (req, res) => {
     console.log(req.body);
     const { NombreDoctor, Especialidad, NombrePaciente, CedulaPaciente, Fecha, Hora } = req.body;
@@ -272,6 +271,29 @@ app.post('/guardarcita', (req, res) => {
     res.status(200).json({ success: true, message: '✅ Cita confirmada y guardada correctamente' }); // Cambio aquí
 });
 
+app.put("/updateDoctorSchedule", (req, res) => {
+    const { Cedula, DiasLaborales } = req.body; // Recibe la cédula del doctor y los nuevos días laborales
+
+    if (!Cedula || !DiasLaborales) {
+        return res.status(400).json({ message: "❌ Faltan datos: Cedula y DiasLaborales son requeridos" });
+    }
+
+    let doctors = loadData("doctors.json");
+
+    // Buscar al doctor
+    let doctorIndex = doctors.findIndex(d => d.Cedula === Cedula);
+    if (doctorIndex === -1) {
+        return res.status(404).json({ message: "❌ Doctor no encontrado" });
+    }
+
+    // Actualizar los días laborales
+    doctors[doctorIndex].DiasLaborales = DiasLaborales;
+
+    // Guardar cambios en doctors.json
+    saveData("doctors.json", doctors);
+
+    res.json({ message: "✅ Días laborales actualizados con éxito", doctor: doctors[doctorIndex] });
+});
 
 app.listen(PORT, () => {
     console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
