@@ -5,8 +5,15 @@ import RegistrarEmpleados from './RegistrarUsuarioAdmin';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('roles');
+  const [focusIndex, setFocusIndex] = useState(0);  // Controlar la selección de los botones
 
-  const render = () => {
+  const tabs = [
+    { label: 'Gestionar Roles', value: 'roles' },
+    { label: 'Configurar Horarios', value: 'schedules' },
+    { label: 'Registrar Usuarios', value: 'register' }
+  ];
+
+  const renderContent = () => {
     switch (activeTab) {
       case 'roles':
         return <AdministrarRoles />;
@@ -19,32 +26,36 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowDown') {
+      setFocusIndex((prev) => Math.min(prev + 1, tabs.length - 1));
+    } else if (e.key === 'ArrowUp') {
+      setFocusIndex((prev) => Math.max(prev - 1, 0));
+    } else if (e.key === 'Enter') {
+      setActiveTab(tabs[focusIndex].value);  // Seleccionar la pestaña activa
+    }
+  };
+
   return (
     <div style={styles.background}>
-    <div style={styles.container}>
-      <h1 style={styles.title}>Panel de Administración</h1>
-      <nav style={styles.nav}>
-        <button
-          style={{ ...styles.button, ...(activeTab === 'roles' ? styles.activeButton : {}) }}
-          onClick={() => setActiveTab('roles')}
-        >
-          Gestionar Roles
-        </button>
-        <button
-          style={{ ...styles.button, ...(activeTab === 'schedules' ? styles.activeButton : {}) }}
-          onClick={() => setActiveTab('schedules')}
-        >
-          Configurar Horarios
-        </button>
-        <button
-          style={{ ...styles.button, ...(activeTab === 'register' ? styles.activeButton : {}) }}
-          onClick={() => setActiveTab('register')}
-        >
-          Registrar Usuarios
-        </button>
-      </nav>
-      <div style={styles.content}>{render()}</div>
-    </div>
+      <div style={styles.container} onKeyDown={handleKeyDown} tabIndex={0}>  {/* Permitir captura de teclas */}
+        <h1 style={styles.title}>Panel de Administración</h1>
+        <nav style={styles.nav}>
+          {tabs.map((tab, index) => (
+            <button
+              key={tab.value}
+              style={{
+                ...styles.button,
+                ...(index === focusIndex ? styles.activeButton : {}),
+              }}
+              onClick={() => setActiveTab(tab.value)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </nav>
+        <div style={styles.content}>{renderContent()}</div>
+      </div>
     </div>
   );
 };
@@ -74,11 +85,11 @@ const styles = {
   },
   nav: {
     display: 'flex',
+    flexDirection: 'column', // Cambio para alineación vertical
     justifyContent: 'center',
-    alignItems: 'center', // Asegura que los botones estén centrados verticalmente
+    alignItems: 'center',
     gap: '10px',
     marginBottom: '20px',
-    backgroundColor: '#d0dcf5'
   },
   button: {
     padding: '10px 15px',
@@ -99,11 +110,9 @@ const styles = {
     backgroundColor: '#d0dcf5',
     borderRadius: '5px',
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-    maxHeight: '400px', // Limita la altura del contenido
-    overflowY: 'auto', // Habilita desplazamiento vertical
+    maxHeight: '400px',
+    overflowY: 'auto',
   },
 };
-
-
 
 export default AdminDashboard;

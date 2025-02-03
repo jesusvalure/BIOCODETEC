@@ -12,29 +12,38 @@ app.use(express.urlencoded({ extended: true }));
 
 
 function saveData(fileName, data) {
-    const filePath = path.join(__dirname, "data", fileName);
+    const dirPath = path.join(__dirname, "Data");
+    const filePath = path.join(dirPath, fileName);
+
     try {
+        if (!fs.existsSync(dirPath)) {
+            fs.mkdirSync(dirPath, { recursive: true });
+        }
+
         fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
+        console.log(`✅ Datos guardados en ${filePath}`);
     } catch (error) {
-        console.error("❌ Error al guardar datos:", error);
+        console.error(`❌ Error al guardar datos en ${filePath}:`, error);
     }
 }
+
 
 // Función para cargar datos de un archivo JSON
 function loadData(fileName) {
     try {
-        const filePath = path.resolve(__dirname, "Data", fileName);
+        const filePath = path.join(__dirname, "Data", fileName);
         if (!fs.existsSync(filePath)) {
-            throw new Error(`Archivo no encontrado: ${filePath}`);
+            fs.writeFileSync(filePath, JSON.stringify([], null, 2), "utf-8"); // Crear archivo si no existe
+            return [];
         }
-
         const jsonData = fs.readFileSync(filePath, "utf8");
         return JSON.parse(jsonData);
     } catch (error) {
         console.error("Error al cargar el archivo:", error);
-        return []; // o lanzar error
+        return [];
     }
 }
+
 
 // Endpoints para obtener datos
 app.get("/patients", (req, res) => {
@@ -196,80 +205,96 @@ app.post("/registerEmployee", (req, res) => {
 });
 
 
-// Ruta para guardar la cita
 app.post('/guardarcita', (req, res) => {
     console.log(req.body);
-    const {Nombre, Especialidad, NombrePaciente, CedulaPaciente, fecha, hora} = req.body;
+    const { NombreDoctor, Especialidad, NombrePaciente, CedulaPaciente, Fecha, Hora } = req.body;
 
-    // Cargar los datos de doctores y pacientes
+    // Cargar los datos
     const doctores = loadData('doctors.json');
     const pacientes = loadData('patients.json');
 
-    // Buscar el doctor en los datos cargados
-    const doctor = doctores.find(d => d.Nombre === Nombre && d.Especialidad === Especialidad);
+    let doctor = doctores.find(d => d.Nombre === NombreDoctor);
+    if (!doctor) return res.status(404).json({ success: false, message: "Doctor no encontrado" });
 
-    if (!doctor) {
-        return res.status(404).send('Doctor no encontrado');
+    // Inicializar estructura si no existe
+    if (!doctor.Horario) doctor.Horario = {};
+    if (!doctor.Horario[Fecha]) {
+        doctor.Horario[Fecha] = Array(10).fill().map(() => Array(3).fill([0, { Paciente: "", Cedula: "", Tipo: "" }]));
     }
 
+    // Obtener las coordenadas correctas
+    let coordx = req.body.coordx;
+    let coordy = req.body.coordy;
 
-    // Verificar si ya existe ese día en el horario del doctor
-    if (!doctor.Horario[fecha]) {
-        doctor.Horario[fecha] = [
-            // Cada uno de los intervalos de hora
-            [[0, { "Paciente": "", "Cedula": "", "Tipo": "" }],
-             [1, { "Paciente": "", "Cedula": "", "Tipo": "" }]],
-        ];
+    if (coordx === -1 || coordy === -1) {
+        return res.status(400).json({ success: false, message: "No hay espacio disponible para esta hora" });
     }
 
-    // Buscar un espacio vacío (0) en el horario
-    let espacioDisponible = false;
-    const horario = doctor.Horario[fecha];
+    // Guardar la cita en la matriz
+    doctor.Horario[Fecha][coordx][coordy] = [1, { Paciente: NombrePaciente, Cedula: CedulaPaciente, Tipo: "Consulta" }];
 
-    for (let i = 0; i < horario.length; i++) {
-        for (let j = 0; j < horario[i].length; j++) {
-            if (horario[i][j][0] === 0) {
-                horario[i][j] = [1, {Paciente: NombrePaciente, Cedula: CedulaPaciente, Tipo: "Consulta"}];
-                espacioDisponible = true;
-                break;
-            }
-        }
-        if (espacioDisponible) break;
-    }
+    // Guardar en la lista de citas del paciente
+    let paciente = pacientes.find(p => p.Cedula === CedulaPaciente);
+    if (!paciente) return res.status(404).json({ success: false, message: "Paciente no encontrado" });
 
-    if (!espacioDisponible) {
-        return res.status(400).send('No hay espacio disponible para la cita en la fecha seleccionada');
-    }
+    if (!paciente.Citas) paciente.Citas = [];
+    paciente.Citas.push({ Doctor: NombreDoctor, Especialidad, Fecha, Hora, Tipo: "Consulta" });
 
-    // Guardar los cambios en los doctores
-    saveData('doctors.json', doctores);
+    // Guardar en JSON
+    saveData("doctors.json", doctores);
+    saveData("patients.json", pacientes);
 
-    // Ahora actualizamos los datos del paciente
-    const paciente = pacientes.find(p => p.Cedula === CedulaPaciente);
-
-    if (!paciente) {
-        return res.status(404).send('Paciente no encontrado');
-    }
-
-    // Agregar la cita al historial del paciente
-    if (!paciente.Citas) {
-        paciente.Citas = [];
-    }
-
-    paciente.Citas.push({
-        
-        Doctor: Nombre,
-        Especialidad: Especialidad,
-        Fecha: fecha,
-        Hora: hora,
-        Tipo: "Consulta",
-    });
-
-    // Guardar los cambios en los pacientes
-    saveData('patients.json', pacientes);
-
-    res.status(200).send({ message: 'Cita confirmada y guardada correctamente' });
+    res.status(200).json({ success: true, message: '✅ Cita confirmada y guardada correctamente', coordx, coordy });
 });
+
+
+app.put("/updateDoctorSchedule", (req, res) => {
+    const { Cedula, DiasLaborales } = req.body; // Recibe la cédula del doctor y los nuevos días laborales
+
+    if (!Cedula || !DiasLaborales) {
+        return res.status(400).json({ message: "❌ Faltan datos: Cedula y DiasLaborales son requeridos" });
+    }
+
+    let doctors = loadData("doctors.json");
+
+    // Buscar al doctor
+    let doctorIndex = doctors.findIndex(d => d.Cedula === Cedula);
+    if (doctorIndex === -1) {
+        return res.status(404).json({ message: "❌ Doctor no encontrado" });
+    }
+
+    // Actualizar los días laborales
+    doctors[doctorIndex].DiasLaborales = DiasLaborales;
+
+    // Guardar cambios en doctors.json
+    saveData("doctors.json", doctors);
+
+    res.json({ message: "✅ Días laborales actualizados con éxito", doctor: doctors[doctorIndex] });
+});
+
+app.put("/updatePatient", (req, res) => {
+    const { Cedula, Nombre, Correo, Celular, Edad, Peso, Estatura } = req.body;
+
+    let patients = loadData("patients.json");
+    let patientIndex = patients.findIndex(p => p.Cedula === Cedula);
+    if (patientIndex === -1) return res.status(404).json({ message: "Paciente no encontrado" });
+
+    patients[patientIndex] = { ...patients[patientIndex], Nombre, Correo, Celular, Edad, Peso, Estatura };
+    saveData("patients.json", patients);
+
+    res.json({ message: "Información actualizada con éxito", paciente: patients[patientIndex] });
+});
+
+app.get("/getPatientAppointments/:Cedula", (req, res) => {
+    const { Cedula } = req.params;
+
+    let patients = loadData("patients.json");
+    let patient = patients.find(p => p.Cedula === Cedula);
+    if (!patient) return res.status(404).json({ message: "Paciente no encontrado" });
+
+    res.json(patient.Citas || []);
+});
+
 
 app.listen(PORT, () => {
     console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);

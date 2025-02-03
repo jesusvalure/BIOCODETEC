@@ -4,7 +4,7 @@
     "Cedula": "104560321",
     "Celular": "60123456",
     "Correo": "miquial@gmail.com",
-    "Edad": 30,
+    "Edad": "31",
     "Peso": 72,
     "Estatura": 1.75,
     "Padecimientos": [
@@ -14,7 +14,26 @@
     "Usuario": "michell.quiros",
     "Contrasena": "Michell2025!",
     "Tipo": 1,
-    "Citas": []
+    "Citas": [
+      {
+        "Doctor": "Felipe Gómez Calderón",
+        "Especialidad": "Cardiología",
+        "Tipo": "Consulta",
+        "Sintomas": "",
+        "Diagnostico": "",
+        "Receta": ""
+      },
+      {
+        "Doctor": "Felipe Gómez Calderón",
+        "Especialidad": "Cardiología",
+        "Fecha": "2025-02-19",
+        "Hora": "16:00",
+        "Tipo": "Consulta",
+        "Sintomas": "",
+        "Diagnostico": "",
+        "Receta": ""
+      }
+    ]
   },
   {
     "Nombre": "Andrés Villalobos Solano",
@@ -188,6 +207,22 @@
     "Usuario": "jesus.valverde",
     "Contrasena": "1234",
     "Tipo": 1,
-    "Citas": []
+    "Citas": [
+      {
+        "Doctor": "Ana María Vargas Solís",
+        "Especialidad": "Pediatría",
+        "Tipo": "Consulta",
+        "Sintomas": "",
+        "Diagnostico": "",
+        "Receta": ""
+      },
+      {
+        "Doctor": "Felipe Gómez Calderón",
+        "Especialidad": "Cardiología",
+        "Fecha": "2025-02-20",
+        "Hora": "11:20",
+        "Tipo": "Consulta"
+      }
+    ]
   }
 ]

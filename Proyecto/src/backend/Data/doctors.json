@@ -11,7 +11,7 @@
     "DiasLaborales": [
       0,
       1,
-      1,
+      0,
       1,
       0,
       1,
@@ -268,7 +268,278 @@
       1,
       1
     ],
-    "Horario": {}
+    "Horario": {
+      "2025-02-19": [
+        {
+          "Paciente": "Michell Quirós Alvares",
+          "Cedula": "104560321",
+          "Tipo": "Consulta",
+          "Hora": "16:00"
+        }
+      ],
+      "2025-02-20": [
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            1,
+            {
+              "Paciente": "Jesus Valverde Urena",
+              "Cedula": "118340220",
+              "Tipo": "Consulta"
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ]
+      ]
+    }
   },
   {
     "Nombre": "Lucía Fernández Rojas",

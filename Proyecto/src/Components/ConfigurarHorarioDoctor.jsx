@@ -1,80 +1,123 @@
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { TfiCheck, TfiClose } from "react-icons/tfi";
 import { RiLogoutBoxLine, RiFileWarningLine, RiFileCheckLine } from "react-icons/ri";
 
 const ConfigurarHorarioDoctor = () => {
     const navigate = useNavigate();
-    const location = useLocation();
-    const { doctor } = location.state || {};
+    const [doctor, setDoctor] = useState(null);
+    const [doctors, setDoctors] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
 
-    const diasSemana = ["Lun", "Mar", "Mié", "Juv", "Vie", "Sab"];
+    const diasSemana = ["Dom", "Lun", "Mar", "Mié", "Juv", "Vie", "Sab"];
 
-    if (!doctor || typeof doctor.Nombre !== "string") {
-        return (
-            <div>
-                <p>No se encontró información del doctor. Redirigiendo...</p>
-                <button onClick={() => navigate("/list-doctors")}>Volver</button>
-            </div>
-        );
-    }
+    useEffect(() => {
+        fetch("http://localhost:5000/doctors")
+            .then((response) => response.json())
+            .then((data) => setDoctors(data))
+            .catch((error) => console.error("Error al obtener los datos:", error));
+    }, []);
 
-    // Estado para controlar si hay cambios guardados
-    const [cambiosGuardados, setCambiosGuardados] = useState(true); // Default: No hay cambios
+    const filteredDoctors = doctors.filter((doc) =>
+        doc.Nombre.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
-    // Usamos doctor.DíasLaborales si existe, sino, usamos un array de 0s
-    const [vectorEstado, setVectorEstado] = useState(doctor.DiasLaborales);
+    const [cambiosGuardados, setCambiosGuardados] = useState(true);
+    const [vectorEstado, setVectorEstado] = useState(doctor?.DiasLaborales || Array(7).fill(0));
 
-    // Función para alternar el estado de un día específico
     const toggleEstado = (index) => {
-        setVectorEstado(prevState => {
+        setVectorEstado((prevState) => {
             const nuevoEstado = [...prevState];
-            nuevoEstado[index] = nuevoEstado[index] === 1 ? 0 : 1; 
-            setCambiosGuardados(false); 
+            nuevoEstado[index] = nuevoEstado[index] === 1 ? 0 : 1;
+            setCambiosGuardados(false);
             return nuevoEstado;
         });
     };
 
-     // Función para guardar los cambios
-     const guardarCambios = () => {
-        console.log("Horario Guardado:", vectorEstado);
-        setCambiosGuardados(true); 
+    const guardarCambios = () => {
+        if (doctor) {
+            const updatedDoctor = { ...doctor, DiasLaborales: vectorEstado };
+
+            fetch("http://localhost:5000/updateDoctorSchedule", {
+              method: "PUT",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                  Cedula: updatedDoctor.Cedula,
+                  DiasLaborales: updatedDoctor.DiasLaborales
+              })
+          })
+                .then((response) => {
+                    if (response.ok) {
+                        setCambiosGuardados(true);
+                        alert("Horario guardado exitosamente.");
+                    } else {
+                        throw new Error("Error al guardar los cambios.");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    alert("Hubo un error al guardar los cambios.");
+                });
+        }
+    };
+
+    const handleDoctorSelect = (selectedDoctor) => {
+        setDoctor(selectedDoctor);
+        setVectorEstado(selectedDoctor.DiasLaborales);
     };
 
     return (
         <div style={styles.background}>
             <div style={styles.container}>
-                <h2 style={styles.title}>Horario de {doctor.Nombre}</h2>
-                <h3>{doctor.Especialidad}</h3>
-                <p>Días Laborales</p>
-                <div>
-                    {diasSemana.map((dia, index) => (
-                        <button
-                            key={index}
-                            onClick={() => toggleEstado(index)} // Cambia el estado al hacer clic
-                            style={{
-                                ...styles.button,
-                                backgroundColor: vectorEstado[index] === 1 ? "#4CAF50" : "#E74C3C",
-                                color: "white",
-                            }}
-                        >
-                            {vectorEstado[index] === 1 ? <TfiCheck /> : <TfiClose />}
-                            {dia}
-                        </button>
+                <input
+                    type="text"
+                    placeholder="Buscar doctor"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    style={styles.searchInput}
+                />
+                <div style={styles.searchResults}>
+                    {filteredDoctors.map((doc) => (
+                        <div key={doc.Id} onClick={() => handleDoctorSelect(doc)} style={styles.resultItem}>
+                            {doc.Nombre} - {doc.Especialidad}
+                        </div>
                     ))}
                 </div>
-                <button 
-                    style={styles.btnVolver}
-                    title="Volver"
-                    onClick={() => navigate("/list-doctors")}>
-                        <RiLogoutBoxLine />
-                </button>
-                <button 
-                    style={styles.btnGuardar}
-                    title="Guardar"
-                    onClick={guardarCambios}>
-                        {cambiosGuardados ? <RiFileCheckLine /> : <RiFileWarningLine />}
-                </button>
+
+                {doctor && (
+                    <>
+                        <h2 style={styles.title}>Horario de Dr. {doctor.Nombre}</h2>
+                        <h3>{doctor.Especialidad}</h3>
+                        <p>Días Laborales</p>
+                        <div>
+                            {diasSemana.map((dia, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => index !== 0 && toggleEstado(index)}
+                                    style={{
+                                        ...styles.button,
+                                        backgroundColor: vectorEstado[index] === 1 ? "#4CAF50" : "#E74C3C",
+                                        color: "white",
+                                        cursor: index === 0 ? "not-allowed" : "pointer",
+                                        opacity: index === 0 ? 0.6 : 1,
+                                    }}
+                                >
+                                    {vectorEstado[index] === 1 ? <TfiCheck /> : <TfiClose />}
+                                    {dia}
+                                </button>
+                            ))}
+                        </div>
+                        <button style={styles.btnVolver} title="Volver" onClick={() => navigate("/list-doctors")}>
+                            <RiLogoutBoxLine />
+                        </button>
+                        <button style={styles.btnGuardar} title="Guardar" onClick={guardarCambios}>
+                            {cambiosGuardados ? <RiFileCheckLine /> : <RiFileWarningLine />}
+                        </button>
+                        <button style={styles.btnGuardarExtra} onClick={guardarCambios}>Guardar Cambios</button>
+                    </>
+                )}
             </div>
         </div>
     );
@@ -82,94 +125,64 @@ const ConfigurarHorarioDoctor = () => {
 
 const styles = {
     background: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "100vh",
-      width: "100vw",
-      backgroundColor: "#373f4f",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        width: "100vw",
+        backgroundColor: "#373f4f",
     },
     container: {
-      backgroundColor: "#d0dcf5",
-      padding: "20px",
-      borderRadius: "10px",
-      boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-      textAlign: "center",
-      alignItems: "center",
-      width: "550px",
+        backgroundColor: "#d0dcf5",
+        padding: "20px",
+        borderRadius: "10px",
+        textAlign: "center",
+        width: "550px",
     },
     title: {
-      marginBottom: "1px",
-      fontSize: "28px",
-      fontWeight: "bold",
-    },
-    field: {
-      marginBottom: "15px",
-      textAlign: "left",
-    },
-    label: {
-      display: "block",
-      marginBottom: "5px",
-      fontWeight: "bold",
-    },
-    select: {
-      width: "100%",
-      padding: "8px",
-      borderRadius: "5px",
-      border: "1px solid #ccc",
-    },
-    error: {
-      color: "red",
-      fontSize: "12px",
-      marginTop: "5px",
-    },
-    buttons: {
-      display: "flex",
-      justifyContent: "space-between",
-      marginTop: "20px",
-      width: "100%",
+        fontSize: "28px",
+        fontWeight: "bold",
     },
     button: {
         width: "65px",
         height: "70px",
-        padding: "10px",
         borderRadius: "5px",
-        border: "1px solid #d0dcf5",
-        cursor: "pointer",
-        fontWeight: "bold",
-        fontSize: "18px",
-        textAlign: "center",
-        marginRight: "2px",
-        marginTop: "2px"
+        margin: "5px",
     },
     btnVolver: {
-      width: "30px",
-      height: "30px",
-      borderRadius: "5px",
-      position: "absolute",
-      left: "66%",
-      top: "33%",
-      marginDown: "5px",
-      border: "none",
-      background: "transparent",
-      cursor: "pointer",
-      color: "#373f4f",
-      fontSize: "20px"
+        marginTop: "10px",
+        border: "none",
+        cursor: "pointer",
     },
     btnGuardar: {
-        width: "30px",
-        height: "30px",
-        borderRadius: "5px",
-        position: "absolute",
-        left: "64%",
-        top: "33%",
-        marginDown: "5px",
+        marginTop: "10px",
         border: "none",
-        background: "transparent",
         cursor: "pointer",
-        color: "#373f4f",
-        fontSize: "20px"
-      },
-  };
+    },
+    btnGuardarExtra: {
+        marginTop: "10px",
+        padding: "10px 20px",
+        backgroundColor: "#4CAF50",
+        color: "white",
+        border: "none",
+        borderRadius: "5px",
+        cursor: "pointer",
+    },
+    searchInput: {
+        width: "100%",
+        padding: "10px",
+        marginBottom: "15px",
+    },
+    searchResults: {
+        marginBottom: "15px",
+    },
+    resultItem: {
+        padding: "10px",
+        cursor: "pointer",
+        backgroundColor: "#f1f1f1",
+        marginBottom: "5px",
+        borderRadius: "5px",
+    },
+};
 
 export default ConfigurarHorarioDoctor;
