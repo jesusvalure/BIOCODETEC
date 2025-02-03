@@ -1,6 +1,4 @@
-import  { useState } from "react";
-import doctors from '../backend/Data/doctors.json';
-import pacientes from '../backend/Data/patients.json';
+import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { RiUserFollowFill } from "react-icons/ri";
 
@@ -13,10 +11,34 @@ const FormNuevaCitaRecept = () => {
   const [cedula, setCedula] = useState("");
   const [pacienteEncontrado, setPacienteEncontrado] = useState(null);
   const [errorCedula, setErrorCedula] = useState("");
+  const [pacientes, setPacientes] = useState([]);  // Estado para almacenar pacientes
+  const [doctores, setDoctores] = useState([]);    // Estado para almacenar doctores
   const navigate = useNavigate();
 
-  // Obtener las especialidades únicas del JSON
-  const especialidades = [...new Set(doctors.map((doc) => doc.Especialidad))];
+  // Obtener los pacientes y doctores desde la API cuando el componente se monta
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Realizar peticiones a la API para obtener pacientes y doctores
+        const pacientesResponse = await fetch('http://localhost:5000/patients');
+        const doctoresResponse = await fetch('http://localhost:5000/doctors');
+        
+        const pacientesData = await pacientesResponse.json();
+        const doctoresData = await doctoresResponse.json();
+
+        // Actualizar los estados con los datos obtenidos
+        setPacientes(pacientesData);
+        setDoctores(doctoresData);
+      } catch (error) {
+        console.error("Error al obtener los datos:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Obtener las especialidades únicas de los doctores
+  const especialidades = [...new Set(doctores.map((doc) => doc.Especialidad))];
 
   const handleEspecialidadChange = (e) => {
     const selectedEspecialidad = e.target.value;
@@ -24,7 +46,7 @@ const FormNuevaCitaRecept = () => {
 
     // Filtrar doctores por la especialidad seleccionada
     setDoctoresFiltrados(
-      doctors.filter((doc) => doc.Especialidad === selectedEspecialidad)
+      doctores.filter((doc) => doc.Especialidad === selectedEspecialidad)
     );
     setDoctor("");
     setErrorEspecialidad("");
@@ -37,15 +59,15 @@ const FormNuevaCitaRecept = () => {
 
   const handleCedulaChange = (e) => {
     let value = e.target.value;
-  
+
     // Permitir solo números y guiones, pero sin forzar el formato desde el principio
     value = value.replace(/[^0-9-]/g, "");
-  
+
     // Aplicar el límite de caracteres
     if (value.length > 10) return;
-  
+
     setCedula(value);
-  
+
     // Validar solo si tiene el formato completo
     if (value.length === 10 && !/^\d{1}-\d{4}-\d{4}$/.test(value)) {
       setErrorCedula("Formato incorrecto. Debe ser 112341234");
@@ -53,7 +75,7 @@ const FormNuevaCitaRecept = () => {
       setErrorCedula("");
     }
   };
-  
+
   // Buscar paciente al presionar "Verificar"
   const handleVerificarCedula = () => {
     const paciente = pacientes.find((p) => p.Cedula === cedula);
@@ -69,7 +91,7 @@ const FormNuevaCitaRecept = () => {
 
   const handleAceptar = () => {
     let valid = true;
-  
+
     if (!especialidad) {
       setErrorEspecialidad("Por favor, selecciona una especialidad.");
       valid = false;
@@ -82,10 +104,10 @@ const FormNuevaCitaRecept = () => {
       setErrorCedula("Debes verificar la cédula antes de continuar.");
       valid = false;
     }
-  
+
     if (valid) {
       const selectedDoctor = doctoresFiltrados.find((doc) => doc.Nombre === doctor);
-  
+
       navigate("/citas-doctor-recept", { 
         state: { 
           doctor: selectedDoctor, 
@@ -141,7 +163,6 @@ const FormNuevaCitaRecept = () => {
           {errorEspecialidad && <p style={styles.error}>{errorEspecialidad}</p>}
         </div>
         <div style={styles.field}>
-          
           <label style={styles.label}>Doctor:</label>
           <select
             value={doctor}
@@ -183,94 +204,73 @@ const styles = {
   container: {
     backgroundColor: "#d0dcf5",
     padding: "20px",
-    borderRadius: "10px",
-    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-    textAlign: "center",
-    width: "300px",
+    borderRadius: "8px",
+    width: "80%",
+    maxWidth: "500px",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
   },
   title: {
+    fontSize: "24px",
     marginBottom: "20px",
-    fontSize: "18px",
-    fontWeight: "bold",
+    textAlign: "center",
   },
   field: {
     marginBottom: "15px",
-    textAlign: "left",
   },
   label: {
-    display: "block",
-    marginBottom: "5px",
-    fontWeight: "bold",
+    fontSize: "16px",
+    marginBottom: "8px",
+  },
+  divField: {
+    display: "flex",
+    alignItems: "center",
+  },
+  input: {
+    padding: "10px",
+    fontSize: "14px",
+    borderRadius: "4px",
+    width: "80%",
+  },
+  buttonSmall: {
+    padding: "10px",
+    fontSize: "14px",
+    cursor: "pointer",
+    marginLeft: "10px",
+    backgroundColor: "#4caf50",
+    border: "none",
+    borderRadius: "4px",
   },
   select: {
+    padding: "10px",
+    fontSize: "14px",
+    borderRadius: "4px",
     width: "100%",
-    padding: "8px",
-    borderRadius: "5px",
-    border: "1px solid #ccc",
   },
   error: {
     color: "red",
     fontSize: "12px",
-    marginTop: "5px",
+  },
+  pacienteInfo: {
+    marginTop: "10px",
+    fontSize: "14px",
+    backgroundColor: "#f5f5f5",
+    padding: "10px",
+    borderRadius: "5px",
   },
   buttons: {
     display: "flex",
     justifyContent: "space-between",
-    marginTop: "20px",
   },
   button: {
-    backgroundColor: "#4b5c7d",
-    border: "1px solid #ccc",
-    borderRadius: "5px",
-    padding: "8px 15px",
-    cursor: "pointer",
-    fontWeight: "bold",
-    color: "white",
-    width: "200px",
-    margin: "0 5px",
-  },
-  success: {
-    color: "green",
-    fontSize: "12px",
-    marginTop: "5px",
-  },
-  input: {
-    width: "75%",
-    height: "10px",
-    padding: "8px",
-    borderRadius: "5px",
-    border: "1px solid #ccc",
-  },
-  buttonSmall: {
-    backgroundColor: "transparent",
-    border: "none",
-    color: "green",
-    borderRadius: "5px",
-    cursor: "pointer",
-    marginTop: "0px",
-    marginLeft: "1px",
-    marginBottom: "0px",
-    fontSize: "25px",
-    height: "40px",
-    padding: "8px",
-  },
-  pacienteInfo: {
-    backgroundColor: "#e0f7fa", // Azul claro
     padding: "10px",
-    borderRadius: "5px",
-    marginTop: "10px",
-    border: "1px solid #4CAF50",
-    color: "#00796b",
-    textAlign: "left",
-    fontSize: "14px"
-  },
-  divField: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
+    fontSize: "16px",
+    cursor: "pointer",
+    backgroundColor: "#4caf50",
+    color: "white",
+    border: "none",
+    borderRadius: "4px",
+    width: "45%",
   },
 };
-
 
 export default FormNuevaCitaRecept;
