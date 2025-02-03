@@ -197,23 +197,21 @@ app.post("/registerEmployee", (req, res) => {
 
 
 // Ruta para guardar la cita
-app.post('/guardar-cita', (req, res) => {
+app.post('/guardarcita', (req, res) => {
     console.log(req.body);
-    const cita = req.body;
+    const {Nombre, Especialidad, NombrePaciente, CedulaPaciente, fecha, hora} = req.body;
 
     // Cargar los datos de doctores y pacientes
     const doctores = loadData('doctors.json');
     const pacientes = loadData('patients.json');
 
     // Buscar el doctor en los datos cargados
-    const doctor = doctores.find(d => d.Cedula === cita.doctorCedula);
+    const doctor = doctores.find(d => d.Nombre === Nombre && d.Especialidad === Especialidad);
 
     if (!doctor) {
         return res.status(404).send('Doctor no encontrado');
     }
 
-    // Obtener la fecha seleccionada
-    const fecha = cita.fecha;
 
     // Verificar si ya existe ese día en el horario del doctor
     if (!doctor.Horario[fecha]) {
@@ -231,7 +229,7 @@ app.post('/guardar-cita', (req, res) => {
     for (let i = 0; i < horario.length; i++) {
         for (let j = 0; j < horario[i].length; j++) {
             if (horario[i][j][0] === 0) {
-                horario[i][j] = [1, {Paciente: cita.paciente, Cedula: cita.pacienteCedula, Tipo: cita.tipoCita}];
+                horario[i][j] = [1, {Paciente: NombrePaciente, Cedula: CedulaPaciente, Tipo: "Consulta"}];
                 espacioDisponible = true;
                 break;
             }
@@ -247,7 +245,7 @@ app.post('/guardar-cita', (req, res) => {
     saveData('doctors.json', doctores);
 
     // Ahora actualizamos los datos del paciente
-    const paciente = pacientes.find(p => p.Cedula === cita.pacienteCedula);
+    const paciente = pacientes.find(p => p.Cedula === CedulaPaciente);
 
     if (!paciente) {
         return res.status(404).send('Paciente no encontrado');
@@ -259,11 +257,12 @@ app.post('/guardar-cita', (req, res) => {
     }
 
     paciente.Citas.push({
-        doctor: cita.doctor,
-        especialidad: cita.especialidad,
-        fecha: cita.fecha,
-        hora: cita.hora,
-        tipo: cita.tipoCita
+        
+        Doctor: Nombre,
+        Especialidad: Especialidad,
+        Fecha: fecha,
+        Hora: hora,
+        Tipo: "Consulta",
     });
 
     // Guardar los cambios en los pacientes

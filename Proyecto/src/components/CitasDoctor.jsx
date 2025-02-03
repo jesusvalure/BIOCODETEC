@@ -84,20 +84,11 @@ const CitasDoctor = () => {
 
     const handleConfirm = async () => {
         const formattedDate = format(selectedDate, "yyyy-MM-dd");
-        const citaData = {
-            Doctor: Doctor.Nombre,
-            Especialidad: Doctor.Especialidad,
-            Paciente: Paciente.Nombre,
-            Cedula: Paciente.Cedula,
-            Fecha: formattedDate,
-            Hora: selectedTime,
-        };
-    
         try {
-            const response = await fetch('http://localhost:5000/guardar-cita', {
+            const response = await fetch('http://localhost:5000/guardarcita', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(citaData),
+                body: JSON.stringify(Doctor.Nombre,Doctor.Especialidad,Paciente.Nombre,Paciente.Cedula,formattedDate,selectedTime),
             });
     
             if (response.ok) {
