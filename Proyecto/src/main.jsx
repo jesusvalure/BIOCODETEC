@@ -10,7 +10,7 @@ import RegisterUsers from './components/RegisterUsers';
 import PerfilPaciente from './components/PerfilPaciente';
 import SelectDoctorPaciente from './components/SelectDoctorPaciente';
 import CitasDoctor from './components/CitasDoctor';
-import ListDoctors from './components/ListDoctors';
+import ListDoctors from './components/ListDoctors-Recepcionist';
 import ReceptionistCitasDoc from './components/Receptionist-CitasDoctor';
 import HorarioDoctor from './components/HorarioDoctor';
 import FormNuevaCitaRecept from './components/NuevaCita-Recept';

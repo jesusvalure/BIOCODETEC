@@ -64,13 +64,13 @@ const LoginForm = () => {
                 // Redirección según el tipo de usuario
                 switch (Number(loggedUser.Tipo)) {  // Asegura que Tipo sea numérico
                     case 4:
-                        navigate("/admin-dashboard", {state: { paciente: enviarUsuario }});
+                        navigate("/admin-dashboard", {state: { admin: enviarUsuario }});
                         break;
                     case 2:
-                        navigate("/doctor-dashboard", {state: { paciente: enviarUsuario }});
+                        navigate("/doctor-dashboard", {state: { doctor: enviarUsuario }});
                         break;
                     case 3:
-                        navigate("/recepcionist-dashboard", {state: { paciente: enviarUsuario }});
+                        navigate("/recepcionist-dashboard", {state: { recepcionista: enviarUsuario }});
                         break;
                     case 1:
                         console.log("Point 3");
