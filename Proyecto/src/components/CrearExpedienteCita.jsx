@@ -10,6 +10,11 @@ const CrearExpediente = () => {
     const location = useLocation();
 
     const Paciente = location.state?.paciente;
+    const Cita = location.state?.cita;
+
+    const coordX = Cita.X;
+    const coordY = Cita.Y;
+
 
     const handleGuardar = () => {
         const expediente = {
@@ -19,12 +24,8 @@ const CrearExpediente = () => {
         };
 
         console.log("Expediente guardado:", expediente);
-        alert("Expediente guardado con éxito.");
 
-        // Aquí podrías hacer una solicitud POST para guardar en el backend
-        // fetch('/api/expediente', { method: 'POST', body: JSON.stringify(expediente) })
-
-        navigate('/dashboard'); // Redirige al dashboard después de guardar
+        navigate('/doctor-dashboard'); 
     };
 
     return (

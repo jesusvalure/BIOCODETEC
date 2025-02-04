@@ -224,14 +224,14 @@ app.post('/guardarcita', (req, res) => {
 
     // Obtener las coordenadas correctas
     let coordx = req.body.coordx;
-    let coordy = req.body.coordy;f
+    let coordy = req.body.coordy;
 
     if (coordx === -1 || coordy === -1) {
         return res.status(400).json({ success: false, message: "No hay espacio disponible para esta hora" });
     }
 
     // Guardar la cita en la matriz
-    doctor.Horario[Fecha][coordx][coordy] = [1, { Paciente: NombrePaciente, Cedula: CedulaPaciente, Tipo: "Consulta" }];
+    doctor.Horario[Fecha][coordx][coordy] = [1, { Paciente: NombrePaciente, Cedula: CedulaPaciente, Tipo: "Consulta", X: coordx, Y: coordy}];
 
     // Guardar en la lista de citas del paciente
     let paciente = pacientes.find(p => p.Cedula === CedulaPaciente);

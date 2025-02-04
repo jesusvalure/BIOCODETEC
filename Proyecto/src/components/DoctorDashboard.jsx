@@ -12,12 +12,13 @@ const DoctorDashboard = () => {
 
   const fechas = Object.keys(doctor.Horario);
 
-  const handleCrearExpediente = (cedula) => {
+  const handleCrearExpediente = (c) => {
+    let cedula = c.Cedula;
     let pac = pacientes.find(p => p.Cedula === cedula);
 
     console.log(pac);
 
-    navigate("/crear-expediente", {state:{paciente: pac}})
+    navigate("/crear-expediente", {state:{paciente: pac, cita: c}})
   };
 
   return (
@@ -71,7 +72,7 @@ const DoctorDashboard = () => {
                       <td>{cita.Cedula}</td>
                       <td>{cita.Tipo}</td>
                       <td>
-                        <button style={styles.btnAction} onClick={() => handleCrearExpediente(cita.Cedula)}>
+                        <button style={styles.btnAction} onClick={() => handleCrearExpediente(cita)}>
                           <RiFileTransferLine />
                         </button>
                       </td>
