@@ -118,7 +118,15 @@
     "Usuario": "maria.delgado",
     "Contrasena": "Maria2025&",
     "Tipo": 1,
-    "Citas": []
+    "Citas": [
+      {
+        "Doctor": "Ricardo Pérez Mora",
+        "Especialidad": "Medicina General",
+        "Fecha": "2025-02-05",
+        "Hora": "11:20",
+        "Tipo": "Consulta"
+      }
+    ]
   },
   {
     "Nombre": "Javier Sánchez López",

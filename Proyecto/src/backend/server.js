@@ -231,7 +231,7 @@ app.post('/guardarcita', (req, res) => {
     }
 
     // Guardar la cita en la matriz
-    doctor.Horario[Fecha][coordx][coordy] = [1, { Paciente: NombrePaciente, Cedula: CedulaPaciente, Tipo: "Consulta" }];
+    doctor.Horario[Fecha][coordx][coordy] = [1, { Paciente: NombrePaciente, Cedula: CedulaPaciente, Tipo: "Consulta", X: coordx, Y: coordy}];
 
     // Guardar en la lista de citas del paciente
     let paciente = pacientes.find(p => p.Cedula === CedulaPaciente);

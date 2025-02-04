@@ -9,7 +9,12 @@ const CrearExpediente = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const paciente = location.state?.paciente;
+    const Paciente = location.state?.paciente;
+    const Cita = location.state?.cita;
+
+    const coordX = Cita.X;
+    const coordY = Cita.Y;
+
 
     const handleGuardar = async () => {
         if (!paciente || !paciente.Citas || paciente.Citas.length === 0) {
@@ -25,31 +30,9 @@ const CrearExpediente = () => {
             Receta: receta
         };
 
-        // Actualizar el JSON del paciente
-        const pacienteActualizado = {
-            ...paciente,
-            Citas: [nuevaCita]
-        };
+        console.log("Expediente guardado:", expediente);
 
-        try {
-            const response = await fetch("http://localhost:5000/actualizarinfoCita", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(pacienteActualizado)
-            });
-
-            if (response.ok) {
-                alert("Expediente actualizado correctamente.");
-                navigate("/"); // Redirige al dashboard
-            } else {
-                alert("Error al actualizar el expediente.");
-            }
-        } catch (error) {
-            console.error("Error al actualizar:", error);
-            alert("Hubo un problema al guardar la información.");
-        }
+        navigate('/doctor-dashboard'); 
     };
 
     return (
