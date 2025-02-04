@@ -25,7 +25,7 @@ const ListTable = () => {
       <h1 style={styles.title}>Panel de Recepcionista</h1>
       <div style={styles.buttons}>
             <button style={styles.buttonHere}>Consultar Horarios</button>
-            <button style={styles.button}>Registrar Cita</button>
+            <button style={styles.button} onClick={() => navigate("/nueva-cita-recept")}>Registrar Cita</button>
       </div>
       <table className="min-w-full border-collapse border border-gray-300">
         <thead>
@@ -41,12 +41,6 @@ const ListTable = () => {
               <td className="border border-gray-300 px-4 py-2">{doctor.Nombre}</td>
               <td className="border border-gray-300 px-4 py-2">{doctor.Especialidad}</td>
               <td className="border border-gray-300 px-4 py-2 flex gap-2">
-                <button 
-                  title="Citas" 
-                  style={styles.btnAction} 
-                  onClick={() => navigate("/recept-citas-doc", { state: { doctor: doctor } })}>
-                    <RiCalendar2Fill  />
-                </button>
                 <button 
                   title="Horarios" 
                   style={styles.btnAction} 

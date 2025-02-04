@@ -18,7 +18,7 @@ const DoctorDashboard = () => {
 
     console.log(pac);
 
-    navigate("/crear-expediente", {state:{paciente: pac, cita: c}})
+    navigate("/crear-expediente", {state:{paciente: pac, doctor: doctor, cita: c}})
   };
 
   return (

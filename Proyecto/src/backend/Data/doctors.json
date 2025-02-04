@@ -63,11 +63,11 @@
             }
           ],
           [
-            0,
+            1,
             {
-              "Paciente": "",
-              "Cedula": "",
-              "Tipo": "",
+              "Paciente": "María José Delgado",
+              "Cedula": "409420721",
+              "Tipo": "Consulta",
               "X": 1,
               "Y": 1
             }
@@ -223,21 +223,21 @@
             }
           ],
           [
-            0,
+            1,
             {
-              "Paciente": "",
-              "Cedula": "",
-              "Tipo": "",
+              "Paciente": "María José Delgado",
+              "Cedula": "409420721",
+              "Tipo": "Consulta",
               "X": 6,
               "Y": 1
             }
           ],
           [
-            0,
+            1,
             {
-              "Paciente": "",
-              "Cedula": "",
-              "Tipo": "",
+              "Paciente": "María José Delgado",
+              "Cedula": "409420721",
+              "Tipo": "Consulta",
               "X": 6,
               "Y": 2
             }
@@ -296,7 +296,222 @@
       1,
       0
     ],
-    "Horario": {}
+    "Horario": {
+      "2025-02-05": [
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            1,
+            {
+              "Paciente": "Michell Quirós Alvares",
+              "Cedula": "104560321",
+              "Tipo": "Consulta",
+              "X": 2,
+              "Y": 1
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            1,
+            {
+              "Paciente": "Roberto Jiménez Vega",
+              "Cedula": "505410339",
+              "Tipo": "Consulta",
+              "X": 4,
+              "Y": 2
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ]
+      ]
+    }
   },
   {
     "Nombre": "Felipe Gómez Calderón",
@@ -595,54 +810,8 @@
       1,
       0
     ],
-    "Horario": {}
-  },
-  {
-    "Cedula": "303610821",
-    "Nombre": "Melina Urena Retana",
-    "Correo": "meliur@gmail.com",
-    "Celular": "88523232",
-    "Usuario": "melina.urena",
-    "Contrasena": "1234",
-    "Especialidad": "Medicina General",
-    "Tipo": 2,
-    "DiasLaborales": [
-      0,
-      1,
-      0,
-      1,
-      0,
-      1,
-      0
-    ],
     "Horario": {
-      "2025-02-05": [
-        [
-          [
-            1,
-            {
-              "Paciente": "Jesus Valverde Urena",
-              "Cedula": "118340220",
-              "Tipo": "Consulta"
-            }
-          ],
-          [
-            1,
-            {
-              "Paciente": "Michell Quirós Alvares",
-              "Cedula": "104560321",
-              "Tipo": "Consulta"
-            }
-          ],
-          [
-            0,
-            {
-              "Paciente": "",
-              "Cedula": "",
-              "Tipo": ""
-            }
-          ]
-        ],
+      "2025-02-07": [
         [
           [
             0,
@@ -676,6 +845,34 @@
               "Paciente": "",
               "Cedula": "",
               "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            1,
+            {
+              "Paciente": "Gabriela Castro Alvarado",
+              "Cedula": "301560912",
+              "Tipo": "Consulta",
+              "X": 2,
+              "Y": 0
             }
           ],
           [
@@ -827,5 +1024,25 @@
         ]
       ]
     }
+  },
+  {
+    "Cedula": "303610821",
+    "Nombre": "Melina Urena Retana",
+    "Correo": "meliur@gmail.com",
+    "Celular": "88523232",
+    "Usuario": "melina.urena",
+    "Contrasena": "1234",
+    "Especialidad": "Medicina General",
+    "Tipo": 2,
+    "DiasLaborales": [
+      0,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0
+    ],
+    "Horario": {}
   }
 ]

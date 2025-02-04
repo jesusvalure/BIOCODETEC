@@ -34,6 +34,16 @@
         "Sintomas": "",
         "Diagnostico": "",
         "Receta": ""
+      },
+      {
+        "Doctor": "Ana María Vargas Solís",
+        "Especialidad": "Pediatría",
+        "Fecha": "2025-02-05",
+        "Hora": "10:20",
+        "Tipo": "Consulta",
+        "Sintomas": "",
+        "Diagnostico": "",
+        "Receta": ""
       }
     ]
   },
@@ -125,6 +135,46 @@
         "Fecha": "2025-02-05",
         "Hora": "11:20",
         "Tipo": "Consulta"
+      },
+      {
+        "Doctor": "Ricardo Pérez Mora",
+        "Especialidad": "Medicina General",
+        "Fecha": "2025-02-05",
+        "Hora": "15:20",
+        "Tipo": "Consulta",
+        "Sintomas": "",
+        "Diagnostico": "",
+        "Receta": ""
+      },
+      {
+        "Doctor": "Ricardo Pérez Mora",
+        "Especialidad": "Medicina General",
+        "Fecha": "2025-02-05",
+        "Hora": "15:40",
+        "Tipo": "Consulta",
+        "Sintomas": "",
+        "Diagnostico": "",
+        "Receta": ""
+      },
+      {
+        "Doctor": "Ricardo Pérez Mora",
+        "Especialidad": "Medicina General",
+        "Fecha": "2025-02-05",
+        "Hora": "9:20",
+        "Tipo": "Consulta",
+        "Sintomas": "",
+        "Diagnostico": "",
+        "Receta": ""
+      },
+      {
+        "Doctor": "Ricardo Pérez Mora",
+        "Especialidad": "Medicina General",
+        "Fecha": "2025-02-05",
+        "Hora": "9:20",
+        "Tipo": "Consulta",
+        "Sintomas": "",
+        "Diagnostico": "",
+        "Receta": ""
       }
     ]
   },
@@ -176,7 +226,18 @@
     "Usuario": "roberto.jimenez",
     "Contrasena": "Roberto2025$",
     "Tipo": 1,
-    "Citas": []
+    "Citas": [
+      {
+        "Doctor": "Ana María Vargas Solís",
+        "Especialidad": "Pediatría",
+        "Fecha": "2025-02-05",
+        "Hora": "13:40",
+        "Tipo": "Consulta",
+        "Sintomas": "",
+        "Diagnostico": "",
+        "Receta": ""
+      }
+    ]
   },
   {
     "Nombre": "Gabriela Castro Alvarado",
@@ -193,7 +254,18 @@
     "Usuario": "gabriela.castro",
     "Contrasena": "Gabriela2025@",
     "Tipo": 1,
-    "Citas": []
+    "Citas": [
+      {
+        "Doctor": "Lucía Fernández Rojas",
+        "Especialidad": "Medicina General",
+        "Fecha": "2025-02-07",
+        "Hora": "10:00",
+        "Tipo": "Consulta",
+        "Sintomas": "",
+        "Diagnostico": "",
+        "Receta": ""
+      }
+    ]
   },
   {
     "Nombre": "Jesus Valverde Urena",

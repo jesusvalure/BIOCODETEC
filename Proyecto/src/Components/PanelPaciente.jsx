@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaRegUser } from "react-icons/fa";
-import { TbLogout2 } from "react-icons/tb";
+import { RiLogoutBoxLine, RiCalendarCloseLine  } from "react-icons/ri";
 import pacientes from '../backend/Data/patients.json';
 
 const PanelPaciente = () => {
@@ -59,7 +59,7 @@ const PanelPaciente = () => {
             <h2 className="text-center mb-4">{user.Nombre}</h2>
           </div>
           <button style={styles.btnVolver} onClick={handleLogout}>
-            <TbLogout2 />
+            <RiLogoutBoxLine />
           </button>
         </div>
 
@@ -78,7 +78,7 @@ const PanelPaciente = () => {
                 <th className="border border-gray-300 px-4 py-2">Doctor</th>
                 <th className="border border-gray-300 px-4 py-2">Especialidad</th>
                 <th className="border border-gray-300 px-4 py-2">Tipo</th>
-                <th className="border border-gray-300 px-4 py-2">Acciones</th>
+                <th className="border border-gray-300 px-4 py-2"></th>
               </tr>
             </thead>
             <tbody>
@@ -91,7 +91,7 @@ const PanelPaciente = () => {
                     <td>{cita.Especialidad}</td>
                     <td>{cita.Tipo}</td>
                     <td>
-                      <button style={styles.cancelButton} onClick={() => handleCancelCita(index)}>Cancelar</button>
+                      <button style={styles.cancelButton} title="Cancelar Cita" onClick={() => handleCancelCita(index)}><RiCalendarCloseLine /></button>
                     </td>
                   </tr>
                 ))
@@ -119,11 +119,15 @@ const styles = {
   },
   container: {
     backgroundColor: "#d0dcf5",
+    display: 'flex',          
+    flexDirection: 'column',  
+    alignItems: 'center',     
+    justifyContent: 'center', 
     padding: "20px",
     borderRadius: "10px",
     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
     textAlign: "center",
-    width: "500px",
+    width: "650px",
     height: "500px"
   },
   buttons: {
@@ -131,6 +135,7 @@ const styles = {
     justifyContent: "space-between",
     marginTop: "30px",
     marginBottom: "50px",
+    width: "500px"
   },
   button: {
     backgroundColor: "#4b5c7d",
@@ -160,7 +165,7 @@ const styles = {
     height: "50px",
     borderRadius: "5px",
     position: "absolute",
-    left: "64%",
+    left: "69%",
     top: "14%",
     border: "none",
     background: "transparent",
@@ -170,13 +175,23 @@ const styles = {
     padding: "1px",
   },
   cancelButton: {
-    backgroundColor: "#d9534f",
-    color: "white",
+    background: "transparent",
+    color: "#d9534f",
     border: "none",
     borderRadius: "5px",
     padding: "5px 10px",
     cursor: "pointer",
     fontWeight: "bold",
+    fontSize: "30px",
+    height: "40px",
+    width: "60px"
+  },
+  divUserName: {
+    height: "50px",
+    width: "600px",
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center"
   }
 };
 

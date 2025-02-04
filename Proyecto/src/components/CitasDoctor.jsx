@@ -12,7 +12,8 @@ const CitasDoctor = () => {
     const [selectedTime, setSelectedTime] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
-    const [matrizCitas, setMatrizCitas] = useState(Array(8).fill().map(() => Array(3).fill(-1)));
+    const [coordx, setCoordx] = useState(0);
+    const [coordy, setCoordy] = useState(0);
     const [diasLaboralesDoc, setDiasLaboralesDoc] = useState(null);
 
     const horarios = [["8:00", "8:20", "8:40"], 
@@ -23,12 +24,20 @@ const CitasDoctor = () => {
                       ["14:00", "14:20", "14:40"], 
                       ["15:00", "15:20", "15:40"], 
                       ["16:00", "16:20", "16:40"]];
+
+    const matrizCitas = [[-1, -1, -1], 
+                         [-1, -1, -1], 
+                         [-1, -1, -1], 
+                         [-1, -1, -1], 
+                         [-1, -1, -1], 
+                         [-1, -1, -1], 
+                         [-1, -1, -1], 
+                         [-1, -1, -1]]; 
+                         
+    const [buttonStates, setButtonStates] = useState(matrizCitas)
     
     const Paciente  = location.state?.paciente;
     const Doctor = location.state?.doctor;
-
-    console.log(Paciente);
-    console.log(Doctor);
 
     if (!Doctor ) {
         return (
@@ -49,7 +58,7 @@ const CitasDoctor = () => {
         return (
             <div>
                 <p>No se encontró información del paciente. Redirigiendo...</p>
-                <button onClick={() => navigate("/select-doctor", { state: { paciente: Paciente } })}>Volver</button>
+                <button onClick={() => navigate("/select-doctor")}>Volver</button>
             </div>
         );
     }
@@ -60,49 +69,64 @@ const CitasDoctor = () => {
             const formattedDate = format(date, "yyyy-MM-dd");
 
             if (Doctor.Horario[formattedDate]) {
-
-                setMatrizCitas(Doctor.Horario[formattedDate]);
+                const matrizJson = Doctor.Horario[formattedDate];
+                setButtonStates(matrizJson.map(fila => fila.map(celda => celda[0])));
             } else {
-                setMatrizCitas(Array(8).fill().map(() => Array(3).fill(0)));
+                setButtonStates(Array(8).fill().map(() => Array(3).fill(0))); // Llenar con ceros si la fecha no existe
             }
         } 
     };
 
     const handleButtonClick = (row, col) => {
-        if (matrizCitas[row][col][0] === 1) {
-            // Si el cupo está ocupado, no hacer nada
+        if (buttonStates[row][col] === -1) {
+            return; // Si la cita está ocupada (-1), no hacer nada
+        } else if (buttonStates[row][col] === 1){
             return;
         }
-
-         if (date instanceof Date) {
-            setSelectedDate(date);
-            const formattedDate = format(date, "yyyy-MM-dd");
-
-            if (Doctor.Horario[formattedDate]) {
-                const matrizJson = Doctor.Horario[formattedDate];
-                setMatrizCitas(matrizJson.map(fila => fila.map(celda => celda[0])));
-            } else {
-                setMatrizCitas(Array(8).fill().map(() => Array(3).fill(0))); // Llenar con ceros si la fecha no existe
-            }
-        } 
+    
+        setButtonStates((prevStates) => {
+            const newStates = prevStates.map((r, rowIndex) =>
+                r.map((val, colIndex) => {
+                    if (rowIndex === row && colIndex === col) {
+                        return val === 0 ? 1 : 0; // Alternar entre disponible (0) y seleccionada (1)
+                    }
+                    return val; // Mantener el estado actual para el resto
+                })
+            );
+            return newStates;
+        });
+    
+        setSelectedTime(horarios[row][col]);
+        setCoordx(row);
+        setCoordy(col);
     };
 
     const handleAccept = () => {
-        setErrorMessage("");
+        
         if (selectedDate && selectedTime) {
             setShowModal(true);
         } else {
-            setErrorMessage("Selecciona una fecha y una hora antes de continuar.");
+            alert("Selecciona una fecha y una hora antes de continuar.");
         }
     };
 
     const handleConfirm = async () => {
         const formattedDate = format(selectedDate, "yyyy-MM-dd");
+    
         try {
             const response = await fetch('http://localhost:5000/guardarcita', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(Doctor.Nombre,Doctor.Especialidad,Paciente.Nombre,Paciente.Cedula,formattedDate,selectedTime),
+                body: JSON.stringify({
+                    NombreDoctor: Doctor.Nombre,
+                    Especialidad: Doctor.Especialidad,
+                    NombrePaciente: Paciente.Nombre,
+                    CedulaPaciente: Paciente.Cedula,
+                    Fecha: formattedDate,
+                    Hora: selectedTime,
+                    coordx: coordx,
+                    coordy: coordy
+                }),
             });
     
             if (response.ok) {
@@ -110,11 +134,20 @@ const CitasDoctor = () => {
                 setShowModal(false);
                 navigate("/panel-paciente", { state: { paciente: Paciente } });
             } else {
-                console.log('Error en la respuesta del servidor:', response.status);
-                setErrorMessage('Hubo un problema al confirmar la cita. Intenta nuevamente.');
+                // Intenta obtener la respuesta como JSON
+                try {
+                    const errorData = await response.json();
+                    console.error('Error en la respuesta del servidor:', response.status, errorData);
+                    setErrorMessage('Hubo un problema al confirmar la cita. Intenta nuevamente.');
+                } catch (jsonError) {
+                    // Si no es un JSON válido, maneja como texto
+                    const errorText = await response.text();
+                    console.error('Error en la respuesta del servidor (texto):', response.status, errorText);
+                    setErrorMessage('Hubo un problema con la conexión. Intenta más tarde.');
+                }
             }
         } catch (error) {
-            console.log('Error de conexión:', error);
+            console.error('Error de conexión:', error);
             setErrorMessage('Hubo un problema con la conexión. Intenta más tarde.');
         }
     };
@@ -125,6 +158,9 @@ const CitasDoctor = () => {
             <div style={styles.container}>
                 <h2>Dr. {Doctor.Nombre}</h2>
                 <h3>{Doctor.Especialidad}</h3>
+
+                <p><strong>Paciente: </strong>{Paciente.Nombre}</p>
+                <p><strong>Cedula: </strong>{Paciente.Cedula}</p>
 
                 <div style={styles.datePickerDiv}>
                     <p style={styles.text2}><RiCalendar2Fill style={{ fontSize: "20px" }} /> </p>
@@ -140,22 +176,26 @@ const CitasDoctor = () => {
 
                 {/* Matriz de botones */}
                 <div style={styles.grid}>
-                    {matrizCitas.map((row, rowIndex) => (
+                    {buttonStates.map((row, rowIndex) => (
                         <div key={`row-${rowIndex}`} style={styles.row}>
                             {row.map((value, colIndex) => (
-                                <button
-                                    key={`button-${rowIndex}-${colIndex}`}
-                                    style={{
-                                        ...styles.button,
-                                        backgroundColor: value === 0 ? "#4CAF50" : value === 1 ? "#E74C3C" : "white",
-                                        color: value === -1 ? "black" : "white",
-                                        border: value === -1 ? "1px solid black" : "none",
-                                    }}
-                                    onClick={() => handleButtonClick(rowIndex, colIndex)}
-                                >
-                                    {value === 0 ? <RiCheckLine /> : value === 1 ? <RiCloseLine /> : <RiSubtractFill />}
-                                    <div style={styles.textHorario}>{horarios[rowIndex][colIndex]}</div>
-                                </button>
+                                horarios[rowIndex] && horarios[rowIndex][colIndex] && (
+                                    <button
+                                        key={`button-${rowIndex}-${colIndex}`}
+                                        style={{
+                                            ...styles.button,
+                                            backgroundColor: 
+                                                value === 0 ? "#4CAF50" : 
+                                                value === 1 ? "#E74C3C" : "white",
+                                            color: value === -1 ? "black" : "white",
+                                            border: value === -1 ? "1px solid black" : "none",
+                                        }}
+                                        onClick={() => handleButtonClick(rowIndex, colIndex)}
+                                    >
+                                        {value === 0 ? <RiCheckLine /> : value === 1 ? <RiCloseLine /> : <RiSubtractFill />}
+                                        <div>{horarios[rowIndex][colIndex]}</div>
+                                    </button>
+                                )
                             ))}
                         </div>
                     ))}
@@ -177,7 +217,7 @@ const CitasDoctor = () => {
                             <p><strong>Fecha:</strong> {format(selectedDate, "yyyy-MM-dd")}</p>
                             <p><strong>Hora:</strong> {selectedTime}</p>
 
-                            <div style={styles.containerBtn}>
+                            <div>
                                 <button style={styles.buttonVolver} onClick={() => setShowModal(false)}>Atrás</button>
                                 <button style={styles.buttonAceptar} onClick={handleConfirm}>Confirmar</button>
                             </div>
@@ -215,10 +255,6 @@ const styles = {
         boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
         textAlign: "center",
         width: "400px",
-    },
-    containerBtn: {
-        backgroundColor: "#d0dcf5",
-        marginTop: "25px"
     },
     datePickerDiv: {
         background: "#d0dcf5",
@@ -260,7 +296,7 @@ const styles = {
         cursor: "pointer",
         fontWeight: "bold",
         color: "white",
-        width: "100px",
+        width: "110px",
     },
     buttonAceptar: {
         backgroundColor: "#373f4f",
@@ -271,7 +307,7 @@ const styles = {
         cursor: "pointer",
         fontWeight: "bold",
         color: "white",
-        width: "100px",
+        width: "120px",
     },
     modalOverlay: { 
         position: "fixed", 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -15,6 +15,7 @@ const CitasDoctorRecept = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [coordx, setCoordx] = useState(0);
     const [coordy, setCoordy] = useState(0);
+    const [diasLaboralesDoc, setDiasLaboralesDoc] = useState(null);
 
     const horarios = [["8:00", "8:20", "8:40"], 
                       ["9:00", "9:20", "9:40"], 
@@ -49,6 +50,12 @@ const CitasDoctorRecept = () => {
         );
     }
 
+    useEffect(() => {
+        if (Doctor && Doctor.DiasLaborales) {
+            setDiasLaboralesDoc(Doctor.DiasLaborales);
+        }
+    }, [Doctor]);
+    
     if (!Paciente || typeof Paciente.Nombre !== "string") {
         return (
             <div>
@@ -66,6 +73,7 @@ const CitasDoctorRecept = () => {
             if (Doctor.Horario[formattedDate]) {
                 const matrizJson = Doctor.Horario[formattedDate];
                 setButtonStates(matrizJson.map(fila => fila.map(celda => celda[0])));
+                
             } else {
                 setButtonStates(Array(8).fill().map(() => Array(3).fill(0))); // Llenar con ceros si la fecha no existe
             }
@@ -75,6 +83,8 @@ const CitasDoctorRecept = () => {
     const handleButtonClick = (row, col) => {
         if (buttonStates[row][col] === -1) {
             return; // Si la cita está ocupada (-1), no hacer nada
+        }else if (buttonStates[row][col] === 1){
+            return;
         }
     
         setButtonStates((prevStates) => {
@@ -99,7 +109,7 @@ const CitasDoctorRecept = () => {
         if (selectedDate && selectedTime) {
             setShowModal(true);
         } else {
-            alert("Selecciona una fecha y una hora antes de continuar.");
+            setErrorMessage("Selecciona una fecha y una hora antes de continuar.");
         }
     };
 
@@ -163,6 +173,7 @@ const CitasDoctorRecept = () => {
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
                         className="customDatepicker"
+                        filterDate={(date) => diasLaboralesDoc[date.getDay()] === 1}
                     />
                 </div>
 
@@ -194,7 +205,7 @@ const CitasDoctorRecept = () => {
                 </div>
 
                 {/* Botones de navegación */}
-                <div style={styles.containerBtn}>
+                <div>
                     <button style={styles.buttonVolver} onClick={() => navigate("/nueva-cita-recept")}>Volver</button>
                     <button style={styles.buttonAceptar} onClick={handleAccept}>Aceptar</button>
                 </div>
@@ -212,7 +223,7 @@ const CitasDoctorRecept = () => {
                         <p><strong>Fecha:</strong> {format(selectedDate, "yyyy-MM-dd")}</p>
                         <p><strong>Hora:</strong> {selectedTime}</p>
 
-                        <div style={styles.containerBtn}>
+                        <div>
                             <button style={styles.buttonVolver} onClick={() => setShowModal(false)}>Atrás</button>
                             <button style={styles.buttonAceptar} onClick={handleConfirm}>Confirmar</button>
                         </div>
@@ -286,7 +297,7 @@ const styles = {
         cursor: "pointer",
         fontWeight: "bold",
         color: "white",
-        width: "100px",
+        width: "110px",
     },
     buttonAceptar: {
         backgroundColor: "#373f4f",
@@ -297,7 +308,7 @@ const styles = {
         cursor: "pointer",
         fontWeight: "bold",
         color: "white",
-        width: "100px",
+        width: "120px",
     },
     modalOverlay: { 
         position: "fixed", 

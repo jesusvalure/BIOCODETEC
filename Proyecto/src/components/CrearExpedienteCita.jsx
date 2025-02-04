@@ -11,20 +11,21 @@ const CrearExpediente = () => {
 
     const Paciente = location.state?.paciente;
     const Cita = location.state?.cita;
+    const Doctor = location.state?.doctor;
 
     const coordX = Cita.X;
     const coordY = Cita.Y;
 
 
     const handleGuardar = async () => {
-        if (!paciente || !paciente.Citas || paciente.Citas.length === 0) {
+        if (!Paciente || !Paciente.Citas || Paciente.Citas.length === 0) {
             alert("No se encontró una cita asociada.");
             return;
         }
 
         // Asumimos que la última cita es la que se quiere actualizar
         const nuevaCita = {
-            ...paciente.Citas[0], // Copia la última cita
+            ...Paciente.Citas[0], // Copia la última cita
             Sintomas: sintomas,
             Diagnostico: diagnostico,
             Receta: receta
@@ -39,15 +40,15 @@ const CrearExpediente = () => {
         <div style={styles.background}>
             <div style={styles.container}>
                 <div style={styles.divHead}>
-                    <button style={styles.btn} onClick={() => navigate("/perfil-paciente", {state: { paciente: paciente}})}><RiContactsFill /></button>
+                    <button style={styles.btn} onClick={() => navigate("/perfil-paciente", {state: { paciente: Paciente}})}><RiContactsFill /></button>
                     <div style={styles.divHeadInfo}>
-                        <h2 style={styles.textInfo1}>{paciente?.Nombre}</h2>
-                        <p style={styles.textInfo2}>Correo: {paciente?.Correo}</p>
-                        <p style={styles.textInfo2}>Cédula: {paciente?.Cedula}</p>
-                        <p style={styles.textInfo2}>Celular: {paciente?.Celular}</p>
+                        <h2 style={styles.textInfo1}>{Paciente?.Nombre}</h2>
+                        <p style={styles.textInfo2}>Correo: {Paciente?.Correo}</p>
+                        <p style={styles.textInfo2}>Cédula: {Paciente?.Cedula}</p>
+                        <p style={styles.textInfo2}>Celular: {Paciente?.Celular}</p>
                     </div>
-                    <button style={styles.btnSmallBack} onClick={() => navigate("/")}><RiLogoutBoxLine /></button>
-                    <button style={styles.btnSmallSeguimiento} ><RiAddLargeLine /> Cita</button>
+                    <button style={styles.btnSmallBack} onClick={() => navigate("/doctor-dashboard")}><RiLogoutBoxLine /></button>
+                    <button style={styles.btnCitaSeguimiento} onClick={() => navigate("/citas-seguimiento", {state: { paciente: Paciente, doctor: Doctor, cita: Cita}})}><RiAddLargeLine /> Cita</button>
                 </div>
 
                 <textarea
@@ -152,9 +153,9 @@ const styles = {
         background: "transparent",
         position: "relative",
         bottom: "30px",
-        left:"180px",
+        left:"220px",
     },
-    btnSmallSeguimiento: {
+    btnCitaSeguimiento: {
         display: "flex",
         alignItems: "center",           
         justifyContent: "center",
@@ -165,10 +166,11 @@ const styles = {
         color: "white",
         background: "#373f4f",
         position: "relative",
-        bottom: "30px",
-        left:"1px",
+        bottom: "25px",
+        left:"40px",
         borderRadius: '50px',
         gap: "5px",
+        fontWeight: "bold"
     },
     textInfo2: {
         margin: "0px",
