@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { RiFileTransferLine, RiLogoutBoxLine } from "react-icons/ri";
 import pacientes from '../backend/Data/patients.json';

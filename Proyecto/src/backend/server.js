@@ -295,6 +295,21 @@ app.get("/getPatientAppointments/:Cedula", (req, res) => {
     res.json(patient.Citas || []);
 });
 
+
+
+app.delete("/citas/:id", (req, res) => {
+    const id = req.params.id;
+
+    let patients = loadData("patients.json");
+    let patientIndex = patients.findIndex(p => p.Cedula === id);
+    if (patientIndex === -1) return res.status(404).json({ message: "Paciente no encontrado" });
+
+    patients[patientIndex].Citas = [];
+    saveData("patients.json", patients);
+
+    res.json({ message: "✅ Citas canceladas con éxito" });
+});
+
 app.put("/actualizarinfoCita", (req, res) => {
     console.log(req.body);
     const { Cedula, Citas } = req.body;

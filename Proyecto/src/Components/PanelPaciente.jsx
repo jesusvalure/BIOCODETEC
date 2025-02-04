@@ -2,42 +2,50 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaRegUser } from "react-icons/fa";
 import { TbLogout2 } from "react-icons/tb";
+import pacientes from '../backend/Data/patients.json';
 
 const PanelPaciente = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState(null);
+  const [citas, setCitas] = useState([]);
 
-  const pacienteLogueado = location.state?.paciente; 
+  const pacienteLogueado = location.state?.paciente;
 
   useEffect(() => {
-    const loggedUser = JSON.parse(localStorage.getItem('user'));  // Recuperamos el usuario del localStorage
-
+    const loggedUser = JSON.parse(localStorage.getItem('user'));
     if (!loggedUser) {
       console.log('No hay usuario logueado');
-      navigate('/');  // Redirige al login si no hay usuario
+      navigate('/');
     } else {
       console.log('Usuario logueado:', loggedUser);
-      setUser(loggedUser);  // Guardamos los datos del usuario en el estado
+      setUser(loggedUser);
+      const paciente = pacientes.find(p => p.Cedula === pacienteLogueado.Cedula);
+      console.log('Paciente encontrado:', paciente);
+      setCitas(paciente.Citas);
     }
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem('user');  // Eliminamos el usuario del localStorage
-    navigate('/');  // Redirigimos al login
+    localStorage.removeItem('user');
+    navigate('/');
   };
 
   const handleGoToProfile = () => {
-    navigate('/perfil-paciente', {state: { paciente: pacienteLogueado}});  // Redirige al perfil del paciente
+    navigate('/perfil-paciente', { state: { paciente: pacienteLogueado } });
   };
 
   const handleRegisterCita = () => {
-    console.log(pacienteLogueado);
-    navigate('/select-doctor', {state: { paciente: pacienteLogueado}});  // Redirige para seleccionar un doctor
+    navigate('/select-doctor', { state: { paciente: pacienteLogueado } });
+  };
+
+  const handleCancelCita = (index) => {
+    const updatedCitas = citas.filter((_, i) => i !== index);
+    setCitas(updatedCitas);
   };
 
   if (!user) {
-    return null; // Si no hay usuario, no renderizamos nada
+    return null;
   }
 
   return (
@@ -48,14 +56,11 @@ const PanelPaciente = () => {
             <button style={styles.btnPerfil} onClick={handleGoToProfile}>
               <FaRegUser />
             </button>
-            <h2 className="text-center mb-4">{user.Nombre}</h2>  {/* Mostramos el nombre del usuario */}
+            <h2 className="text-center mb-4">{user.Nombre}</h2>
           </div>
-          <div className="user-actions">
-            
-            <button style={styles.btnVolver} onClick={handleLogout}>
-              <TbLogout2 />
-            </button>
-          </div>
+          <button style={styles.btnVolver} onClick={handleLogout}>
+            <TbLogout2 />
+          </button>
         </div>
 
         <div style={styles.buttons}>
@@ -70,26 +75,31 @@ const PanelPaciente = () => {
               <tr className="bg-gray-100">
                 <th className="border border-gray-300 px-4 py-2">Fecha</th>
                 <th className="border border-gray-300 px-4 py-2">Hora</th>
-                <th className="border border-gray-300 px-4 py-2">Médico</th>
+                <th className="border border-gray-300 px-4 py-2">Doctor</th>
                 <th className="border border-gray-300 px-4 py-2">Especialidad</th>
                 <th className="border border-gray-300 px-4 py-2">Tipo</th>
+                <th className="border border-gray-300 px-4 py-2">Acciones</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>20/12/2024</td>
-                <td>10:00 AM</td>
-                <td>Dr. Juan Pérez</td>
-                <td>Cardiología</td>
-                <td>Pendiente</td>
-              </tr>
-              <tr>
-                <td>15/11/2024</td>
-                <td>3:00 PM</td>
-                <td>Dr. María López</td>
-                <td>Dermatología</td>
-                <td>Completada</td>
-              </tr>
+              {citas.length > 0 ? (
+                citas.map((cita, index) => (
+                  <tr key={index}>
+                    <td>{cita.Fecha}</td>
+                    <td>{cita.Hora}</td>
+                    <td>{cita.Doctor}</td>
+                    <td>{cita.Especialidad}</td>
+                    <td>{cita.Tipo}</td>
+                    <td>
+                      <button style={styles.cancelButton} onClick={() => handleCancelCita(index)}>Cancelar</button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6">No hay citas registradas</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -115,31 +125,6 @@ const styles = {
     textAlign: "center",
     width: "500px",
     height: "500px"
-  },
-  title: {
-    marginBottom: "20px",
-    fontSize: "40px",
-    fontWeight: "bold",
-  },
-  field: {
-    marginBottom: "15px",
-    textAlign: "left",
-  },
-  label: {
-    display: "block",
-    marginBottom: "5px",
-    fontWeight: "bold",
-  },
-  select: {
-    width: "100%",
-    padding: "8px",
-    borderRadius: "5px",
-    border: "1px solid #ccc",
-  },
-  error: {
-    color: "red",
-    fontSize: "12px",
-    marginTop: "5px",
   },
   buttons: {
     display: "flex",
@@ -184,14 +169,15 @@ const styles = {
     fontSize: "20px",
     padding: "1px",
   },
-  divUserName: {
-    height: "50px",
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "center",
-
+  cancelButton: {
+    backgroundColor: "#d9534f",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    padding: "5px 10px",
+    cursor: "pointer",
+    fontWeight: "bold",
   }
 };
-
 
 export default PanelPaciente;

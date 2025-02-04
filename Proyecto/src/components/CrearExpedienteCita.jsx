@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { RiSave3Fill, RiLogoutBoxLine, RiContactsFill, RiAddLargeLine  } from "react-icons/ri";
 
@@ -56,7 +56,7 @@ const CrearExpediente = () => {
         <div style={styles.background}>
             <div style={styles.container}>
                 <div style={styles.divHead}>
-                    <button style={styles.btn} onClick={() => navigate("/perfil-paciente", {state: { paciente: Paciente}})}><RiContactsFill /></button>
+                    <button style={styles.btn} onClick={() => navigate("/perfil-paciente", {state: { paciente: paciente}})}><RiContactsFill /></button>
                     <div style={styles.divHeadInfo}>
                         <h2 style={styles.textInfo1}>{paciente?.Nombre}</h2>
                         <p style={styles.textInfo2}>Correo: {paciente?.Correo}</p>
@@ -170,7 +170,6 @@ const styles = {
         position: "relative",
         bottom: "30px",
         left:"180px",
-        bottom: "35px",
     },
     btnSmallSeguimiento: {
         display: "flex",
@@ -185,7 +184,6 @@ const styles = {
         position: "relative",
         bottom: "30px",
         left:"1px",
-        padding: '10px 40px',
         borderRadius: '50px',
         gap: "5px",
     },

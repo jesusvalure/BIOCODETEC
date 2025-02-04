@@ -45,10 +45,15 @@ const ClientProfile = () => {
           <div style={styles.column}>
             <h3>Padecimientos</h3>
             <ul style={styles.list}>
-              {pacienteLogueado.Padecimientos.map((condicion, index) => (
-                <li key={index}>{condicion}</li>
-              ))}
-            </ul>
+  {Array.isArray(pacienteLogueado.Padecimientos) ? (
+    pacienteLogueado.Padecimientos.map((condicion, index) => (
+      <li key={index}>{condicion}</li>
+    ))
+  ) : (
+    <li>No hay padecimientos registrados</li>
+  )}
+</ul>
+
           </div>
         </div>
       </div>
