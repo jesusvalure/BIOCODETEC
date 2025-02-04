@@ -17,6 +17,7 @@ import FormNuevaCitaRecept from './components/NuevaCita-Recept';
 import CitasDoctorRecept from './components/SelectCitaDoc-Recept';
 import UpdateProfile from './components/ActualizarPerfilPaciente';
 import AppointmentHistory from './components/HistorialPaciente';
+import CrearExpediente from './components/CrearExpedienteCita';
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
@@ -42,6 +43,7 @@ root.render(
         <Route path="/citas-doctor-recept" element={<CitasDoctorRecept />} />
         <Route path="/update-profile" element={<UpdateProfile />} />
         <Route path="/appointment-history" element={<AppointmentHistory />} />
+        <Route path="/crear-expediente" element={<CrearExpediente />} />
         {/* Redirección para rutas inexistentes */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

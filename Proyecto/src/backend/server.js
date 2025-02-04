@@ -219,12 +219,12 @@ app.post('/guardarcita', (req, res) => {
     // Inicializar estructura si no existe
     if (!doctor.Horario) doctor.Horario = {};
     if (!doctor.Horario[Fecha]) {
-        doctor.Horario[Fecha] = Array(10).fill().map(() => Array(3).fill([0, { Paciente: "", Cedula: "", Tipo: "" }]));
+        doctor.Horario[Fecha] = Array(8).fill().map(() => Array(3).fill([0, { Paciente: "", Cedula: "", Tipo: "" }]));
     }
 
     // Obtener las coordenadas correctas
     let coordx = req.body.coordx;
-    let coordy = req.body.coordy;
+    let coordy = req.body.coordy;f
 
     if (coordx === -1 || coordy === -1) {
         return res.status(400).json({ success: false, message: "No hay espacio disponible para esta hora" });

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { RiFileTransferLine } from "react-icons/ri";
+import { RiFileTransferLine, RiLogoutBoxLine } from "react-icons/ri";
+import pacientes from '../backend/Data/patients.json';
 
 const DoctorDashboard = () => {
   const navigate = useNavigate();
@@ -11,15 +12,22 @@ const DoctorDashboard = () => {
 
   const fechas = Object.keys(doctor.Horario);
 
-  const handleRegisterDiagnosis = () => {
-    navigate('/register-diagnosis');
+  const handleCrearExpediente = (cedula) => {
+    let pac = pacientes.find(p => p.Cedula === cedula);
+
+    console.log(pac);
+
+    navigate("/crear-expediente", {state:{paciente: pac}})
   };
 
   return (
     <div style={styles.background}>
       <div style={styles.container}>
+        <div style={styles.divVolver}>
+          <button style={styles.btn} onClick={() => navigate("/")}><RiLogoutBoxLine/></button>
+        </div>
         <h1 className="text-center mb-4">Bienvenido Dr. {doctor.Nombre}</h1>
-
+        
         {/* Acordeón de Fechas */}
         {doctor && (
         <div style={{ marginBottom: "20px" }}>
@@ -63,7 +71,7 @@ const DoctorDashboard = () => {
                       <td>{cita.Cedula}</td>
                       <td>{cita.Tipo}</td>
                       <td>
-                        <button style={styles.btnAction}>
+                        <button style={styles.btnAction} onClick={() => handleCrearExpediente(cita.Cedula)}>
                           <RiFileTransferLine />
                         </button>
                       </td>
@@ -127,6 +135,27 @@ const styles = {
     color: "black",
     fontSize: "20px",
   },
+  btn: {
+    width: "40px",
+    height: "40px",
+    borderRadius: "5px",
+    position: "relative",
+    marginDown: "5px",
+    border: "none",
+    left: "280px",
+    top: "1px",
+    background: "transparent",
+    cursor: "pointer",
+    color: "#373f4f",
+    fontSize: "20px"
+  },
+  divVolver: {
+    display: "flex",
+    height: "10px",
+    marginTop: "0px",
+    padding: "0px",
+
+  }
 };
 
 export default DoctorDashboard;
