@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { RiSave3Fill, RiLogoutBoxLine, RiContactsFill } from "react-icons/ri";
+import { RiSave3Fill, RiLogoutBoxLine, RiContactsFill, RiAddLargeLine  } from "react-icons/ri";
 
 const CrearExpediente = () => {
     const [padecimientos, setPadecimientos] = useState("");
@@ -31,13 +31,15 @@ const CrearExpediente = () => {
         <div style={styles.background}>
             <div style={styles.container}>
                 <div style={styles.divHead}>
-                    <button style={styles.btn} onClick={() => navigate("/")}><RiContactsFill /></button>
+                    <button style={styles.btn} onClick={() => navigate("/perfil-paciente", {state: { paciente: Paciente}})}><RiContactsFill /></button>
                     <div style={styles.divHeadInfo}>
                         <h2 style={styles.textInfo1}>{Paciente.Nombre}</h2>
                         <p style={styles.textInfo2}>Correo: {Paciente.Correo}</p>
                         <p style={styles.textInfo2}>Cedula: {Paciente.Cedula}</p>
                         <p style={styles.textInfo2}>Celular: {Paciente.Celular}</p>
                     </div>
+                    <button style={styles.btnSmallBack} onClick={() => navigate("/")}><RiLogoutBoxLine /></button>
+                    <button style={styles.btnSmallSeguimiento} ><RiAddLargeLine /> Cita</button>
                 </div>
                 
 
@@ -133,6 +135,35 @@ const styles = {
         width: "105px",
         padding: "10px",
         background: "#373f4f"
+    },
+    btnSmallBack: {
+        fontSize: "40px",
+        height: "50px",
+        width: "50px",
+        padding: "10px",
+        color: "#373f4f",
+        background: "transparent",
+        position: "relative",
+        bottom: "30px",
+        left:"180px",
+        bottom: "35px",
+    },
+    btnSmallSeguimiento: {
+        display: "flex",
+        alignItems: "center",           
+        justifyContent: "center",
+        fontSize: "15px",
+        height: "50px",
+        width: "130px",
+        padding: "10px",
+        color: "white",
+        background: "#373f4f",
+        position: "relative",
+        bottom: "30px",
+        left:"1px",
+        padding: '10px 40px',
+        borderRadius: '50px',
+        gap: "5px",
     },
     textInfo2: {
         margin: '0px',              // Asegura que no haya margen entre los hijos
