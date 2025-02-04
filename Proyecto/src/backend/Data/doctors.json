@@ -308,6 +308,217 @@
       1,
       0
     ],
-    "Horario": {}
+    "Horario": {
+      "2025-02-05": [
+        [
+          [
+            1,
+            {
+              "Paciente": "Jesus Valverde Urena",
+              "Cedula": "118340220",
+              "Tipo": "Consulta"
+            }
+          ],
+          [
+            1,
+            {
+              "Paciente": "Michell Quirós Alvares",
+              "Cedula": "104560321",
+              "Tipo": "Consulta"
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ],
+        [
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ],
+          [
+            0,
+            {
+              "Paciente": "",
+              "Cedula": "",
+              "Tipo": ""
+            }
+          ]
+        ]
+      ]
+    }
   }
 ]

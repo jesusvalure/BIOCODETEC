@@ -18,14 +18,6 @@
       {
         "Doctor": "Felipe Gómez Calderón",
         "Especialidad": "Cardiología",
-        "Tipo": "Consulta",
-        "Sintomas": "",
-        "Diagnostico": "",
-        "Receta": ""
-      },
-      {
-        "Doctor": "Felipe Gómez Calderón",
-        "Especialidad": "Cardiología",
         "Fecha": "2025-02-19",
         "Hora": "16:00",
         "Tipo": "Consulta",
@@ -34,11 +26,14 @@
         "Receta": ""
       },
       {
-        "Doctor": "Felipe Gómez Calderón",
-        "Especialidad": "Cardiología",
-        "Fecha": "2025-02-20",
-        "Hora": "10:40",
-        "Tipo": "Consulta"
+        "Doctor": "Melina Urena Retana",
+        "Especialidad": "Medicina General",
+        "Fecha": "2025-02-05",
+        "Hora": "8:20",
+        "Tipo": "Consulta",
+        "Sintomas": "",
+        "Diagnostico": "",
+        "Receta": ""
       }
     ]
   },
@@ -216,19 +211,14 @@
     "Tipo": 1,
     "Citas": [
       {
-        "Doctor": "Ana María Vargas Solís",
-        "Especialidad": "Pediatría",
+        "Doctor": "Melina Urena Retana",
+        "Especialidad": "Medicina General",
+        "Fecha": "2025-02-05",
+        "Hora": "8:00",
         "Tipo": "Consulta",
         "Sintomas": "",
         "Diagnostico": "",
         "Receta": ""
-      },
-      {
-        "Doctor": "Felipe Gómez Calderón",
-        "Especialidad": "Cardiología",
-        "Fecha": "2025-02-20",
-        "Hora": "11:20",
-        "Tipo": "Consulta"
       }
     ]
   }

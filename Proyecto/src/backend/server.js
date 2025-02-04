@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 const PORT = 5000;
 
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: "http://localhost:5175" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -224,7 +224,7 @@ app.post('/guardarcita', (req, res) => {
 
     // Obtener las coordenadas correctas
     let coordx = req.body.coordx;
-    let coordy = req.body.coordy;f
+    let coordy = req.body.coordy;
 
     if (coordx === -1 || coordy === -1) {
         return res.status(400).json({ success: false, message: "No hay espacio disponible para esta hora" });
@@ -238,7 +238,7 @@ app.post('/guardarcita', (req, res) => {
     if (!paciente) return res.status(404).json({ success: false, message: "Paciente no encontrado" });
 
     if (!paciente.Citas) paciente.Citas = [];
-    paciente.Citas.push({ Doctor: NombreDoctor, Especialidad, Fecha, Hora, Tipo: "Consulta" });
+    paciente.Citas.push({ Doctor: NombreDoctor, Especialidad, Fecha, Hora, Tipo: "Consulta", Sintomas: "", Diagnostico: "", Receta: "" });
 
     // Guardar en JSON
     saveData("doctors.json", doctores);
@@ -295,6 +295,19 @@ app.get("/getPatientAppointments/:Cedula", (req, res) => {
     res.json(patient.Citas || []);
 });
 
+app.put("/actualizarinfoCita", (req, res) => {
+    console.log(req.body);
+    const { Cedula, Citas } = req.body;
+
+    let patients = loadData("patients.json");
+    let patientIndex = patients.findIndex(p => p.Cedula === Cedula);
+    if (patientIndex === -1) return res.status(404).json({ message: "Paciente no encontrado" });
+
+    patients[patientIndex].Citas = Citas;
+    saveData("patients.json", patients);
+
+    res.json({ message: "✅ Información de citas actualizada con éxito", citas: Citas });
+  });
 
 app.listen(PORT, () => {
     console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
